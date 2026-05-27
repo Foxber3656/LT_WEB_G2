@@ -1,0 +1,45 @@
+/*=========================
+GLOBAL
+==========================*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+:root{
+
+    --primary:#BF8A49;
+    --dark:#221f20;
+    --gray:#666;
+    --light:#ddd;
+
+    --transition:.3s ease;
+
+}
+
+body{
+    overflow-x:hidden;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+.row{
+    display:flex;
+    flex-wrap:wrap;
+}
+
+a{
+    text-decoration:none;
+    color:black;
+}
+
+li{
+    list-style:none;
+}
