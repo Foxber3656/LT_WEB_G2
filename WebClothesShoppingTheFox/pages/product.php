@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="icon" type="image/x-icon" href="../Images/fashion.ico">
+    <link rel="icon" type="image/x-icon" href="../assets/images/fashion.ico">
     <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!--=========================CSS==========================-->
 
-    <link rel="stylesheet" href="../Css/cart.css">
-    <link rel="stylesheet" href="../Css/header.css">
-    <link rel="stylesheet" href="../Css/footer.css">
-    <link rel="stylesheet" href="../Css/gobal.css">
+    <link rel="stylesheet" href="../assets/css/product.css">
+    <link rel="stylesheet" href="../assets/css/header.css">
+    <link rel="stylesheet" href="../assets/css/footer.css">
+    <link rel="stylesheet" href="../assets/css/gobal.css">
 
     <title>The Fox</title>
 </head>
@@ -26,7 +26,7 @@
         <div class="header-logo">
             <a href="#">
                 <img
-                src="../Images/icon.png"
+                src="../assets/images/icon.png"
                 alt="The Fox Logo"
                 class="logo">
             </a>
@@ -232,153 +232,216 @@
         </div>
     </div>
 </header>
-<!--=========================CART PAGE==========================-->
-<section class="cart">
+<!--=========================PRODUCT_DETAILS=========================-->
+<section class="product">
     <div class="container">
-        <div class="cart-process">
-            <div class="cart-process-item active">
-                <span></span>
-                <p>Giỏ hàng</p>
-            </div>
-            <div class="cart-process-item">
-                <span></span>
-                <p>Đặt hàng</p>
-            </div>
-            <div class="cart-process-item">
-                <span></span>
-                <p>Thanh toán</p>
-            </div>
-            <div class="cart-process-item">
-                <span></span>
-                <p>Hoàn thành</p>
-            </div>
+        <div class="product-top">
+            <p>TRANG CHỦ</p>
+            <span>&#8594;</span>
+            <p>ALL ITEMS</p>
+            <span>&#8594;</span>
+            <p>ÁO KIỂU FOX SUMMER</p>
         </div>
-        <!--TITLE-->
-        <div class="cart-title">
-            <h1>
-                Giỏ hàng của bạn
-                <span>3 Sản phẩm</span>
-            </h1>
-        </div>
-
-        <!--CONTENT-->
-        <div class="cart-content row">
-            <div class="cart-left">
-                <!-- ITEM -->
-                <div class="cart-item">
-                    <div class="cart-item-image">
-                        <img src="../Images/sp1.jpg"alt="Product">
-                    </div>
-                    <div class="cart-item-info">
-                        <h3>Áo kiểu Fox Summer</h3>
-                        <p>
-                            Màu: Hồng
-                        </p>
-                        <p>
-                            Size: M
-                        </p>
-                    </div>
-                    <div class="cart-item-price">
-                        <p>
-                            790.000đ
-                        </p>
-                    </div>
-                    <div class="cart-item-quantity">
-                        <button>-</button>
-                        <input type="text" value="1">
-                        <button>+</button>
-                    </div>
-                    <div class="cart-item-total">
-                        <p>
-                            790.000đ
-                        </p>
-                    </div>
-                    <div class="cart-item-delete">
-                        <i class="fas fa-trash"> </i>
-                    </div>
+        <!--=========================CONTENT==========================-->
+        <div class="product-content row">
+            <!--=========================LEFT==========================-->
+            <div class="product-content-left">
+                <!-- MAIN IMAGE -->
+                <div class="product-content-left-big-img">
+                    <button class="main-arrow prev">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <img src="../assets/images/sp1.jpg"alt="Product">
+                    <button class="main-arrow next">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
 
-                <!-- ITEM -->
-                <div class="cart-item">
-                    <div class="cart-item-image">
-                        <img src="../Images/sp2.jpg" alt="Product">
+                <!-- THUMBNAILS -->
+                <div class="product-content-left-small-wrapper">
+                    <button class="thumb-arrow up">
+                        <i class="fas fa-chevron-up"></i>
+                    </button>
+                    <div class="thumb-container">
+                    <div class="product-content-left-small-img">
+                        <img src="../assets/images/sp1.jpg">
+                        <img src="../assets/images/sp2.jpg">
+                        <img src="../assets/images/sp3.jpg">
+                        <img src="../assets/images/sp4.jpg">
+                        <img src="../assets/images/sp4.jpg">
                     </div>
-                    <div class="cart-item-info">
-                        <h3> Váy Fox Summer </h3>
-                        <p>
-                            Màu: Đỏ
-                        </p>
-                        <p>
-                            Size: S
-                        </p>
                     </div>
-                    <div class="cart-item-price">
-                        <p>
-                            690.000đ
-                        </p>
-                    </div>
-                    <div class="cart-item-quantity">
-                        <button>-</button>
-                        <input type="text" value="2">
-                        <button>+</button>
-                    </div>
-                    <div class="cart-item-total">
-                        <p>
-                            1.380.000đ
-                        </p>
-                    </div>
-                    <div class="cart-item-delete">
-                        <i class="fas fa-trash"></i>
-                    </div>
+                <button class="thumb-arrow down">
+                    <i class="fas fa-chevron-down"></i>
+                </button>
                 </div>
             </div>
+
             <!--=========================RIGHT==========================-->
+            <div class="product-content-right">
 
-            <div class="cart-right">
-                <div class="cart-summary">
-                    <h2>Tổng tiền giỏ hàng</h2>
-                    <div class="cart-summary-item">
-                        <p>
-                            Tổng sản phẩm
-                        </p>
-                        <span>3</span>
+                <!-- TITLE -->
+                <div class="product-content-right-name">
+                    <h1>ÁO KIỂU FOX SUMMER</h1>
+                    <p>SKU: FX001</p>
+                </div>
+                <!-- PRICE -->
+
+                <div class="product-content-right-price">
+                    <p>
+                        790.000đ
+                    </p>
+                </div>
+
+                <!-- COLOR -->
+                <div class="product-content-right-color">
+                    <p>
+                        <span>Màu:</span> Hồng Pastel
+                    </p>
+                    <div class="product-color">
+                        <span class="color pink"></span>
+                        <span class="color gray"></span>
                     </div>
-                    <div class="cart-summary-item">
-                        <p>
-                            Tổng tiền hàng
-                        </p>
-                        <span>
-                            2.170.000đ
-                        </span>
+                </div>
+                <!-- SIZE -->
+                <div class="product-content-right-size">
+                    <p>Size:</p>
+                    <div class="size">
+                        <span class="active">S</span>
+                        <span>M</span>
+                        <span>L</span>
+                        <span>XL</span>
                     </div>
-                    <div class="cart-summary-item">
-                        <p>
-                            Giảm giá
-                        </p>
-                        <span>
-                            -100.000đ
-                        </span>
+                </div>
+
+                <!-- QUANTITY -->
+                <div class="quantity">
+                    <p>Số lượng:</p>
+                    <div class="quantity-box">
+                        <button>-</button>
+                        <input
+                        type="text"
+                        value="1">
+                        <button>+</button>
                     </div>
-                    <div class="cart-summary-item total">
-                        <p>
-                            Thành tiền
-                        </p>
-                        <span>
-                            2.070.000đ
-                        </span>
-                    </div>
-                    <button class="cart-order">
-                        ĐẶT HÀNG
+                </div>
+
+                <!-- BUTTON -->
+                <div class="product-content-right-button">
+                    <button>
+                        <i class="fas fa-shopping-cart"></i>
+                        THÊM VÀO GIỎ
                     </button>
-                    <button class="continue-shopping">
-                        TIẾP TỤC MUA HÀNG
-                    </button>
+                    <button>MUA NGAY</button>
+                    <button><i class="far fa-heart"></i></button>
+                </div>
+            <!--=========================PRODUCT INFO==========================-->
+            <div class="product-content-right-bottom">
+                <!-- TAB -->
+                 <div class="product-content-right-bottom-top">
+                    <div class="product-content-right-bottom-top-item active">
+                        <p>GIỚI THIỆU</p>
+                    </div>
+                    <div class="product-content-right-bottom-top-item">
+                        <p>CHI TIẾT SẢN PHẨM</p>
+                    </div>
+                    <div class="product-content-right-bottom-top-item">
+                        <p>BẢO QUẢN</p>
+                    </div>
+                </div>
+
+                <!-- CONTENT -->
+                 <div class="product-content-right-bottom-content">
+                    <div class="product-tab-content active">
+                        <div class="product-content-right-bottom-content-title">
+                            <p>Thông tin mẫu:</p>
+                        </div>
+                        <div class="product-content-right-bottom-content-text">
+                            <p>
+                                <strong>Chiều cao:</strong>165 cm
+                            </p>
+                            <p>
+                                <strong>Cân nặng:</strong>49 kg
+                            </p>
+                            <p>
+                                <strong>Số đo 3 vòng:</strong>81-63-90 cm
+                            </p>
+                            <p>
+                                Mẫu mặc size S.
+                                Lưu ý: Màu sắc sản phẩm thực tế có thể chênh lệch nhẹ.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="product-tab-content">
+                        <div class="product-content-right-bottom-content-text">
+                            <p><strong>Chất liệu:</strong> Cotton</p>
+                            <p><strong>Form:</strong> Regular Fit</p>
+                            <p><strong>Tay áo:</strong> Ngắn</p>
+                        </div>
+                    </div>
+                    <!-- BẢO QUẢN -->
+                     <div class="product-tab-content">
+                        <div class="product-content-right-bottom-content-text">
+                            <p>Giặt dưới 30°C</p>
+                            <p>Không dùng thuốc tẩy</p>
+                            <p>Ủi nhiệt độ thấp</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- TOGGLE -->
+                <div class="product-content-right-bottom-toggle">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+
+        <!--=========================RELATED PRODUCT==========================-->
+        <div class="product-related">
+            <h2>SẢN PHẨM LIÊN QUAN</h2>
+            <div class="product-related-items row">
+                <div class="product-related-item">
+                    <img src="../assets/images/sp1.jpg">
+                    <h1>
+                        ÁO KIỂU SUMMER
+                    </h1>
+                    <p>
+                        790.000đ
+                    </p>
+                </div>
+                <div class="product-related-item">
+                    <img src="../assets/images/sp2.jpg">
+                    <h1>
+                        VÁY HOA FOX
+                    </h1>
+                    <p>
+                        690.000đ
+                    </p>
+                </div>
+
+                <div class="product-related-item">
+                    <img src="../assets/images/sp3.jpg">
+                    <h1>
+                        ÁO THUN FOX
+                    </h1>
+                    <p>
+                        590.000đ
+                    </p>
+                </div>
+
+                <div class="product-related-item">
+                    <img
+                    src="../assets/images/sp4.jpg">
+                    <h1>
+                        CHÂN VÁY FOX
+                    </h1>
+                    <p>
+                        490.000đ
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
 <!--=========================FOOTER==========================-->
 <div class="site-bottom">
     <div id="footer">
@@ -387,7 +450,7 @@
             <div class="footer-col">
                 <!--LOGO-->
                 <div class="footer-logo">
-                <img src="../Images/fashion.ico" alt="The Fox Logo">
+                <img src="../assets/images/fashion.ico" alt="The Fox Logo">
                 </div>
                 <!--SOCIAL MEDIA-->
                 <div class="footer-social">
@@ -438,8 +501,8 @@
                 <div class="footer-download">
                     <div class="footer-download-app">
                         <h4>TẢI ỨNG DỤNG</h4>
-                        <a href="#"><img src="../Images/appstore.png" alt="App Store"></a>
-                        <a href="#"><img src="../Images/googleplay.png" alt="Google Play"></a>
+                        <a href="#"><img src="../assets/images/appstore.png" alt="App Store"></a>
+                        <a href="#"><img src="../assets/images/googleplay.png" alt="Google Play"></a>
                     </div>
                 </div>   
             </div>
@@ -454,7 +517,6 @@
 </footer>
 </body>
 
-<script src="../JS/cart.js"></script>
-<script src="../JS/scroll.js"></script>
-
+<script src="../assets/js/product.js"></script>
+<script src="../assets/js/scroll.js"></script>
 </html>

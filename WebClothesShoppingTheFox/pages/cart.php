@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="icon" type="image/x-icon" href="../Images/fashion.ico">
+    <link rel="icon" type="image/x-icon" href="../assets/images/fashion.ico">
     <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!--=========================CSS==========================-->
 
-    <link rel="stylesheet" href="../Css/mainstyle.css">
-    <link rel="stylesheet" href="../Css/header.css">
-    <link rel="stylesheet" href="../Css/footer.css">
-    <link rel="stylesheet" href="../Css/gobal.css">
+    <link rel="stylesheet" href="../assets/css/cart.css">
+    <link rel="stylesheet" href="../assets/css/header.css">
+    <link rel="stylesheet" href="../assets/css/footer.css">
+    <link rel="stylesheet" href="../assets/css/gobal.css">
 
     <title>The Fox</title>
 </head>
@@ -26,12 +26,14 @@
         <div class="header-logo">
             <a href="#">
                 <img
-                src="../Images/icon.png"
+                src="../assets/images/icon.png"
                 alt="The Fox Logo"
                 class="logo">
             </a>
         </div>
-        <!--=========================NAVBAR==========================-->
+        <!--=========================
+        NAVBAR
+        ==========================-->
         <nav class="navbar">
             <ul class="menu">
 
@@ -230,36 +232,153 @@
         </div>
     </div>
 </header>
-<!--=========================MAIN==========================-->
-<main class="site-main">
-
-    <!-- HOME BANNER -->
-
-    <section class="home-banner">
-
-        <!-- SLIDER -->
-
-        <div class="banner-item">
-            <img src="../Images/slide1.jpg" alt="Items 1">
-            <img src="../Images/slide2.jpg" alt="Items 2">
-            <img src="../Images/slide3.jpg" alt="Items 3">
-            <img src="../Images/Sale.png" alt="Items 4">
+<!--=========================CART PAGE==========================-->
+<section class="cart">
+    <div class="container">
+        <div class="cart-process">
+            <div class="cart-process-item active">
+                <span></span>
+                <p>Giỏ hàng</p>
+            </div>
+            <div class="cart-process-item">
+                <span></span>
+                <p>Đặt hàng</p>
+            </div>
+            <div class="cart-process-item">
+                <span></span>
+                <p>Thanh toán</p>
+            </div>
+            <div class="cart-process-item">
+                <span></span>
+                <p>Hoàn thành</p>
+            </div>
         </div>
-        <!-- BUTTON -->
-
-        <button class="banner-prev"><i class="fas fa-chevron-left"></i></button>
-        <button class="banner-next"><i class="fas fa-chevron-right"></i></button>
-
-        <!-- DOTS -->
-
-        <div class="banner-dots">
-            <span class="banner-dot active"></span>
-            <span class="banner-dot"></span>
-            <span class="banner-dot"></span>
-            <span class="banner-dot"></span>
+        <!--TITLE-->
+        <div class="cart-title">
+            <h1>
+                Giỏ hàng của bạn
+                <span>3 Sản phẩm</span>
+            </h1>
         </div>
-    </section>
-</main>
+
+        <!--CONTENT-->
+        <div class="cart-content row">
+            <div class="cart-left">
+                <!-- ITEM -->
+                <div class="cart-item">
+                    <div class="cart-item-image">
+                        <img src="../assets/images/sp1.jpg"alt="Product">
+                    </div>
+                    <div class="cart-item-info">
+                        <h3>Áo kiểu Fox Summer</h3>
+                        <p>
+                            Màu: Hồng
+                        </p>
+                        <p>
+                            Size: M
+                        </p>
+                    </div>
+                    <div class="cart-item-price">
+                        <p>
+                            790.000đ
+                        </p>
+                    </div>
+                    <div class="cart-item-quantity">
+                        <button>-</button>
+                        <input type="text" value="1">
+                        <button>+</button>
+                    </div>
+                    <div class="cart-item-total">
+                        <p>
+                            790.000đ
+                        </p>
+                    </div>
+                    <div class="cart-item-delete">
+                        <i class="fas fa-trash"> </i>
+                    </div>
+                </div>
+
+                <!-- ITEM -->
+                <div class="cart-item">
+                    <div class="cart-item-image">
+                        <img src="../assets/images/sp2.jpg" alt="Product">
+                    </div>
+                    <div class="cart-item-info">
+                        <h3> Váy Fox Summer </h3>
+                        <p>
+                            Màu: Đỏ
+                        </p>
+                        <p>
+                            Size: S
+                        </p>
+                    </div>
+                    <div class="cart-item-price">
+                        <p>
+                            690.000đ
+                        </p>
+                    </div>
+                    <div class="cart-item-quantity">
+                        <button>-</button>
+                        <input type="text" value="2">
+                        <button>+</button>
+                    </div>
+                    <div class="cart-item-total">
+                        <p>
+                            1.380.000đ
+                        </p>
+                    </div>
+                    <div class="cart-item-delete">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                </div>
+            </div>
+            <!--=========================RIGHT==========================-->
+
+            <div class="cart-right">
+                <div class="cart-summary">
+                    <h2>Tổng tiền giỏ hàng</h2>
+                    <div class="cart-summary-item">
+                        <p>
+                            Tổng sản phẩm
+                        </p>
+                        <span>3</span>
+                    </div>
+                    <div class="cart-summary-item">
+                        <p>
+                            Tổng tiền hàng
+                        </p>
+                        <span>
+                            2.170.000đ
+                        </span>
+                    </div>
+                    <div class="cart-summary-item">
+                        <p>
+                            Giảm giá
+                        </p>
+                        <span>
+                            -100.000đ
+                        </span>
+                    </div>
+                    <div class="cart-summary-item total">
+                        <p>
+                            Thành tiền
+                        </p>
+                        <span>
+                            2.070.000đ
+                        </span>
+                    </div>
+                    <button class="cart-order">
+                        ĐẶT HÀNG
+                    </button>
+                    <button class="continue-shopping">
+                        TIẾP TỤC MUA HÀNG
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!--=========================FOOTER==========================-->
 <div class="site-bottom">
     <div id="footer">
@@ -268,7 +387,7 @@
             <div class="footer-col">
                 <!--LOGO-->
                 <div class="footer-logo">
-                <img src="../Images/fashion.ico" alt="The Fox Logo">
+                <img src="../assets/images/fashion.ico" alt="The Fox Logo">
                 </div>
                 <!--SOCIAL MEDIA-->
                 <div class="footer-social">
@@ -319,8 +438,8 @@
                 <div class="footer-download">
                     <div class="footer-download-app">
                         <h4>TẢI ỨNG DỤNG</h4>
-                        <a href="#"><img src="../Images/appstore.png" alt="App Store"></a>
-                        <a href="#"><img src="../Images/googleplay.png" alt="Google Play"></a>
+                        <a href="#"><img src="../assets/images/appstore.png" alt="App Store"></a>
+                        <a href="#"><img src="../assets/images/googleplay.png" alt="Google Play"></a>
                     </div>
                 </div>   
             </div>
@@ -335,6 +454,7 @@
 </footer>
 </body>
 
-<script src="../JS/silder.js"></script>
-<script src="../JS/scroll.js"></script>
+<script src="../assets/js/cart.js"></script>
+<script src="../assets/js/scroll.js"></script>
+
 </html>

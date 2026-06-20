@@ -10,10 +10,10 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!--=========================CSS==========================-->
 
-    <link rel="stylesheet" href="../Css/cartegory.css">
-    <link rel="stylesheet" href="../Css/header.css">
-    <link rel="stylesheet" href="../Css/footer.css">
-    <link rel="stylesheet" href="../Css/gobal.css">
+    <link rel="stylesheet" href="../assets/css/cartegory.css">
+    <link rel="stylesheet" href="../assets/css/header.css">
+    <link rel="stylesheet" href="../assets/css/footer.css">
+    <link rel="stylesheet" href="../assets/css/gobal.css">
 
     <title>The Fox</title>
 </head>
@@ -26,7 +26,7 @@
         <div class="header-logo">
             <a href="#">
                 <img
-                src="../Images/icon.png"
+                src="../assets/images/icon.png"
                 alt="The Fox Logo"
                 class="logo">
             </a>
@@ -341,7 +341,7 @@
                     <!-- PRODUCT 1 -->
                     <div class="cartegory-right-content-item">
                         <img
-                        src="../Images/sp1.jpg"
+                        src="../assets/images/sp1.jpg"
                         alt="Product">
                         <h1>
                             ZUÝP LỤA ĐUÔI CÁ MS 31T0014
@@ -351,7 +351,7 @@
                     <!-- PRODUCT 2 -->
                     <div class="cartegory-right-content-item">
                         <img
-                        src="../Images/sp2.jpg"
+                        src="../assets/images/sp2.jpg"
                         alt="Product">
                         <h1>
                             ZUÝP LỤA ĐUÔI CÁ MS 31T0014
@@ -361,7 +361,7 @@
                     <!-- PRODUCT 3 -->
                     <div class="cartegory-right-content-item">
                         <img
-                        src="../Images/sp3.jpg"
+                        src="../assets/images/sp3.jpg"
                         alt="Product">
                         <h1>
                             ZUÝP LỤA ĐUÔI CÁ MS 31T0014
@@ -371,7 +371,7 @@
                     <!-- PRODUCT 4 -->
                     <div class="cartegory-right-content-item">
                         <img
-                        src="../Images/sp4.jpg"
+                        src="../assets/images/sp4.jpg"
                         alt="Product">
                         <h1>
                             ZUÝP LỤA ĐUÔI CÁ MS 31T0014
@@ -406,7 +406,7 @@
             <div class="footer-col">
                 <!--LOGO-->
                 <div class="footer-logo">
-                <img src="../Images/fashion.ico" alt="The Fox Logo">
+                <img src="../assets/images/fashion.ico" alt="The Fox Logo">
                 </div>
                 <!--SOCIAL MEDIA-->
                 <div class="footer-social">
@@ -457,8 +457,8 @@
                 <div class="footer-download">
                     <div class="footer-download-app">
                         <h4>TẢI ỨNG DỤNG</h4>
-                        <a href="#"><img src="../Images/appstore.png" alt="App Store"></a>
-                        <a href="#"><img src="../Images/googleplay.png" alt="Google Play"></a>
+                        <a href="#"><img src="../assets/images/appstore.png" alt="App Store"></a>
+                        <a href="#"><img src="../assets/images/googleplay.png" alt="Google Play"></a>
                     </div>
                 </div>   
             </div>
@@ -473,7 +473,7 @@
 </footer>
 </body>
 
-<script src="../JS/animation.js"></script>
-<script src="../JS/scroll.js"></script>
+<script src="../assets/js/animation.js"></script>
+<script src="../assets/js/scroll.js"></script>
 
 </html>

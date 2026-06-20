@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="icon" type="image/x-icon" href="../Images/fashion.ico">
+    <link rel="icon" type="image/x-icon" href="../assets/images/fashion.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!--=========================CSS==========================-->
-    <link rel="stylesheet" href="../Css/gobal.css">
-    <link rel="stylesheet" href="../Css/sidebarcart.css">
+    <link rel="stylesheet" href="../assets/css/gobal.css">
+    <link rel="stylesheet" href="../assets/css/sidebarcart.css">
 
     <title>The Fox</title>
 </head>
@@ -36,7 +36,7 @@
             <!-- ITEM -->
             <div class="cart-item">
                 <div class="cart-item-img">
-                    <img src="../Images/sp1.jpg" alt="Product">
+                    <img src="../assets/images/sp1.jpg" alt="Product">
                 </div>
                 <div class="cart-item-info">
                     <h3> Áo kiểu Fox Summer</h3>
@@ -65,7 +65,7 @@
 
             <div class="cart-item">
                 <div class="cart-item-img">
-                    <img src="../Images/sp2.jpg" alt="Product">
+                    <img src="../assets/images/sp2.jpg" alt="Product">
                 </div>
                 <div class="cart-item-info">
                     <h3> Váy Fox Summer</h3>
@@ -106,6 +106,6 @@
     </section>
 </body>
 
-<script src="../JS/sidebarcart.js"></script>
+<script src="../assets/js/sidebarcart.js"></script>
 
 </html>
