@@ -1,0 +1,1 @@
+-- TODO: Fashionshop SQL schema and seed data - To be implemented by other team members

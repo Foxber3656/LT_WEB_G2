@@ -1,0 +1,44 @@
+/* Checkout page styles */
+.checkout-section {
+    background: #fafafa;
+}
+
+.method-option {
+    border: 1px solid var(--border-color);
+    background: #fff;
+}
+
+.method-option:hover {
+    border-color: var(--primary) !important;
+    background: #fcfcfc;
+}
+
+.method-option input[type="radio"]:checked {
+    accent-color: var(--primary);
+}
+
+.method-option:has(input[type="radio"]:checked) {
+    border-color: var(--primary) !important;
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.checkout-right div {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+#checkout-items-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+#checkout-items-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+#checkout-items-list::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+}
+
+#checkout-items-list::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
