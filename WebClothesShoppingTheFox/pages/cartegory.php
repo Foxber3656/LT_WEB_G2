@@ -226,7 +226,7 @@
             </div>
             <a class="fa fa-headphones" href="#"></a>
             <a class="fa fa-user" href="#"></a>
-            <a class="fa fa-shopping-bag" href="#"></a>
+            <a class="fa fa-shopping-bag cart-icon-btn" href="javascript:void(0)"></a>
         </div>
     </div>
 </header>
@@ -339,45 +339,45 @@
                 ==========================-->
                 <div class="cartegory-right-content row">
                     <!-- PRODUCT 1 -->
-                    <div class="cartegory-right-content-item">
+                    <a href="product.php?name=Áo%20Kiểu%20Fox%20Summer&price=790.000đ&image=../assets/images/sp1.jpg" class="cartegory-right-content-item" style="text-decoration: none; color: inherit;">
                         <img
                         src="../assets/images/sp1.jpg"
                         alt="Product">
                         <h1>
-                            ZUÝP LỤA ĐUÔI CÁ MS 31T0014
+                            ÁO KIỂU FOX SUMMER
                         </h1>
                         <p>790.000đ</p>
-                    </div>
+                    </a>
                     <!-- PRODUCT 2 -->
-                    <div class="cartegory-right-content-item">
+                    <a href="product.php?name=Váy%20Hoa%20Fox&price=690.000đ&image=../assets/images/sp2.jpg" class="cartegory-right-content-item" style="text-decoration: none; color: inherit;">
                         <img
                         src="../assets/images/sp2.jpg"
                         alt="Product">
                         <h1>
-                            ZUÝP LỤA ĐUÔI CÁ MS 31T0014
+                            VÁY HOA FOX
                         </h1>
-                        <p>790.000đ</p>
-                    </div>
+                        <p>690.000đ</p>
+                    </a>
                     <!-- PRODUCT 3 -->
-                    <div class="cartegory-right-content-item">
+                    <a href="product.php?name=Áo%20Thun%20Fox&price=590.000đ&image=../assets/images/sp3.jpg" class="cartegory-right-content-item" style="text-decoration: none; color: inherit;">
                         <img
                         src="../assets/images/sp3.jpg"
                         alt="Product">
                         <h1>
-                            ZUÝP LỤA ĐUÔI CÁ MS 31T0014
+                            ÁO THUN FOX
                         </h1>
-                        <p>790.000đ</p>
-                    </div>
+                        <p>590.000đ</p>
+                    </a>
                     <!-- PRODUCT 4 -->
-                    <div class="cartegory-right-content-item">
+                    <a href="product.php?name=Chân%20Váy%20Fox&price=490.000đ&image=../assets/images/sp4.jpg" class="cartegory-right-content-item" style="text-decoration: none; color: inherit;">
                         <img
                         src="../assets/images/sp4.jpg"
                         alt="Product">
                         <h1>
-                            ZUÝP LỤA ĐUÔI CÁ MS 31T0014
+                            CHÂN VÁY FOX
                         </h1>
-                        <p>790.000đ</p>
-                    </div>
+                        <p>490.000đ</p>
+                    </a>
                 </div>
                     <div class="cartegory-right-bottom">
                         <div class="pagination">
@@ -471,6 +471,7 @@
         <p>©THE FOX</p>
     </div>
 </footer>
+    <?php include 'sidebarcart.php'; ?>
 </body>
 
 <script src="../assets/js/animation.js"></script>

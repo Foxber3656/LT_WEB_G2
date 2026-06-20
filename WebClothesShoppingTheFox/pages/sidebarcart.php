@@ -1,111 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="icon" type="image/x-icon" href="../assets/images/fashion.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <!--=========================CSS==========================-->
-    <link rel="stylesheet" href="../assets/css/gobal.css">
-    <link rel="stylesheet" href="../assets/css/sidebarcart.css">
-
-    <title>The Fox</title>
-</head>
-
-<body>
 <!--=========================CART SIDEBAR==========================-->
-    <div class="cart-overlay"></div>
-    <section class="cart-sidebar">
-        <!--=========================TOP==========================-->
-        <div class="cart-top">
-            <h2>
-                Giỏ hàng
-                <span class="cart-count">1</span>
-            </h2>
-            <button class="close-cart">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
+<link rel="stylesheet" href="../assets/css/sidebarcart.css">
 
-        <!--=========================PRODUCT LIST==========================-->
-        <div class="cart-items">
+<div class="cart-overlay"></div>
+<section class="cart-sidebar">
+    <!--=========================TOP==========================-->
+    <div class="cart-top">
+        <h2>
+            Giỏ hàng
+            <span class="cart-count">0</span>
+        </h2>
+        <button class="close-cart">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
 
-            <!-- ITEM -->
-            <div class="cart-item">
-                <div class="cart-item-img">
-                    <img src="../assets/images/sp1.jpg" alt="Product">
-                </div>
-                <div class="cart-item-info">
-                    <h3> Áo kiểu Fox Summer</h3>
-                    <p>
-                        Màu:Hồng Pastel
-                    </p>
-                    <p>
-                        Size:M
-                    </p>
-                    <div class="cart-item-quantity">
-                        <button>-</button>
-                        <input type="text" value="1">
-                        <button>+</button>
-                    </div>
-                </div>
-                <div class="cart-item-right">
-                    <p class="cart-item-price"
-                    data-price="790000">
-                    790.000đ
-                    </p>
-                    <button class="cart-delete">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class="cart-item">
-                <div class="cart-item-img">
-                    <img src="../assets/images/sp2.jpg" alt="Product">
-                </div>
-                <div class="cart-item-info">
-                    <h3> Váy Fox Summer</h3>
-                    <p>
-                        Màu:Đỏ
-                    </p>
-                    <p>
-                        Size: S
-                    </p>
-                    <div class="cart-item-quantity">
-                        <button>-</button>
-                        <input type="text" value="1">
-                        <button>+</button>
-                    </div>
-                </div>
-                <div class="cart-item-right">
-                    <p class="cart-item-price"
-                    data-price="690000">
-                    690.000đ
-                    </p>
-                <button
-                    class="cart-delete">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            </div>
+    <!--=========================PRODUCT LIST==========================-->
+    <div class="cart-items">
+        <!-- Items will be rendered dynamically by JavaScript from localStorage -->
+    </div>
+    
+    <!--=========================BOTTOM==========================-->
+    <div class="cart-bottom">
+        <div class="cart-total">
+            <h3>Tổng cộng</h3>
+            <p class="cart-total-price">0đ</p>
         </div>
-        <!--=========================BOTTOM==========================-->
-        <div class="cart-bottom">
-            <div class="cart-total">
-                <h3>Tổng cộng</h3>
-                <p class="cart-total-price">1.480.000đ</p>
-            </div>
-            <button class="view-cart">
-                XEM GIỎ HÀNG
-            </button>
-        </div>
-    </section>
-</body>
+        <button class="view-cart" onclick="location.href='cart.php'" style="width: 100%; padding: 12px; background: var(--primary); color: #fff; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 10px;">
+            XEM GIỎ HÀNG
+        </button>
+    </div>
+</section>
 
 <script src="../assets/js/sidebarcart.js"></script>
-
-</html>

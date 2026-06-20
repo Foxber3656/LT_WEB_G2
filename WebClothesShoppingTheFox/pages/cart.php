@@ -10,7 +10,7 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!--=========================CSS==========================-->
 
-    <link rel="stylesheet" href="../assets/css/cart.css">
+    <link rel="stylesheet" href="../assets/css/cart.css?v=1.2">
     <link rel="stylesheet" href="../assets/css/header.css">
     <link rel="stylesheet" href="../assets/css/footer.css">
     <link rel="stylesheet" href="../assets/css/gobal.css">
@@ -228,29 +228,37 @@
             </div>
             <a class="fa fa-headphones" href="#"></a>
             <a class="fa fa-user" href="#"></a>
-            <a class="fa fa-shopping-bag" href="#"></a>
+            <a class="fa fa-shopping-bag cart-icon-btn" href="javascript:void(0)"></a>
         </div>
     </div>
 </header>
 <!--=========================CART PAGE==========================-->
 <section class="cart">
     <div class="container">
-        <div class="cart-process">
+        <div class="cart-process step-1">
             <div class="cart-process-item active">
-                <span></span>
-                <p>Giỏ hàng</p>
+                <a href="cart.php" style="display: block; text-decoration: none; color: inherit;">
+                    <span></span>
+                    <p>Giỏ hàng</p>
+                </a>
             </div>
             <div class="cart-process-item">
-                <span></span>
-                <p>Đặt hàng</p>
+                <a href="checkout.php" style="display: block; text-decoration: none; color: inherit;">
+                    <span></span>
+                    <p>Đặt hàng</p>
+                </a>
             </div>
             <div class="cart-process-item">
-                <span></span>
-                <p>Thanh toán</p>
+                <a href="javascript:void(0)" style="display: block; text-decoration: none; color: inherit; cursor: default;">
+                    <span></span>
+                    <p>Thanh toán</p>
+                </a>
             </div>
             <div class="cart-process-item">
-                <span></span>
-                <p>Hoàn thành</p>
+                <a href="javascript:void(0)" style="display: block; text-decoration: none; color: inherit; cursor: default;">
+                    <span></span>
+                    <p>Hoàn thành</p>
+                </a>
             </div>
         </div>
         <!--TITLE-->
@@ -452,6 +460,7 @@
         <p>©THE FOX</p>
     </div>
 </footer>
+    <?php include 'sidebarcart.php'; ?>
 </body>
 
 <script src="../assets/js/cart.js"></script>

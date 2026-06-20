@@ -228,7 +228,7 @@
             </div>
             <a class="fa fa-headphones" href="#"></a>
             <a class="fa fa-user" href="#"></a>
-            <a class="fa fa-shopping-bag" href="#"></a>
+            <a class="fa fa-shopping-bag cart-icon-btn" href="javascript:void(0)"></a>
         </div>
     </div>
 </header>
@@ -399,16 +399,16 @@
         <div class="product-related">
             <h2>SẢN PHẨM LIÊN QUAN</h2>
             <div class="product-related-items row">
-                <div class="product-related-item">
+                <a href="product.php?name=Áo%20Kiểu%20Fox%20Summer&price=790.000đ&image=../assets/images/sp1.jpg" class="product-related-item" style="text-decoration: none; color: inherit;">
                     <img src="../assets/images/sp1.jpg">
                     <h1>
-                        ÁO KIỂU SUMMER
+                        ÁO KIỂU FOX SUMMER
                     </h1>
                     <p>
                         790.000đ
                     </p>
-                </div>
-                <div class="product-related-item">
+                </a>
+                <a href="product.php?name=Váy%20Hoa%20Fox&price=690.000đ&image=../assets/images/sp2.jpg" class="product-related-item" style="text-decoration: none; color: inherit;">
                     <img src="../assets/images/sp2.jpg">
                     <h1>
                         VÁY HOA FOX
@@ -416,9 +416,8 @@
                     <p>
                         690.000đ
                     </p>
-                </div>
-
-                <div class="product-related-item">
+                </a>
+                <a href="product.php?name=Áo%20Thun%20Fox&price=590.000đ&image=../assets/images/sp3.jpg" class="product-related-item" style="text-decoration: none; color: inherit;">
                     <img src="../assets/images/sp3.jpg">
                     <h1>
                         ÁO THUN FOX
@@ -426,11 +425,9 @@
                     <p>
                         590.000đ
                     </p>
-                </div>
-
-                <div class="product-related-item">
-                    <img
-                    src="../assets/images/sp4.jpg">
+                </a>
+                <a href="product.php?name=Chân%20Váy%20Fox&price=490.000đ&image=../assets/images/sp4.jpg" class="product-related-item" style="text-decoration: none; color: inherit;">
+                    <img src="../assets/images/sp4.jpg">
                     <h1>
                         CHÂN VÁY FOX
                     </h1>
@@ -515,6 +512,7 @@
         <p>©THE FOX</p>
     </div>
 </footer>
+    <?php include 'sidebarcart.php'; ?>
 </body>
 
 <script src="../assets/js/product.js"></script>

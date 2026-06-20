@@ -225,8 +225,8 @@
                 <i class="fas fa-search"></i>
             </div>
             <a class="fa fa-headphones" href="#"></a>
-            <a class="fa fa-user" href="#"></a>
-            <a class="fa fa-shopping-bag" href="#"></a>
+            <a class="fa fa-user" href="javascript:void(0)"></a>
+            <a class="fa fa-shopping-bag cart-icon-btn" href="javascript:void(0)"></a>
         </div>
     </div>
 </header>
@@ -333,6 +333,7 @@
         <p>©THE FOX</p>
     </div>
 </footer>
+    <?php include 'sidebarcart.php'; ?>
 </body>
 
 <script src="../assets/js/silder.js"></script>
