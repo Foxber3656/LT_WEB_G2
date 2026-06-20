@@ -9,17 +9,21 @@ WebClothesShoppingTheFox/
 │   │   ├── footer.css
 │   │   ├── product.css
 │   │   ├── cart.css
-│   │   └── admin.css
+│   │   ├── admin.css
+│   │   └── auth.css
 │   │
 │   ├── js/
 │   │   ├── main.js
+│   │   ├── slider.js
 │   │   ├── cart.js
-│   │   ├── product.js
-│   │   └── slider.js
+│   │   ├── checkout.js
+│   │   ├── auth.js
+│   │   └── product.js
 │   │
 │   └── images/
 │       ├── banners/
 │       ├── products/
+│       ├── avatars/
 │       ├── icons/
 │       └── logo/
 │
@@ -34,29 +38,65 @@ WebClothesShoppingTheFox/
 │   └── sidebar.php
 │
 ├── models/
-│   ├── Product.php
 │   ├── User.php
+│   ├── Product.php
+│   ├── Category.php
+│   ├── Cart.php
 │   ├── Order.php
-│   └── Category.php
+│   ├── Wishlist.php
+│   └── Outfit.php
 │
 ├── controllers/
+│   ├── AuthController.php
 │   ├── ProductController.php
+│   ├── CategoryController.php
 │   ├── CartController.php
-│   ├── UserController.php
-│   └── OrderController.php
+│   ├── CheckoutController.php
+│   ├── OrderController.php
+│   ├── WishlistController.php
+│   └── OutfitController.php
 │
 ├── pages/
+│   │
 │   ├── home.php
-│   ├── category.php
-│   ├── product-detail.php
-│   ├── cart.php
-│   ├── checkout.php
-│   ├── login.php
-│   ├── register.php
-│   └── profile.php
+│   │
+│   ├── auth/
+│   │   ├── login.php
+│   │   ├── register.php
+│   │   └── profile.php
+│   │
+│   ├── product/
+│   │   ├── index.php
+│   │   └── detail.php
+│   │
+│   ├── category/
+│   │   └── index.php
+│   │
+│   ├── cart/
+│   │   └── cart.php
+│   │
+│   ├── checkout/
+│   │   └── checkout.php
+│   │
+│   ├── order/
+│   │   ├── history.php
+│   │   └── detail.php
+│   │
+│   ├── wishlist/
+│   │   └── wishlist.php
+│   │
+│   └── outfit/
+│       └── builder.php
 │
 ├── admin/
+│   │
 │   ├── dashboard.php
+│   │
+│   ├── users/
+│   │   ├── index.php
+│   │   ├── create.php
+│   │   ├── edit.php
+│   │   └── delete.php
 │   │
 │   ├── products/
 │   │   ├── index.php
@@ -74,16 +114,18 @@ WebClothesShoppingTheFox/
 │   │   ├── index.php
 │   │   └── detail.php
 │   │
-│   └── users/
-│       └── index.php
+│   └── statistics/
+│       └── revenue.php
 │
 ├── uploads/
 │   ├── products/
-│   └── avatars/
+│   ├── avatars/
+│   └── outfits/
 │
 ├── database/
-│   └── fashionshop.sql
+│   ├── schema.sql
+│   └── seed.sql
 │
 ├── index.php
-└── .htaccess
+└── README.md
 ```
