@@ -1,3 +1,4 @@
+```text
 WebClothesShoppingTheFox/
 │
 ├── assets/
@@ -85,3 +86,4 @@ WebClothesShoppingTheFox/
 │
 ├── index.php
 └── .htaccess
+```
