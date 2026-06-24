@@ -10,7 +10,7 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!--=========================CSS==========================-->
 
-    <link rel="stylesheet" href="../Css/cart.css">
+    <link rel="stylesheet" href="../Css/delivery.css">
     <link rel="stylesheet" href="../Css/header.css">
     <link rel="stylesheet" href="../Css/footer.css">
     <link rel="stylesheet" href="../Css/gobal.css">
@@ -31,9 +31,7 @@
                 class="logo">
             </a>
         </div>
-        <!--=========================
-        NAVBAR
-        ==========================-->
+        <!--=========================NAVBAR==========================-->
         <nav class="navbar">
             <ul class="menu">
 
@@ -232,153 +230,133 @@
         </div>
     </div>
 </header>
-<!--=========================CART PAGE==========================-->
-<section class="cart">
+<!--=========================DELIVERY==========================-->
+<section class="delivery">
     <div class="container">
-        <div class="cart-process">
-            <div class="cart-process-item active">
+        <div class="delivery-process">
+            <div class="delivery-process-item completed">
                 <span></span>
                 <p>Giỏ hàng</p>
             </div>
-            <div class="cart-process-item">
+            <div class="delivery-process-item active">
                 <span></span>
                 <p>Đặt hàng</p>
             </div>
-            <div class="cart-process-item">
+            <div class="delivery-process-item">
                 <span></span>
                 <p>Thanh toán</p>
             </div>
-            <div class="cart-process-item">
+            <div class="delivery-process-item">
                 <span></span>
                 <p>Hoàn thành</p>
             </div>
         </div>
-        <!--TITLE-->
-        <div class="cart-title">
-            <h1>
-                Giỏ hàng của bạn
-                <span>3 Sản phẩm</span>
-            </h1>
-        </div>
 
-        <!--CONTENT-->
-        <div class="cart-content">
-            <div class="cart-left">
-                <!-- ITEM -->
-                <div class="cart-item">
-                    <div class="cart-item-image">
-                        <img src="../Images/sp1.jpg"alt="Product">
+        <div class="delivery-content">
+            <div class="delivery-left">
+                <div class="delivery-section">
+                    <h2>THÔNG TIN NHẬN HÀNG</h2>
+                </div>
+                <div class="delivery-form">
+                    <div class="form-row">
+                        <input type="text" placeholder="Họ và tên">
                     </div>
-                    <div class="cart-item-info">
-                        <h3>Áo kiểu Fox Summer</h3>
-                        <p>
-                            Màu: Hồng
-                        </p>
-                        <p>
-                            Size: M
-                        </p>
+                    <div class="form-row two-column">
+                        <input type="email" placeholder="Email">
+                        <input type="text" placeholder="Số điện thoại">
                     </div>
-                    <div class="cart-item-price">
-                        <p>
-                            790.000đ
-                        </p>
+                    <div class="form-row">
+                        <input type="text" placeholder="Địa chỉ">
                     </div>
-                    <div class="cart-item-quantity">
-                        <button>-</button>
-                        <input type="text" value="1">
-                        <button>+</button>
+                    <div class="form-row three-column">
+                        <select>
+                            <option> Chọn Tỉnh / Thành Phố</option>
+                        </select>
+                        <select> 
+                            <option> Chọn Quận / Huyện</option>
+                        </select>
+                        <select>
+                            <option> Chọn Phường / Xã</option>
+                        </select>
                     </div>
-                    <div class="cart-item-total">
-                        <p>
-                            790.000đ
-                        </p>
-                    </div>
-                    <div class="cart-item-delete">
-                        <i class="fas fa-trash"> </i>
+                    <div class="form-row">
+                        <textarea placeholder="Ghi chú"></textarea>
                     </div>
                 </div>
 
-                <!-- ITEM -->
-                <div class="cart-item">
-                    <div class="cart-item-image">
-                        <img src="../Images/sp2.jpg" alt="Product">
+                <!--==============METHOD==============-->
+                <div class="delivery-section">
+                    <h2>PHƯƠNG THỨC GIAO HÀNG</h2>
+                </div>
+                <div class="delivery-method">
+                    <div class="delivery-method-item">
+                        <label>
+                            <input type="radio" name="delivery" checked>
+                            Giao hàng tiêu chuẩn (3 - 5 ngày) - không kể thứ 7, CN
+                        </label>
+                        <span>MIỄN PHÍ</span>
                     </div>
-                    <div class="cart-item-info">
-                        <h3> Váy Fox Summer </h3>
-                        <p>
-                            Màu: Đỏ
-                        </p>
-                        <p>
-                            Size: S
-                        </p>
-                    </div>
-                    <div class="cart-item-price">
-                        <p>
-                            690.000đ
-                        </p>
-                    </div>
-                    <div class="cart-item-quantity">
-                        <button>-</button>
-                        <input type="text" value="2">
-                        <button>+</button>
-                    </div>
-                    <div class="cart-item-total">
-                        <p>
-                            1.380.000đ
-                        </p>
-                    </div>
-                    <div class="cart-item-delete">
-                        <i class="fas fa-trash"></i>
+                    <div class="delivery-method-item">
+                        <label>
+                            <input type="radio" name="delivery">
+                            Giao hàng nhanh (1 - 2 ngày) - không kể thứ 7, CN
+                        </label>
+                        <span>15.000 VNĐ</span>
                     </div>
                 </div>
             </div>
-            <!--=========================RIGHT==========================-->
 
-            <div class="cart-right">
-                <div class="cart-summary">
-                    <h2>Tổng tiền giỏ hàng</h2>
-                    <div class="cart-summary-item">
-                        <p>
-                            Tổng sản phẩm
-                        </p>
-                        <span>3</span>
+            <div class="delivery-right">
+                <div class="delivery-section">
+                    <h2>ĐƠN HÀNG CỦA BẠN</h2>
+                    
+                    <div class="delivery-product">
+                        <img src="../Images/sp1.jpg" alt="Product">
+                        <div class="delivery-product-info">
+                            <h4>Áo kiểu Fox Summer</h4>
+                            <p>Size M</p>
+                            <p>Màu Hồng</p>
+                        </div>
+                        <span>790.000đ</span>
                     </div>
-                    <div class="cart-summary-item">
-                        <p>
-                            Tổng tiền hàng
-                        </p>
-                        <span>
-                            2.170.000đ
-                        </span>
+
+                    <div class="delivery-product">
+                        <img src="../Images/sp2.jpg" alt="Product">
+                        <div class="delivery-product-info">
+                            <h4>Váy Fox Summer</h4>
+                            <p>Size L</p>
+                            <p>Màu Đỏ</p>
+                        </div>
+                        <span>690.000đ</span>
                     </div>
-                    <!-- <div class="cart-summary-item">
-                        <p>
-                            Giảm giá
-                        </p>
-                        <span>
-                            -100.000đ
-                        </span>
-                    </div> -->
-                    <div class="cart-summary-item total">
-                        <p>
-                            Thành tiền
-                        </p>
-                        <span>
-                            2.070.000đ
-                        </span>
+                    
+                    <!-- VOUCHER-->
+                    <div class="voucher-box">
+                        <input type="text" placeholder="Mã giảm giá">
+                        <button>Áp dụng</button>
                     </div>
-                    <button class="cart-order">
-                        ĐẶT HÀNG
-                    </button>
-                    <button class="continue-shopping">
-                        TIẾP TỤC MUA HÀNG
-                    </button>
+
+                    <!-- SUM -->
+                    <div class="summary-item">
+                        <span>Tạm tính</span>
+                        <span class="untotal">1.480.000đ</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Phí vận chuyển</span>
+                        <span class="shipping-price">Miễn phí</span>
+                    </div>
+                    <div class="summary-item total">
+                        <span>Thành tiền</span>
+                        <span class="total">1.480.000đ</span>
+                    </div>
+
+                    <!-- BUTTON -->
+                    <button class="delivery-btn">TIẾP TỤC THANH TOÁN</button>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
 <!--=========================FOOTER==========================-->
 <div class="site-bottom">
     <div id="footer">
@@ -454,7 +432,7 @@
 </footer>
 </body>
 
-<script src="../JS/cart.js"></script>
+<script src="../JS/delivery.js"></script>
 <script src="../JS/scroll.js"></script>
 
 </html>
