@@ -1,0 +1,136 @@
+.login{
+    padding: 120px 0 60px 0;
+}
+.login-wrapper{
+    display:flex;
+}
+.login-left{
+    width:50%;
+    padding-right:80px;
+}
+.login-right{
+    width:50%;
+    padding-left:80px;
+    border-left:1px solid #ddd;
+}
+.login-left h2,
+.login-right h2{
+    font-size:28px;
+    margin-bottom:15px;
+    text-align: center;
+}
+.login-left p,
+.login-right p{
+    font-size:16px;
+    color:#555;
+    text-align: center;
+    margin-bottom:15px;
+}
+/* Form */
+.login-left input{
+    width:100%;
+    height:55px;
+    border:1px solid #ddd;
+    border-radius:4px;
+    padding:0 20px;
+    margin-bottom:20px;
+}
+.login-option{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:#555;
+    margin:10px 0;
+}
+.login-option input[type="checkbox"]{
+    width:18px;
+    height:18px;
+    margin-right:8px;
+}
+.login-method{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:20px;
+}
+.login-method a{
+    color:#555;
+    text-decoration:underline;
+}
+.login-left button{
+    width:100%;
+    height:80px;
+    border:none;
+    border-radius:20px 0 20px 0;
+    background:#221f20;
+    color:white;
+    font-size:24px;
+    font-weight:600;
+}
+.register-btn{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:300px;
+    height:60px;
+    background:#221f20;
+    color:#fff;
+    border-radius:20px 0 20px 0;
+    font-size:20px;
+    font-weight:600;
+    margin:30px auto 0;
+}
+
+/* HOVER */
+.login-left button{
+    transition:all .3s ease;
+}
+
+.login-left button:hover{
+    background:#BF8A49;
+    transform:translateY(-2px);
+}
+.login-left input{
+    transition:.3s;
+}
+
+.login-left input:hover{
+    border-color:#BF8A49;
+}
+
+.login-left  input:focus{
+    border-color:#BF8A49;
+    box-shadow:0 0 5px rgba(191,138,73,.3);
+}
+.register-btn{
+    transition:all .3s ease;
+}
+
+.register-btn:hover{
+    background:#BF8A49;
+    transform:translateY(-2px);
+}
+.login-option {
+    transition:.3s;
+}
+
+.login-option :hover{
+    color:#BF8A49;
+}
+.login-method a{
+    position:relative;
+}
+.login-method a::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-2px;
+    width:0;
+    height: 2px;
+    background:#BF8A49;
+    transition:.3s;
+}
+
+.login-method a:hover::after{
+    width:100%;
+    
+}

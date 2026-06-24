@@ -88,9 +88,7 @@ LEFT
 
     border:2px solid #BF8A49;
 }
-/*=========================
-BIG IMAGE
-==========================*/
+/*=========================BIG IMAGE==========================*/
 .product-content-left-big-img{
     width:85%;
     position:relative;
@@ -130,9 +128,7 @@ BIG IMAGE
 .next{
     right:20px;
 }
-/*=========================
-RIGHT
-==========================*/
+/*=========================RIGHT==========================*/
 .product-content-right{
     width:45%;
 }
@@ -246,9 +242,7 @@ RIGHT
     text-align:center;
     outline:none;
 }
-/*=========================
-BUTTON
-==========================*/
+/*=========================BUTTON==========================*/
 .product-content-right-button{
     display:flex;
     gap:15px;
@@ -283,9 +277,7 @@ BUTTON
     opacity:.8;
 }
 
-/*=========================
-PRODUCT INFO
-==========================*/
+/*=========================PRODUCT INFO==========================*/
 .product-content-right-bottom{
     margin-top:50px;
     border-top:
@@ -385,9 +377,7 @@ PRODUCT INFO
 .product-content-right-bottom-toggle i{
     transform:rotate(180deg);
 }
-/*=========================
-RELATED PRODUCT
-==========================*/
+/*=========================RELATED PRODUCT==========================*/
 .product-related{
     margin-top:100px;
 }

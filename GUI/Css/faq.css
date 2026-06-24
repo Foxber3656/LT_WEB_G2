@@ -1,0 +1,26 @@
+.faq-list{
+    margin-top: 10px;
+}
+.faq-item{
+    border:1px solid #eee;
+    border-radius:12px;
+    margin-bottom:15px;
+    overflow:hidden;
+}
+.faq-question{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px;
+    cursor:pointer;
+    font-weight:600;
+}
+.faq-answer{
+    display:none;
+    padding:0 20px 20px;
+    color:#666;
+    line-height:1.7;
+}
+.faq-answer.show{
+    display:block;
+}
