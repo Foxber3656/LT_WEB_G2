@@ -25,7 +25,7 @@
             <h3>Tổng cộng</h3>
             <p class="cart-total-price">0đ</p>
         </div>
-        <button class="view-cart" onclick="location.href='cart.php'" style="width: 100%; padding: 12px; background: var(--primary); color: #fff; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 10px;">
+        <button class="view-cart" onclick="location.href='cart.php'">
             XEM GIỎ HÀNG
         </button>
     </div>

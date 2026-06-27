@@ -24,7 +24,7 @@
     <div class="container">
         <!-- LOGO -->
         <div class="header-logo">
-            <a href="#">
+            <a href="home.php">
                 <img
                 src="../assets/images/icon.png"
                 alt="The Fox Logo"
@@ -226,8 +226,8 @@
                 <input type="text" placeholder="Tìm kiếm">
                 <i class="fas fa-search"></i>
             </div>
-            <a class="fa fa-headphones" href="#"></a>
-            <a class="fa fa-user" href="#"></a>
+            <a class="fa fa-headphones" href="mailto:info@thefox.com"></a>
+            <a class="fa fa-user" href="profile.php"></a>
             <a class="fa fa-shopping-bag cart-icon-btn" href="javascript:void(0)"></a>
         </div>
     </div>
@@ -333,7 +333,7 @@
                         THÊM VÀO GIỎ
                     </button>
                     <button>MUA NGAY</button>
-                    <button><i class="far fa-heart"></i></button>
+                    <button id="wishlistBtn"><i class="far fa-heart"></i></button>
                 </div>
             <!--=========================PRODUCT INFO==========================-->
             <div class="product-content-right-bottom">
@@ -513,8 +513,7 @@
     </div>
 </footer>
     <?php include 'sidebarcart.php'; ?>
+    <script src="../assets/js/product.js"></script>
+    <script src="../assets/js/scroll.js"></script>
 </body>
-
-<script src="../assets/js/product.js"></script>
-<script src="../assets/js/scroll.js"></script>
 </html>

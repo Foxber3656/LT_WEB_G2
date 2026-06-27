@@ -22,7 +22,7 @@
     <div class="container">
         <!-- LOGO -->
         <div class="header-logo">
-            <a href="../index.php">
+            <a href="home.php">
                 <img src="../assets/images/icon.png" alt="The Fox Logo" class="logo">
             </a>
         </div>
@@ -44,8 +44,8 @@
                 <input type="text" placeholder="Tìm kiếm">
                 <i class="fas fa-search"></i>
             </div>
-            <a class="fa fa-headphones" href="#"></a>
-            <a class="fa fa-user" href="#"></a>
+            <a class="fa fa-headphones" href="mailto:info@thefox.com"></a>
+            <a class="fa fa-user" href="profile.php"></a>
             <a class="fa fa-shopping-bag" href="cart.php"></a>
         </div>
     </div>
@@ -190,81 +190,7 @@
     </div>
 </footer>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const orderCodeUrl = urlParams.get('order_code');
-    
-    let orderData = JSON.parse(sessionStorage.getItem('last_order'));
-    
-    if (!orderData) {
-        document.querySelector('main').innerHTML = `
-            <div class="container" style="max-width: 600px; text-align: center; padding: 80px 0;">
-                <h2>Không tìm thấy thông tin đơn hàng</h2>
-                <a href="cartegory.php" style="color: var(--primary);">Quay lại cửa hàng</a>
-            </div>
-        `;
-        return;
-    }
-    
-    document.getElementById('order-code-display').innerText = orderData.order_code;
-    document.getElementById('info-name').innerText = orderData.fullname;
-    document.getElementById('info-phone').innerText = orderData.phone;
-    document.getElementById('info-email').innerText = orderData.email;
-    document.getElementById('info-address').innerText = orderData.address;
-    document.getElementById('info-shipping').innerText = `${orderData.shipping_method} (+${formatPrice(orderData.shipping_fee)}đ)`;
-    document.getElementById('info-payment').innerText = orderData.payment_method;
-    
-    document.getElementById('bill-subtotal').innerText = formatPrice(orderData.subtotal) + 'đ';
-    document.getElementById('bill-shipping').innerText = '+' + formatPrice(orderData.shipping_fee) + 'đ';
-    document.getElementById('bill-discount').innerText = '-' + formatPrice(orderData.discount) + 'đ';
-    document.getElementById('bill-total').innerText = formatPrice(orderData.final_total) + 'đ';
-    
-    const instructSection = document.getElementById('payment-instruction-section');
-    if (orderData.payment_method === 'Chuyển khoản') {
-        const amount = orderData.final_total;
-        const addInfo = encodeURIComponent(orderData.order_code);
-        const qrUrl = `https://api.vietqr.io/image/970415-0011004123456-compact.jpg?amount=${amount}&addInfo=${addInfo}&accountName=THE%20FOX%20SHOP`;
-        
-        instructSection.innerHTML = `
-            <h3 style="font-size: 16px; margin: 0 0 15px 0; color: #2196f3; text-transform: uppercase;">Hướng dẫn chuyển khoản qua mã VietQR</h3>
-            <div style="display: flex; gap: 20px; align-items: center; justify-content: center; flex-wrap: wrap;">
-                <div style="border: 1px solid #ccc; padding: 10px; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                    <img src="${qrUrl}" alt="VietQR Vietcombank" style="width: 220px; height: auto; display: block;">
-                </div>
-                <div style="text-align: left; max-width: 320px;">
-                    <p style="margin: 0 0 10px 0; font-size: 13px; color: #666;">Mở ứng dụng Mobile Banking của ngân hàng bạn đang dùng, chọn tính năng quét QR và thực hiện thanh toán tự động.</p>
-                    <p style="margin: 0 0 6px 0; font-size: 14px;"><strong>Ngân hàng:</strong> Vietcombank (VCB)</p>
-                    <p style="margin: 0 0 6px 0; font-size: 14px;"><strong>Số tài khoản:</strong> 0011004123456</p>
-                    <p style="margin: 0 0 6px 0; font-size: 14px;"><strong>Tên tài khoản:</strong> THE FOX SHOP</p>
-                    <p style="margin: 0 0 6px 0; font-size: 14px;"><strong>Số tiền:</strong> <strong style="color: var(--primary);">${formatPrice(amount)}đ</strong></p>
-                    <p style="margin: 0 0 6px 0; font-size: 14px;"><strong>Nội dung:</strong> <strong style="color: #2196f3;">${orderData.order_code}</strong></p>
-                </div>
-            </div>
-        `;
-    } else if (orderData.payment_method === 'MoMo') {
-        instructSection.innerHTML = `
-            <h3 style="font-size: 16px; margin: 0 0 12px 0; color: #d81b60; text-transform: uppercase;">Thanh toán qua Ví điện tử MoMo</h3>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                <i class="fas fa-wallet" style="font-size: 40px; color: #d81b60;"></i>
-                <p style="margin: 0; font-size: 14px; max-width: 450px; line-height: 1.5;">Vui lòng chuyển khoản đúng số tiền <strong style="color: var(--primary);">${formatPrice(orderData.final_total)}đ</strong> vào số điện thoại ví MoMo <strong>0912345678</strong> (THE FOX) với nội dung chuyển tiền: <strong>${orderData.order_code}</strong>.</p>
-            </div>
-        `;
-    } else {
-        instructSection.innerHTML = `
-            <h3 style="font-size: 16px; margin: 0 0 12px 0; color: #4caf50; text-transform: uppercase;">Thanh toán khi nhận hàng (COD)</h3>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                <i class="fas fa-truck-loading" style="font-size: 40px; color: #4caf50;"></i>
-                <p style="margin: 0; font-size: 14px; max-width: 450px; line-height: 1.5;">Bạn sẽ thanh toán số tiền <strong style="color: var(--primary);">${formatPrice(orderData.final_total)}đ</strong> bằng tiền mặt cho nhân viên giao hàng khi nhận được kiện hàng.</p>
-            </div>
-        `;
-    }
-    
-    function formatPrice(number) {
-        return number.toLocaleString('vi-VN');
-    }
-});
-</script>
+<script src="../assets/js/invoice.js"></script>
 <script src="../assets/js/scroll.js"></script>
 </body>
 </html>
