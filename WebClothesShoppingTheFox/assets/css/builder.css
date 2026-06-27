@@ -1,0 +1,264 @@
+/* ==========================================================================
+   THE FOX - Module Phối Đồ Thời Trang (Outfit Builder Component Style)
+   Áp dụng chuẩn thiết kế phần mềm Clean Code & Senior Developer Architecture
+   Sử dụng Hệ thống Biến Toàn Cục (CSS Custom Properties) & Chú thích Tiếng Việt
+   ========================================================================== */
+
+.builder-page {
+    margin-top: 100px;
+    margin-bottom: 60px;
+    background: linear-gradient(135deg, #f5efe6 0%, #e6dcd0 100%);
+    min-height: calc(100vh - 160px);
+    display: flex;
+    align-items: center;
+    padding: 30px 0;
+}
+
+.builder-wrapper {
+    display: grid;
+    grid-template-columns: 450px 1fr;
+    gap: 30px;
+    background: var(--color-bg-body, #ffffff);
+    border-radius: var(--border-radius-lg, 12px);
+    box-shadow: var(--shadow-card);
+    border: 1px solid rgba(191, 138, 73, 0.15);
+    padding: 30px;
+    width: 100%;
+}
+
+/* --- CỘT TRÁI: KHUNG XEM TRƯỚC PHỐI ĐỒ (CANVAS PREVIEW) --- */
+.builder-canvas {
+    background-color: var(--color-bg-secondary, #faf9f7);
+    border: 1px dashed rgba(191, 138, 73, 0.4);
+    border-radius: var(--border-radius-lg, 12px);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 550px;
+}
+
+.canvas-header {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid var(--color-border-light, #eee);
+    padding-bottom: 12px;
+}
+
+.canvas-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-dark-heading, #221f20);
+}
+
+.canvas-mannequin {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px 0;
+}
+
+.mannequin-slot {
+    width: 80%;
+    height: 120px;
+    border: 1px dashed var(--color-border-main, #ccc);
+    border-radius: var(--border-radius-sm, 6px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-bg-body, #ffffff);
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-normal, 0.3s ease);
+}
+
+.mannequin-slot.active {
+    border-style: solid;
+    border-color: var(--color-primary, #BF8A49);
+    box-shadow: 0 4px 12px rgba(191, 138, 73, 0.1);
+}
+
+.mannequin-slot .placeholder {
+    color: var(--color-text-muted, #999);
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.slot-item {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    gap: 15px;
+}
+
+.slot-item img {
+    height: 100%;
+    width: 90px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.slot-details {
+    flex: 1;
+    text-align: left;
+}
+
+.slot-details h4 {
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--color-dark-heading, #221f20);
+    margin-bottom: 4px;
+}
+
+.slot-details p {
+    font-size: 13px;
+    color: var(--color-primary, #BF8A49);
+    font-weight: bold;
+}
+
+.slot-remove {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(34, 31, 32, 0.6);
+    color: white;
+    border: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    font-size: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-normal, 0.3s);
+}
+
+.mannequin-slot:hover .slot-remove { opacity: 1; }
+.slot-remove:hover { background: var(--color-danger, #de3b3b); }
+
+.canvas-footer {
+    width: 100%;
+    border-top: 1px solid var(--color-border-light, #eee);
+    padding-top: 15px;
+}
+
+.canvas-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--color-dark-heading, #221f20);
+    margin-bottom: 15px;
+}
+
+.canvas-total span:last-child {
+    color: var(--color-primary, #BF8A49);
+}
+
+.canvas-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* --- CỘT PHẢI: BẢNG CHỌN DANH MỤC SẢN PHẨM (CATALOG SELECTOR) --- */
+.builder-catalog {
+    display: flex;
+    flex-direction: column;
+}
+
+.catalog-tabs {
+    display: flex;
+    border-bottom: 2px solid var(--color-border-light, #eee);
+    margin-bottom: 20px;
+}
+
+.catalog-tab-btn {
+    padding: 12px 25px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--color-text-sub, #666);
+    cursor: pointer;
+    transition: all var(--transition-normal, 0.3s ease);
+    margin-bottom: -2px;
+}
+
+.catalog-tab-btn:hover, .catalog-tab-btn.active {
+    color: var(--color-primary, #BF8A49);
+    border-bottom-color: var(--color-primary, #BF8A49);
+}
+
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+    max-height: 480px;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+.catalog-grid::-webkit-scrollbar { width: 6px; }
+.catalog-grid::-webkit-scrollbar-track { background: var(--color-border-light, #f1f1f1); border-radius: 4px; }
+.catalog-grid::-webkit-scrollbar-thumb { background: var(--color-border-main, #ccc); border-radius: 4px; }
+.catalog-grid::-webkit-scrollbar-thumb:hover { background: var(--color-primary, #BF8A49); }
+
+.catalog-item-card {
+    background: var(--color-bg-body, #ffffff);
+    border: 1px solid var(--color-border-light, #eee);
+    border-radius: var(--border-radius-sm, 6px);
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-normal, 0.3s ease);
+    position: relative;
+}
+
+.catalog-item-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card);
+    border-color: var(--color-primary, #BF8A49);
+}
+
+.catalog-item-card.selected {
+    border-color: var(--color-primary, #BF8A49);
+    background-color: rgba(191, 138, 73, 0.05);
+}
+
+.catalog-item-card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.catalog-item-card h4 {
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--color-dark-heading, #221f20);
+    margin-bottom: 4px;
+}
+
+.catalog-item-card p {
+    font-size: 13px;
+    color: var(--color-primary, #BF8A49);
+    font-weight: bold;
+}
+
+@media (max-width: 900px) {
+    .builder-wrapper { grid-template-columns: 1fr; }
+}

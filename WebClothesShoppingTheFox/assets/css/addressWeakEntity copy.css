@@ -1,0 +1,43 @@
+/* ==========================================================================
+   THE FOX - Module Thực Thể Yếu: Quản Lý Địa Chỉ Nhận Hàng (Address Weak Entity Style)
+   Áp dụng chuẩn thiết kế phần mềm Clean Code & Senior Developer Architecture
+   Sử dụng Hệ thống Biến Toàn Cục (CSS Custom Properties) & Chú thích Tiếng Việt
+   ========================================================================== */
+
+/* --- HỘP THOẠI POPUP THÊM ĐỊA CHỈ (CUSTOM MODAL OVERLAY) --- */
+.custom-modal-overlay {
+    backdrop-filter: blur(4px);
+    transition: all var(--transition-normal, 0.3s ease);
+}
+
+.custom-modal-content {
+    border: 1px solid rgba(191, 138, 73, 0.2);
+    box-shadow: var(--shadow-modal);
+}
+
+/* --- THẺ HIỂN THỊ ĐỊA CHỈ THÀNH PHẦN (ADDRESS CARD ITEM) --- */
+.address-item-card {
+    background: var(--color-bg-body, #fff);
+    border: 1px solid var(--color-border-light, #e8e8e8);
+    border-radius: var(--border-radius-lg, 12px);
+    padding: 20px;
+    position: relative;
+    transition: all var(--transition-fast, 0.2s ease);
+}
+
+.address-item-card:hover {
+    border-color: var(--color-primary, #BF8A49);
+    box-shadow: 0 4px 12px rgba(191, 138, 73, 0.08);
+}
+
+/* --- NHÃN NỔI BẬT ĐỊA CHỈ MẶC ĐỊNH (DEFAULT ADDRESS BADGE) --- */
+.address-badge-default {
+    display: inline-block;
+    background: var(--color-bg-secondary, #fdfbf7);
+    color: var(--color-primary, #BF8A49);
+    border: 1px solid var(--color-primary-border, #fce8d5);
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: var(--border-radius-sm, 4px);
+    font-weight: 600;
+}

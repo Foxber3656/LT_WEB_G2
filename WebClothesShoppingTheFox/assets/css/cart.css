@@ -1,18 +1,25 @@
+/* ==========================================================================
+   THE FOX - Module Giao Diện Giỏ Hàng & Thanh Toán (Cart & Checkout Style)
+   Áp dụng chuẩn thiết kế phần mềm Clean Code & Senior Developer Architecture
+   Sử dụng Hệ thống Biến Toàn Cục (CSS Custom Properties) & Chú thích Tiếng Việt
+   ========================================================================== */
+
 .cart {
     padding: 120px 0 80px;
 }
 
-/*=========================PROCESS==========================*/
+/* --- THANH TIẾN TRÌNH ĐẶT HÀNG (ORDER PROCESS BAR) --- */
 .cart-process {
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
     margin-bottom: 60px;
-    border: 1px solid #eee;
+    border: 1px solid var(--color-border-light);
     border-radius: 20px;
     padding: 30px 0;
 }
+
 .cart-process::before {
     content: '';
     position: absolute;
@@ -20,20 +27,22 @@
     left: 12.5%;
     right: 12.5%;
     height: 2px;
-    background: #eee;
+    background: var(--color-border-light);
     z-index: 1;
 }
+
 .cart-process::after {
     content: '';
     position: absolute;
     top: 44.5px;
     left: 12.5%;
     height: 2px;
-    background: #221f20;
+    background: var(--color-dark-heading);
     z-index: 1;
     width: 0%;
     transition: width 0.4s ease;
 }
+
 .cart-process.step-1::after {
     width: 0%;
 }
@@ -46,197 +55,233 @@
 .cart-process.step-4::after {
     width: 75%;
 }
+
 .cart-process-item {
     position: relative;
     z-index: 2;
     text-align: center;
     flex: 1;
 }
+
 .cart-process-item span {
     width: 25px;
     height: 25px;
     display: block;
     margin: auto auto 15px;
     border-radius: 50%;
-    border: 2px solid #ddd;
-    background: white;
+    border: 2px solid var(--color-border-main);
+    background: var(--color-bg-body);
 }
+
 .cart-process-item.active span {
-    background: #221f20;
-    border-color: #221f20;
+    background: var(--color-dark-heading);
+    border-color: var(--color-dark-heading);
 }
+
 .cart-process-item p {
     font-size: 16px;
+    color: var(--color-text-main);
 }
-/*=========================TITLE==========================*/
+
+/* --- TIÊU ĐỀ BẢNG GIỎ HÀNG --- */
 .cart-title {
     margin-bottom: 40px;
 }
+
 .cart-title h1 {
     font-size: 40px;
     font-weight: 700;
-}
-.cart-title span {
-    color: #bf8a49;
+    color: var(--color-dark-heading);
 }
 
-/*=========================CONTENT==========================*/
+.cart-title span {
+    color: var(--color-primary);
+}
+
+/* --- BỐ CỤC NỘI DUNG GIỎ HÀNG (CART CONTENT LAYOUT) --- */
 .cart-content {
     display: flex;
     justify-content: space-between;
     gap: 40px;
 }
 
-/*=========================LEFT==========================*/
 .cart-left {
     width: calc(70% - 20px);
 }
 
-/*=========================ITEM==========================*/
+/* --- CHI TIẾT DÒNG SẢN PHẨM (CART ITEM ROW) --- */
 .cart-item {
     display: flex;
     align-items: center;
     gap: 20px;
     padding: 25px 0;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--color-border-light);
 }
 
-/* IMAGE */
 .cart-item-image {
     width: 120px;
 }
+
 .cart-item-image img {
     width: 100%;
+    border-radius: var(--border-radius-sm);
 }
 
-/* INFO */
 .cart-item-info {
     flex: 1;
 }
+
 .cart-item-info h3 {
     font-size: 22px;
     margin-bottom: 15px;
+    color: var(--color-dark-heading);
 }
+
 .cart-item-info p {
-    color: #666;
+    color: var(--color-text-sub);
     margin-bottom: 8px;
 }
-/* PRICE */
+
 .cart-item-price {
     width: 120px;
     text-align: center;
 }
+
 .cart-item-price p {
     font-size: 18px;
-    color: #666;
+    color: var(--color-text-sub);
 }
 
-/*=========================QUANTITY==========================*/
+/* --- Ô ĐIỀU CHỈNH SỐ LƯỢNG (QUANTITY CONTROLLER) --- */
 .cart-item-quantity {
     width: 120px;
     height: 45px;
     display: flex;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border-main);
     border-radius: 25px;
 }
+
 .cart-item-quantity button {
     width: 35%;
     border: none;
-    background: white;
+    background: var(--color-bg-body);
     cursor: pointer;
     font-size: 18px;
+    color: var(--color-text-main);
+    transition: color var(--transition-fast);
 }
+
+.cart-item-quantity button:hover {
+    color: var(--color-primary);
+}
+
 .cart-item-quantity input {
     width: 30%;
     border: none;
     text-align: center;
     outline: none;
+    font-weight: bold;
+    color: var(--color-dark-heading);
 }
 
-/*=========================TOTAL==========================*/
 .cart-item-total {
     width: 150px;
     text-align: center;
 }
+
 .cart-item-total p {
     font-size: 22px;
     font-weight: 700;
-    color: #bf8a49;
+    color: var(--color-primary);
 }
 
-/* DELETE */
 .cart-item-delete {
     width: 50px;
     text-align: center;
     cursor: pointer;
-    transition: 0.3s;
-}
-.cart-item-delete:hover {
-    color: red;
+    transition: color var(--transition-fast);
 }
 
-/*=========================RIGHT==========================*/
+.cart-item-delete:hover {
+    color: var(--color-danger);
+}
+
+/* --- TỔNG TÍNH PHÍ VÀ THANH TOÁN (CART SUMMARY SIDEBAR) --- */
 .cart-right {
     width: calc(30% - 20px);
 }
+
 .cart-summary {
     position: sticky;
     top: 120px;
     padding: 30px;
-    border: 1px solid #eee;
+    border: 1px solid var(--color-border-light);
     border-radius: 25px;
+    background: var(--color-bg-body);
+    box-shadow: var(--shadow-card);
 }
+
 .cart-summary h2 {
     margin-bottom: 30px;
     font-size: 28px;
+    color: var(--color-dark-heading);
 }
 
-/* SUMMARY ITEM */
 .cart-summary-item {
     display: flex;
     justify-content: space-between;
     margin-bottom: 25px;
 }
+
 .cart-summary-item.total {
     padding-top: 20px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--color-border-light);
 }
+
 .cart-summary-item.total span {
     font-size: 26px;
     font-weight: 700;
-    color: #bf8a49;
+    color: var(--color-primary);
 }
 
-/*=========================BUTTON==========================*/
+/* --- NÚT ĐẶT HÀNG VÀ TIẾP TỤC MUA SẮM --- */
 .cart-order {
     width: 100%;
     height: 55px;
     border: none;
     border-radius: 30px;
-    background: #221f20;
-    color: white;
+    background: var(--color-dark-heading);
+    color: var(--color-bg-body);
+    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
     margin-bottom: 15px;
-    transition: 0.3s;
+    transition: background-color var(--transition-normal);
 }
+
 .cart-order:hover {
-    background: #bf8a49;
+    background: var(--color-primary);
 }
+
 .continue-shopping {
     width: 100%;
     height: 55px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border-main);
     border-radius: 30px;
-    background: white;
+    background: var(--color-bg-body);
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--color-dark-heading);
     cursor: pointer;
-    transition: 0.3s;
-}
-.continue-shopping:hover {
-    border-color: #bf8a49;
-    color: #bf8a49;
+    transition: all var(--transition-normal);
 }
 
-/*=========================CART RESPONSIVE==========================*/
+.continue-shopping:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+/* --- RESPONSIVE THIẾT BỊ DI ĐỘNG --- */
 @media (max-width: 992px) {
     .cart-content {
         flex-direction: column;
@@ -246,6 +291,7 @@
         width: 100%;
     }
 }
+
 @media (max-width: 768px) {
     .cart-item {
         flex-wrap: wrap;

@@ -1,9 +1,14 @@
-/*=========================CATEGORY==========================*/
+/* ==========================================================================
+   THE FOX - Module Giao Diện Danh Mục Sản Phẩm (Category Style)
+   Áp dụng chuẩn thiết kế phần mềm Clean Code & Senior Developer Architecture
+   Sử dụng Hệ thống Biến Toàn Cục (CSS Custom Properties) & Chú thích Tiếng Việt
+   ========================================================================== */
+
 .cartegory {
     padding: 120px 0 50px 0;
 }
 
-/*=========================BREADCRUMB==========================*/
+/* --- THANH ĐƯỜNG DẪN BREADCRUMB --- */
 .cartegory-top {
     display: flex;
     align-items: center;
@@ -11,14 +16,15 @@
     gap: 12px;
     margin-bottom: 30px;
 }
+
 .cartegory-top p,
 .cartegory-top span {
     margin: 0;
     font-size: 12px;
-    color: #666;
+    color: var(--color-text-sub, #666);
 }
 
-/*=========================CATEGORY LAYOUT=========================*/
+/* --- BỐ CỤC DANH MỤC SẢN PHẨM (CATEGORY LAYOUT) --- */
 .cartegory .row {
     justify-content: space-between;
 }
@@ -32,172 +38,189 @@
     width: 80%;
 }
 
-/*=========================LEFT SIDEBAR==========================*/
+/* --- BỘ LỌC SIDEBAR BÊN TRÁI (LEFT CATEGORY FILTER) --- */
 .cartegory-left > ul > li {
     padding: 15px 0;
-
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--color-border-light, #eee);
 }
 
-/*=========================CATEGORY TITLE==========================*/
 .cartegory-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     cursor: pointer;
 }
+
 .cartegory-title a {
     font-size: 16px;
+    color: var(--color-dark-heading, #221f20);
+    transition: color var(--transition-normal, 0.3s);
+}
 
-    transition: 0.3s;
-}
 .cartegory-title a:hover {
-    color: #bf8a49;
+    color: var(--color-primary, #bf8a49);
 }
+
 .cartegory-title span {
     font-size: 18px;
-
-    transition: transform 0.3s ease;
+    transition: transform var(--transition-normal, 0.3s ease);
 }
 
-/*=========================SUB MENU==========================*/
+/* SUB MENU ACCORDION */
 .cartegory-left-li ul {
     max-height: 0;
     overflow: hidden;
-
     margin-top: 0;
     padding-left: 15px;
     transition:
         max-height 0.5s ease,
         margin-top 0.3s ease;
 }
+
 .cartegory-left-li ul li {
     padding: 8px 0;
 }
+
 .cartegory-left-li ul li a {
     font-size: 13px;
-    color: #666;
-
-    transition: 0.3s;
+    color: var(--color-text-sub, #666);
+    transition: color var(--transition-normal, 0.3s);
 }
+
 .cartegory-left-li ul li a:hover {
-    color: #bf8a49;
+    color: var(--color-primary, #bf8a49);
 }
 
-/*=========================ACTIVE==========================*/
 .cartegory-left-li.active ul {
     max-height: 500px;
     margin-top: 10px;
 }
+
 .cartegory-left-li.active span {
     transform: rotate(45deg);
 }
 
-/*=========================RIGHT TOP==========================*/
+/* --- KHU VỰC THAO TÁC TRÊN BÊN PHẢI (RIGHT TOP TOOLBAR) --- */
 .cartegory-right-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
 }
+
 .cartegory-right-top-item:first-child {
     flex: 3;
 }
+
 .cartegory-right-top-item:first-child p {
     font-size: 28px;
     font-weight: 550;
+    color: var(--color-dark-heading, #221f20);
 }
+
 .cartegory-right-top-item {
     flex: 1;
     padding-left: 20px;
 }
+
 .cartegory-right-top-item button,
 .cartegory-right-top-item select {
     width: 100%;
     height: 45px;
     border-radius: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border-main, #ddd);
     padding: 0 15px;
-    background: #fff;
+    background: var(--color-bg-body, #fff);
     cursor: pointer;
     font-size: 14px;
-    transition: 0.3s;
-}
-.cartegory-right-top-item button:hover,
-.cartegory-right-top-item select:hover {
-    border-color: #bf8a49;
+    transition: border-color var(--transition-normal, 0.3s);
+    color: var(--color-dark-heading, #221f20);
 }
 
-/*=========================PRODUCT GRID==========================*/
+.cartegory-right-top-item button:hover,
+.cartegory-right-top-item select:hover {
+    border-color: var(--color-primary, #bf8a49);
+}
+
+/* --- LƯỚI SẢN PHẨM (PRODUCT GRID) --- */
 .cartegory-right-content {
     display: flex;
     flex-wrap: wrap;
     gap: 25px;
 }
+
 .cartegory-right-content-item {
     width: calc(25% - 19px);
     margin-bottom: 40px;
     text-align: center;
     cursor: pointer;
 }
+
 .cartegory-right-content-item img {
     width: 100%;
     display: block;
-    transition: 0.5s;
+    transition: transform 0.5s ease;
+    border-radius: var(--border-radius-sm, 4px);
 }
+
 .cartegory-right-content-item:hover img {
     transform: scale(1.03);
 }
+
 .cartegory-right-content-item h1 {
     margin: 15px 0 10px;
     font-size: 14px;
     font-weight: 500;
     line-height: 22px;
+    color: var(--color-dark-heading, #221f20);
 }
+
 .cartegory-right-content-item p {
-    color: #bf8a49;
+    color: var(--color-primary, #bf8a49);
     font-size: 16px;
     font-weight: 700;
 }
 
-/*=========================PAGINATION==========================*/
+/* --- THANH PHÂN TRANG (PAGINATION BAR) --- */
 .cartegory-right-bottom {
     display: flex;
     justify-content: center;
     margin-top: 25px;
 }
+
 .pagination {
     display: flex;
     align-items: center;
     gap: 12px;
 }
+
 .page-btn {
     min-width: 45px;
     height: 35px;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     border-radius: 10px;
-    border: 1px solid #ddd;
-    color: #555;
-    transition: 0.3s;
+    border: 1px solid var(--color-border-main, #ddd);
+    color: var(--color-text-sub, #555);
+    transition: all var(--transition-normal, 0.3s);
 }
+
 .page-btn:hover {
-    border-color: #221f20;
-    color: #221f20;
+    border-color: var(--color-dark-heading, #221f20);
+    color: var(--color-dark-heading, #221f20);
 }
+
 .page-btn.active {
-    background: #221f20;
+    background: var(--color-dark-heading, #221f20);
     color: #fff;
 }
+
 .page-btn.last {
     padding: 0 20px;
 }
 
-/*=========================CATEGORY RESPONSIVE==========================*/
+/* --- RESPONSIVE MOBILE --- */
 @media (max-width: 992px) {
     .cartegory-left {
         width: 100%;
@@ -205,13 +228,5 @@
     }
     .cartegory-right {
         width: 100%;
-    }
-    .cartegory-right-content {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-@media (max-width: 768px) {
-    .cartegory-right-content {
-        grid-template-columns: 1fr;
     }
 }

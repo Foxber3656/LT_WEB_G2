@@ -1,44 +1,53 @@
-/* Checkout page styles */
+/* ==========================================================================
+   THE FOX - Module Giao Diện Trang Thanh Toán (Checkout Component Style)
+   Áp dụng chuẩn thiết kế phần mềm Clean Code & Senior Developer Architecture
+   Sử dụng Hệ thống Biến Toàn Cục (CSS Custom Properties) & Chú thích Tiếng Việt
+   ========================================================================== */
+
 .checkout-section {
-    background: #fafafa;
+    background: var(--color-bg-secondary, #fafafa);
 }
 
+/* --- TÙY CHỌN PHƯƠNG THỨC THANH TOÁN (PAYMENT OPTIONS) --- */
 .method-option {
-    border: 1px solid var(--border-color);
-    background: #fff;
+    border: 1px solid var(--color-border-main, #dddddd);
+    background: var(--color-bg-body, #ffffff);
+    border-radius: var(--border-radius-sm, 4px);
+    transition: all var(--transition-fast, 0.2s ease);
 }
 
 .method-option:hover {
-    border-color: var(--primary) !important;
+    border-color: var(--color-primary, #bf8a49) !important;
     background: #fcfcfc;
 }
 
-.method-option input[type="radio"]:checked {
-    accent-color: var(--primary);
+.method-option input[type='radio']:checked {
+    accent-color: var(--color-primary, #bf8a49);
 }
 
-.method-option:has(input[type="radio"]:checked) {
-    border-color: var(--primary) !important;
-    background: rgba(0, 0, 0, 0.02);
+.method-option:has(input[type='radio']:checked) {
+    border-color: var(--color-primary, #bf8a49) !important;
+    background: rgba(191, 138, 73, 0.05);
 }
 
 .checkout-right div {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-card);
 }
 
+/* --- THANH CUỘN CHI TIẾT SẢN PHẨM THANH TOÁN (CUSTOM SCROLLBAR) --- */
 #checkout-items-list::-webkit-scrollbar {
     width: 6px;
 }
 
 #checkout-items-list::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: var(--color-border-light, #f1f1f1);
 }
 
 #checkout-items-list::-webkit-scrollbar-thumb {
-    background: #ccc;
+    background: var(--color-border-main, #ccc);
     border-radius: 3px;
 }
 
 #checkout-items-list::-webkit-scrollbar-thumb:hover {
-    background: #999;
+    background: var(--color-text-muted, #999);
 }

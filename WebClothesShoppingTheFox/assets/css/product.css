@@ -1,39 +1,39 @@
-/*=========================
-PRODUCT
-==========================*/
+/* ==========================================================================
+   THE FOX - Module Giao Diện Chi Tiết Sản Phẩm (Product Detail Style)
+   Áp dụng chuẩn thiết kế phần mềm Clean Code & Senior Developer Architecture
+   Sử dụng Hệ thống Biến Toàn Cục (CSS Custom Properties) & Chú thích Tiếng Việt
+   ========================================================================== */
+
 .product {
     padding: 120px 0 70px;
 }
-/*=========================
-BREADCRUMB
-==========================*/
+
+/* --- THANH ĐƯỜNG DẪN BREADCRUMB --- */
 .product-top {
     display: flex;
     align-items: center;
-
     gap: 12px;
     margin-bottom: 50px;
 }
+
 .product-top p,
 .product-top span {
     font-size: 14px;
-
-    color: #666;
+    color: var(--color-text-sub, #666);
 }
-/*=========================
-PRODUCT CONTENT
-==========================*/
+
+/* --- BỐ CỤC TRANG CHI TIẾT SẢN PHẨM --- */
 .product-content {
     justify-content: space-between;
 }
-/*=========================
-LEFT
-==========================*/
+
+/* --- KHU VỰC HÌNH ẢNH BÊN TRÁI (LEFT GALLERY) --- */
 .product-content-left {
     width: 50%;
     display: flex;
     gap: 25px;
 }
+
 .product-content-left-small-wrapper {
     width: 10%;
     display: flex;
@@ -41,26 +41,27 @@ LEFT
     align-items: center;
     gap: 15px;
 }
+
 .thumb-container {
     height: 400px;
     overflow: hidden;
 }
-/* ARROW */
+
 .thumb-arrow {
     width: 35px;
     height: 35px;
     border: none;
     background: transparent;
     cursor: pointer;
-    color: #666;
+    color: var(--color-text-sub, #666);
     font-size: 18px;
-    transition: 0.3s;
+    transition: color var(--transition-normal, 0.3s);
 }
 
 .thumb-arrow:hover {
-    color: #bf8a49;
+    color: var(--color-primary, #bf8a49);
 }
-/* THUMBNAIL */
+
 .product-content-left-small-img {
     display: flex;
     flex-direction: column;
@@ -69,35 +70,39 @@ LEFT
     overflow: hidden;
     transition: transform 0.4s ease;
 }
+
 .product-content-left-small-img img {
     width: 70px;
     height: 90px;
-
     object-fit: cover;
     cursor: pointer;
-    border: 1px solid #eee;
-    transition: 0.3s;
+    border: 1px solid var(--color-border-light, #eee);
+    transition: all var(--transition-normal, 0.3s);
+    border-radius: var(--border-radius-sm, 4px);
 }
+
 .product-content-left-small-img img:hover {
-    border-color: #bf8a49;
+    border-color: var(--color-primary, #bf8a49);
     transform: scale(1.05);
 }
+
 .product-content-left-small-img img.active {
-    border: 2px solid #bf8a49;
+    border: 2px solid var(--color-primary, #bf8a49);
 }
-/*=========================
-BIG IMAGE
-==========================*/
+
+/* --- ẢNH LỚN TRUYÊN THÔNG (BIG IMAGE DISPLAY) --- */
 .product-content-left-big-img {
     width: 85%;
     position: relative;
 }
+
 .product-content-left-big-img img {
     width: 100%;
     display: block;
     object-fit: cover;
+    border-radius: var(--border-radius-md, 8px);
 }
-/* MAIN ARROW */
+
 .main-arrow {
     position: absolute;
     top: 50%;
@@ -106,187 +111,216 @@ BIG IMAGE
     height: 50px;
     border: none;
     border-radius: 50%;
-
     background: rgba(255, 255, 255, 0.9);
     cursor: pointer;
-    color: #666;
+    color: var(--color-text-sub, #666);
     font-size: 20px;
-    transition: 0.3s;
+    transition: all var(--transition-normal, 0.3s);
+    box-shadow: var(--shadow-card);
 }
+
 .main-arrow:hover {
-    color: #bf8a49;
+    color: var(--color-primary, #bf8a49);
     transform: translateY(-50%) scale(1.05);
 }
+
 .prev {
     left: 20px;
 }
 .next {
     right: 20px;
 }
-/*=========================
-RIGHT
-==========================*/
+
+/* --- KHU VỰC THÔNG TIN SẢN PHẨM BÊN PHẢI (RIGHT INFO PANEL) --- */
 .product-content-right {
     width: 45%;
 }
-/* TITLE */
+
 .product-content-right-name h1 {
     font-size: 38px;
     margin-bottom: 10px;
+    color: var(--color-dark-heading, #221f20);
 }
+
 .product-content-right-name p {
-    color: #777;
+    color: var(--color-text-muted, #777);
     font-size: 14px;
 }
-/* PRICE */
+
 .product-content-right-price {
     margin: 30px 0;
 }
+
 .product-content-right-price p {
     font-size: 30px;
     font-weight: bold;
-    color: #bf8a49;
+    color: var(--color-primary, #bf8a49);
 }
-/* COLOR */
+
+/* --- LỰA CHỌN MÀU SẮC & KÍCH THƯỚC (COLOR & SIZE SELECTOR) --- */
 .product-content-right-color {
     margin-bottom: 30px;
 }
+
 .product-content-right-color p {
     margin-bottom: 15px;
     font-size: 18px;
+    color: var(--color-dark-heading, #221f20);
 }
+
 .product-color {
     display: flex;
     gap: 15px;
 }
+
 .color {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border-main, #ddd);
     cursor: pointer;
+    transition: transform var(--transition-fast, 0.2s);
 }
+
 .color.active {
-    border: 3px solid #221f20;
+    border: 3px solid var(--color-dark-heading, #221f20);
     transform: scale(1.1);
 }
+
 .pink {
     background: #f5c9d6;
 }
 .gray {
     background: #b8b8b8;
 }
-/* SIZE */
+
 .product-content-right-size {
     margin-bottom: 30px;
 }
+
 .product-content-right-size p {
     margin-bottom: 15px;
     font-size: 18px;
+    color: var(--color-dark-heading, #221f20);
 }
+
 .size {
     display: flex;
     gap: 15px;
 }
+
 .size span {
     width: 50px;
     height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border-main, #ddd);
     border-radius: 20px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all var(--transition-normal, 0.3s);
+    font-weight: 500;
 }
+
 .size span:hover {
-    border-color: #bf8a49;
+    border-color: var(--color-primary, #bf8a49);
+    color: var(--color-primary, #bf8a49);
 }
+
 .size span.active {
-    background: #221f20;
-
+    background: var(--color-dark-heading, #221f20);
     color: white;
-
-    border-color: #221f20;
+    border-color: var(--color-dark-heading, #221f20);
 }
+
+/* --- BỘ ĐIỀU CHỈNH SỐ LƯỢNG (QUANTITY BOX) --- */
 .quantity {
     margin-bottom: 35px;
 }
+
 .quantity p {
     margin-bottom: 15px;
     font-size: 18px;
+    color: var(--color-dark-heading, #221f20);
 }
+
 .quantity-box {
     width: 140px;
     height: 45px;
     display: flex;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border-main, #ddd);
     border-radius: 20px;
 }
+
 .quantity-box button {
     width: 35%;
     border: none;
     border-radius: 20px;
-    background: white;
+    background: var(--color-bg-body, white);
     cursor: pointer;
     font-size: 18px;
+    color: var(--color-text-main, #333);
 }
+
 .quantity-box input {
     width: 30%;
     border: none;
     text-align: center;
     outline: none;
+    font-weight: bold;
 }
-/*=========================
-BUTTON
-==========================*/
+
+/* --- NHÓM NÚT MUA HÀNG (ACTION BUTTONS) --- */
 .product-content-right-button {
     display: flex;
     gap: 15px;
 }
+
 .product-content-right-button button {
     height: 50px;
     border-radius: 20px;
     border: none;
     cursor: pointer;
-    transition: 0.3s;
+    font-weight: bold;
+    font-size: 15px;
+    transition: all var(--transition-normal, 0.3s);
 }
-/* ADD CART */
+
 .product-content-right-button button:first-child {
     width: 220px;
-    background: #221f20;
+    background: var(--color-dark-heading, #221f20);
     color: white;
 }
-/* BUY NOW */
+
 .product-content-right-button button:nth-child(2) {
     width: 180px;
-    border: 1px solid #221f20;
+    border: 1px solid var(--color-dark-heading, #221f20);
     background: white;
+    color: var(--color-dark-heading, #221f20);
 }
-/* FAVORITE */
+
 .product-content-right-button button:last-child {
     width: 50px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border-main, #ddd);
     background: white;
-}
-/* HOVER */
-.product-content-right-button button:hover {
-    opacity: 0.8;
+    color: var(--color-text-sub, #666);
 }
 
-/*=========================
-PRODUCT INFO
-==========================*/
+.product-content-right-button button:hover {
+    opacity: 0.85;
+    transform: translateY(-2px);
+}
+
+/* --- TAB MÔ TẢ CHI TIẾT SẢN PHẨM (TAB ACCORDION CONTENT) --- */
 .product-content-right-bottom {
     margin-top: 50px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--color-border-light, #eee);
 }
 
-/* TAB */
 .product-content-right-bottom-top {
     display: flex;
     gap: 40px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--color-border-light, #eee);
 }
 
 .product-content-right-bottom-top-item {
@@ -298,21 +332,21 @@ PRODUCT INFO
 .product-content-right-bottom-top-item p {
     font-size: 18px;
     font-weight: 600;
-    color: #666;
-    transition: 0.3s;
+    color: var(--color-text-sub, #666);
+    transition: color var(--transition-normal, 0.3s);
 }
 
 .product-content-right-bottom-top-item.active p {
-    color: #221f20;
+    color: var(--color-dark-heading, #221f20);
 }
+
 .product-tab-content {
     display: none;
 }
-
 .product-tab-content.active {
     display: block;
 }
-/* ACTIVE LINE */
+
 .product-content-right-bottom-top-item.active::after {
     content: '';
     position: absolute;
@@ -320,87 +354,88 @@ PRODUCT INFO
     bottom: -1px;
     width: 100%;
     height: 2px;
-    background: #221f20;
+    background: var(--color-dark-heading, #221f20);
 }
 
-/* CONTENT */
 .product-content-right-bottom-content {
     padding-top: 20px;
     max-height: 500px;
     overflow: hidden;
     transition: max-height 0.4s ease;
 }
+
 .product-content-right-bottom-content-title p {
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 15px;
+    color: var(--color-dark-heading, #221f20);
 }
 
 .product-content-right-bottom-content-text p {
     font-size: 18px;
     color: #444;
     margin-bottom: 10px;
+    line-height: 1.6;
 }
 
-/* TOGGLE */
 .product-content-right-bottom-toggle {
     width: 35px;
     height: 35px;
-
     margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border-main, #ddd);
     border-radius: 50%;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all var(--transition-normal, 0.3s);
 }
 
 .product-content-right-bottom-toggle:hover {
-    border-color: #bf8a49;
-    color: #bf8a49;
-}
-/* COLLAPSE */
-.product-content-right-bottom.active .product-content-right-bottom-content {
-    max-height: 0;
+    border-color: var(--color-primary, #bf8a49);
+    color: var(--color-primary, #bf8a49);
 }
 
-.product-content-right-bottom.active .product-content-right-bottom-toggle i {
-    transform: rotate(180deg);
-}
-/*=========================
-RELATED PRODUCT
-==========================*/
+/* --- DANH SÁCH SẢN PHẨM LIÊN QUAN (RELATED PRODUCTS) --- */
 .product-related {
     margin-top: 100px;
 }
+
 .product-related h2 {
     text-align: center;
     margin-bottom: 50px;
     font-size: 28px;
+    color: var(--color-dark-heading, #221f20);
 }
+
 .product-related-items {
     justify-content: space-between;
 }
+
 .product-related-item {
     width: 23%;
     text-align: center;
     cursor: pointer;
 }
+
 .product-related-item img {
     width: 100%;
     margin-bottom: 15px;
-    transition: 0.5s;
+    transition: transform 0.5s ease;
+    border-radius: var(--border-radius-md, 8px);
 }
+
 .product-related-item:hover img {
     transform: scale(1.03);
 }
+
 .product-related-item h1 {
     font-size: 14px;
     margin-bottom: 10px;
+    color: var(--color-dark-heading, #221f20);
 }
+
 .product-related-item p {
-    color: #bf8a49;
+    color: var(--color-primary, #bf8a49);
     font-weight: 700;
 }

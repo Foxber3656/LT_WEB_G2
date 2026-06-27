@@ -1,0 +1,440 @@
+/* ==========================================================================
+   THE FOX - Module Giao Diện Xác Thực & Hồ Sơ (Auth & Profile Style)
+   Áp dụng chuẩn thiết kế phần mềm Clean Code & Senior Developer Architecture
+   Sử dụng Hệ thống Biến Toàn Cục (CSS Custom Properties) & Chú thích Tiếng Việt
+   ========================================================================== */
+
+:root {
+    --auth-bg-gradient: linear-gradient(135deg, #f5efe6 0%, #e6dcd0 100%);
+    --shadow-premium: 0 10px 30px rgba(34, 31, 32, 0.08);
+    --shadow-hover: 0 15px 35px rgba(191, 138, 73, 0.15);
+    --border-radius-lg: 12px;
+    --border-radius-sm: 6px;
+}
+
+/* --- KHOẢNG CÁCH NỀN TRANG VỚI HEADER CO ĐỊNH --- */
+.auth-page, .profile-page {
+    margin-top: 100px;
+    margin-bottom: 60px;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--auth-bg-gradient);
+    padding: 40px 0;
+}
+
+/* --- KHUNG FORM ĐĂNG NHẬP / ĐĂNG KÝ (AUTH CONTAINER) --- */
+.auth-container {
+    width: 100%;
+    max-width: 480px;
+    background: var(--color-bg-body, #ffffff);
+    border-radius: 24px;
+    box-shadow: 0 15px 35px rgba(191, 138, 73, 0.05), 0 5px 15px rgba(0, 0, 0, 0.02);
+    padding: 45px;
+    transition: all var(--transition-normal, 0.3s) cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(191, 138, 73, 0.15);
+}
+
+.auth-container:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-header h2 {
+    font-size: 28px;
+    color: var(--color-dark-heading, #221f20);
+    margin-bottom: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.auth-header p {
+    color: var(--color-text-sub, #666);
+    font-size: 14px;
+}
+
+/* --- KHUNG THÔNG BÁO HỆ THỐNG (SYSTEM ALERTS) --- */
+.alert {
+    padding: 12px 16px;
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 20px;
+    font-size: 14px;
+    display: none;
+    line-height: 1.5;
+}
+
+.alert-danger {
+    background-color: #fdf2f2;
+    color: var(--color-danger, #de3b3b);
+    border: 1px solid #fbd5d5;
+}
+
+.alert-success {
+    background-color: #f3faf7;
+    color: var(--color-success, #0e9f6e);
+    border: 1px solid #def7ec;
+}
+
+/* --- CÁC TRƯỜNG NHẬP LIỆU FORM (FORM CONTROLS) --- */
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--color-dark-heading, #221f20);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-control {
+    width: 100%;
+    height: 52px;
+    padding: 10px 16px 10px 48px;
+    border: 1.5px solid var(--color-border-main, #e2e8f0);
+    border-radius: var(--border-radius-lg, 12px);
+    font-size: 15px;
+    color: var(--color-dark-heading, #221f20);
+    background-color: var(--color-bg-body, #ffffff);
+    transition: all var(--transition-normal, 0.3s ease);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--color-primary, #BF8A49);
+    background-color: var(--color-bg-body, #ffffff);
+    box-shadow: 0 0 0 4px rgba(191, 138, 73, 0.15);
+}
+
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.input-with-icon .input-icon {
+    position: absolute;
+    left: 18px;
+    color: var(--color-text-muted, #888);
+    font-size: 16px;
+    pointer-events: none;
+    transition: color var(--transition-normal, 0.3s ease);
+    z-index: 5;
+}
+
+.input-with-icon input:focus + .input-icon {
+    color: var(--color-primary, #BF8A49);
+}
+
+.toggle-password-btn {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #999;
+    font-size: 16px;
+    transition: color var(--transition-fast, 0.2s);
+    z-index: 10;
+}
+
+.toggle-password-btn:hover {
+    color: var(--color-primary, #BF8A49);
+}
+
+.auth-footer-link {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 14px;
+    color: var(--color-text-sub, #666);
+}
+
+.auth-footer-link a {
+    color: var(--color-primary, #BF8A49);
+    font-weight: bold;
+    transition: color var(--transition-normal, 0.3s ease);
+}
+
+.auth-footer-link a:hover {
+    color: var(--color-dark-heading, #221f20);
+}
+
+/* --- NÚT BẤM CAO CẤP (PREMIUM BUTTONS) --- */
+.btn-premium {
+    width: 100%;
+    height: 48px;
+    background-color: var(--color-dark-heading, #221f20);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all var(--transition-normal, 0.3s ease);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 0.5px;
+}
+
+.btn-premium:hover {
+    background-color: var(--color-primary, #BF8A49);
+    box-shadow: 0 4px 12px rgba(191, 138, 73, 0.2);
+}
+
+.btn-premium:active {
+    transform: scale(0.98);
+}
+
+/* --- GIAO DIỆN HỒ SƠ CÁ NHÂN (USER PROFILE PAGE SPECIFIC) --- */
+.profile-wrapper {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+.profile-sidebar {
+    background: var(--color-bg-body, #ffffff);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-premium);
+    padding: 30px 20px;
+    text-align: center;
+    border: 1px solid rgba(191, 138, 73, 0.1);
+}
+
+.avatar-container {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #ddd;
+    color: var(--color-primary, #BF8A49);
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    border: 3px solid #fff;
+    outline: 2px solid var(--color-primary, #BF8A49);
+}
+
+.profile-sidebar h3 {
+    font-size: 18px;
+    color: var(--color-dark-heading, #221f20);
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.profile-sidebar p {
+    font-size: 13px;
+    color: var(--color-text-sub, #666);
+    margin-bottom: 25px;
+}
+
+.profile-menu {
+    border-top: 1px solid #f1f1f1;
+    padding-top: 20px;
+}
+
+.profile-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    border-radius: var(--border-radius-sm);
+    color: var(--color-text-sub, #666);
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 5px;
+    transition: all var(--transition-normal, 0.3s ease);
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.profile-menu-item:hover, .profile-menu-item.active {
+    background-color: rgba(191, 138, 73, 0.08);
+    color: var(--color-primary, #BF8A49);
+}
+
+.profile-menu-item.logout {
+    color: var(--color-danger, #de3b3b);
+}
+
+.profile-menu-item.logout:hover {
+    background-color: #fdf2f2;
+    color: var(--color-danger, #de3b3b);
+}
+
+.profile-content {
+    background: var(--color-bg-body, #ffffff);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-premium);
+    padding: 40px;
+    border: 1px solid rgba(191, 138, 73, 0.1);
+    min-height: 500px;
+}
+
+.profile-tab-content {
+    display: none;
+}
+
+.profile-tab-content.active {
+    display: block;
+}
+
+.profile-content h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-dark-heading, #221f20);
+    margin-bottom: 25px;
+    border-bottom: 2px solid rgba(191, 138, 73, 0.15);
+    padding-bottom: 12px;
+}
+
+.profile-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 768px) {
+    .profile-wrapper { grid-template-columns: 1fr; }
+    .profile-grid-2 { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   ĐĂNG NHẬP BẰNG MẠNG XÃ HỘI (SOCIAL LOGIN BUTTONS)
+   Google & Apple — Thiết kế chuẩn Brand Guidelines
+   ========================================================================== */
+
+/* --- ĐƯỜNG KẺ PHÂN CÁCH "hoặc tiếp tục với" --- */
+.social-login-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 22px 0 18px;
+    color: var(--color-text-muted, #aaa);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+.social-login-divider::before,
+.social-login-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #e0d8d0, transparent);
+}
+
+/* --- WRAPPER CÁC NÚT MẠNG XÃ HỘI --- */
+.social-login-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+/* --- NÚT MẠNG XÃ HỘI CHUNG --- */
+.btn-social {
+    width: 100%;
+    height: 52px;
+    border: 1.5px solid var(--color-border-main, #e2e8f0);
+    border-radius: 12px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 14.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: 0.2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-social::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: currentColor;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.btn-social:hover::after {
+    opacity: 0.04;
+}
+
+.btn-social:active {
+    transform: scale(0.98);
+}
+
+/* Biểu tượng logo SVG bên trong nút */
+.btn-social .social-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+/* --- NÚT GOOGLE --- */
+.btn-google {
+    color: #3c4043;
+    border-color: #dadce0;
+    background: #ffffff;
+}
+
+.btn-google:hover {
+    border-color: #bdc1c6;
+    box-shadow: 0 2px 12px rgba(66, 133, 244, 0.12);
+    background: #f8f9fa;
+}
+
+/* --- NÚT APPLE --- */
+.btn-apple {
+    color: #000000;
+    border-color: #000000;
+    background: #000000;
+    color: #ffffff;
+}
+
+.btn-apple:hover {
+    background: #1a1a1a;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+    border-color: #1a1a1a;
+}
+
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 480px) {
+    .social-login-buttons {
+        gap: 10px;
+    }
+    .btn-social {
+        height: 48px;
+        font-size: 14px;
+    }
+}
+

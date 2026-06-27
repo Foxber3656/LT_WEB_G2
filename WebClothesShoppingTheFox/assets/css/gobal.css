@@ -1,6 +1,9 @@
-/*=========================
-GLOBAL
-==========================*/
+/* ==========================================================================
+   THE FOX - Hệ Thống Biến Thiết Kế Toàn Cục (Global CSS Design System / Tokens)
+   Áp dụng chuẩn thiết kế phần mềm Clean Code & Senior Developer Architecture
+   Mục đích: Tập trung quản lý toàn bộ Bảng màu, Font chữ, Khoảng cách & Hiệu ứng 
+   giúp đảm bảo tính đồng nhất giao diện (UI Consistencies) và dễ dàng bảo trì.
+   ========================================================================== */
 
 * {
     margin: 0;
@@ -10,16 +13,56 @@ GLOBAL
 }
 
 :root {
-    --primary: #bf8a49;
-    --dark: #221f20;
-    --gray: #666;
-    --light: #ddd;
+    /* --- BẢNG MÀU CHỦ ĐẠO THƯƠNG HIỆU (BRAND PALETTE) --- */
+    /* Màu vàng kim đồng chủ đạo đại diện cho sự sang trọng của thương hiệu thời trang The Fox */
+    --color-primary: #bf8a49;
+    --color-primary-hover: #a6753b;
+    --color-primary-light: #fff1f0;
+    --color-primary-border: #fce8d5;
 
-    --transition: 0.3s ease;
+    /* --- BẢNG MÀU NỀN & VĂN BẢN (TEXT & BACKGROUND NEUTRALS) --- */
+    /* Tông màu đen/xám tối cao cấp cho văn bản tiêu đề và menu chính */
+    --color-dark-heading: #221f20;
+    --color-text-main: #333333;
+    --color-text-sub: #555555;
+    --color-text-muted: #888888;
+
+    /* --- BẢNG MÀU NỀN & ĐƯỜNG VIỀN (BACKGROUNDS & BORDERS) --- */
+    --color-bg-body: #ffffff;
+    --color-bg-secondary: #fafafa;
+    --color-border-light: #e8e8e8;
+    --color-border-main: #dddddd;
+
+    /* --- BẢNG MÀU GIAO DIỆN QUẢN TRỊ (ADMIN CONTROL PANEL PALETTE) --- */
+    --color-admin-bg: #ecf0f5;
+    --color-admin-header: #3c8dbc;
+    --color-admin-header-dark: #367fa9;
+    --color-admin-sidebar: #222d32;
+    --color-admin-sidebar-dark: #1a2226;
+    --color-admin-sidebar-hover: #1e282c;
+    --color-admin-text-muted: #b8c7ce;
+
+    /* --- BẢNG MÀU TRẠNG THÁI HỆ THỐNG (SYSTEM STATUS COLORS) --- */
+    --color-success: #00a65a;
+    --color-info: #3c8dbc;
+    --color-warning: #f39c12;
+    --color-danger: #dd4b39;
+    --color-danger-hover: #d73925;
+
+    /* --- ĐỔ BÓNG & CHUYỂN ĐỘNG (SHADOWS & TRANSITIONS) --- */
+    --shadow-card: 0 4px 15px rgba(0, 0, 0, 0.05);
+    --shadow-modal: 0 10px 30px rgba(0, 0, 0, 0.2);
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
 }
 
 body {
     overflow-x: hidden;
+    background-color: var(--color-bg-body);
+    color: var(--color-text-main);
 }
 
 .container {
@@ -35,7 +78,12 @@ body {
 
 a {
     text-decoration: none;
-    color: black;
+    color: var(--color-dark-heading);
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--color-primary);
 }
 
 li {
