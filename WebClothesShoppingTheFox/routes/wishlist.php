@@ -1,6 +1,6 @@
 <?php
 /* ==========================================================================
-   THE FOX - Route Định Tuyến Giỏ Hàng (Cart Route API)
+   THE FOX - Route Định Tuyến Danh Sách Yêu Thích (Wishlist Route API)
    Áp dụng chuẩn thiết kế phần mềm Clean Code & Senior Developer
    Tên biến/hàm: Tiếng Anh chuẩn | Chú thích (Comments): Tiếng Việt chuyên nghiệp
    ========================================================================== */
@@ -8,12 +8,6 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
-// Giả lập tài khoản thử nghiệm nếu người dùng chưa đăng nhập để giữ giỏ hàng hoạt động liên tục
-if (!isset($_SESSION['user_id'])) {
-    $_SESSION['user_id'] = 1;
-}
-$currentUserId = $_SESSION['user_id'];
 
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Origin: *");
@@ -25,8 +19,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
+// Bắt buộc xác thực tài khoản đăng nhập để quản lý danh sách yêu thích cá nhân
+if (!isset($_SESSION['user_id'])) {
+    http_response_code(401);
+    echo json_encode(['success' => false, 'message' => 'Vui lòng đăng nhập để sử dụng chức năng yêu thích.']);
+    exit();
+}
+
+$currentUserId = $_SESSION['user_id'];
+
 require_once __DIR__ . '/../config/db.php';
-require_once __DIR__ . '/../controllers/CartController.php';
+require_once __DIR__ . '/../controllers/WishlistController.php';
 
 try {
     $databaseConnection = getDBConnection();
@@ -37,18 +40,18 @@ try {
 }
 
 $routeAction = $_GET['action'] ?? '';
-$cartController = new CartController($databaseConnection);
+$wishlistController = new WishlistController($databaseConnection);
 
 switch ($routeAction) {
-    case 'get_cart':
-        $apiResponse = $cartController->getCart($currentUserId);
+    case 'get_wishlist':
+        $apiResponse = $wishlistController->getWishlist($currentUserId);
         echo json_encode($apiResponse);
         break;
 
-    case 'add_to_cart':
+    case 'add_to_wishlist':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $requestInput = json_decode(file_get_contents("php://input"), true);
-            $apiResponse = $cartController->addToCart($currentUserId, $requestInput);
+            $apiResponse = $wishlistController->addToWishlist($currentUserId, $requestInput);
             echo json_encode($apiResponse);
         } else {
             http_response_code(405);
@@ -56,10 +59,10 @@ switch ($routeAction) {
         }
         break;
 
-    case 'update_cart_qty':
+    case 'remove_from_wishlist':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $requestInput = json_decode(file_get_contents("php://input"), true);
-            $apiResponse = $cartController->updateQuantity($currentUserId, $requestInput);
+            $apiResponse = $wishlistController->removeFromWishlist($currentUserId, $requestInput);
             echo json_encode($apiResponse);
         } else {
             http_response_code(405);
@@ -67,15 +70,39 @@ switch ($routeAction) {
         }
         break;
 
-    case 'remove_cart_item':
+    case 'toggle_wishlist':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $requestInput = json_decode(file_get_contents("php://input"), true);
-            $apiResponse = $cartController->removeItem($currentUserId, $requestInput);
+            $apiResponse = $wishlistController->toggleWishlist($currentUserId, $requestInput);
             echo json_encode($apiResponse);
         } else {
             http_response_code(405);
             echo json_encode(['success' => false, 'message' => 'Phương thức không được hỗ trợ']);
         }
+        break;
+
+    case 'check_status':
+        $targetProductId = isset($_GET['product_id']) ? intval($_GET['product_id']) : 0;
+        $apiResponse = $wishlistController->checkStatus($currentUserId, $targetProductId);
+        echo json_encode($apiResponse);
+        break;
+
+    case 'toggle_by_name':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $requestInput = json_decode(file_get_contents("php://input"), true);
+            $targetProductName = $requestInput['product_name'] ?? '';
+            $apiResponse = $wishlistController->toggleWishlistByName($currentUserId, $targetProductName);
+            echo json_encode($apiResponse);
+        } else {
+            http_response_code(405);
+            echo json_encode(['success' => false, 'message' => 'Phương thức không được hỗ trợ']);
+        }
+        break;
+
+    case 'check_status_by_name':
+        $targetProductName = $_GET['product_name'] ?? '';
+        $apiResponse = $wishlistController->checkStatusByName($currentUserId, $targetProductName);
+        echo json_encode($apiResponse);
         break;
 
     default:
