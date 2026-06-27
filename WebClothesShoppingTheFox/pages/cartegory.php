@@ -5,6 +5,16 @@ require_once __DIR__ . '/../models/Category.php';
 $productModel = new Product();
 $categoryModel = new Category();
 
+$currentCategoryName = 'ALL ITEMS';
+
+if (!empty($filters['category_id'])) {
+    $currentCategory = $categoryModel->getById($filters['category_id']);
+
+    if ($currentCategory) {
+        $currentCategoryName = $currentCategory['name'];
+    }
+}
+
 $filters = [
     'search' => $_GET['search'] ?? '',
     'category_id' => $_GET['category_id'] ?? '',
@@ -286,7 +296,7 @@ function productImagePath($image)
             <div class="cartegory-top">
                 <p>TRANG CHỦ</p>
                 <span>&#8594;</span>
-                <p>ALL ITEMS</p>
+                <p><?= htmlspecialchars($currentCategoryName) ?></p>
             </div>
         </div>
 
@@ -297,62 +307,20 @@ function productImagePath($image)
                     <ul>
                         <li class="cartegory-left-li">
                             <div class="cartegory-title">
-                                <a href="#">NỮ</a>
-                                <span>+</span>
-                            </div>
-                            <ul>
-                                <li><a href="#">ÁO</a></li>
-                                <li><a href="#">QUẦN</a></li>
-                                <li><a href="#">ĐẦM</a></li>
-                            </ul>
-                        </li>
-                        <li class="cartegory-left-li">
-                            <div class="cartegory-title">
-                                <a href="#">NAM</a>
-                                <span>+</span>
-                            </div>
-                            <ul>
-                                <li><a href="#">ÁO</a></li>
-                                <li><a href="#">QUẦN</a></li>
-                            </ul>
-                        </li>
-                        <li class="cartegory-left-li">
-                            <div class="cartegory-title">
-                                <a href="#">TRẺ EM</a>
-                                <span>+</span>
-                            </div>
-                            <ul>
-                                <li><a href="#">ÁO</a></li>
-                                <li><a href="#">QUẦN</a></li>
-                            </ul>
-                        </li>
-                        <li class="cartegory-left-li">
-                            <div class="cartegory-title">
-                                <a href="#">PHỤ KIỆN</a>
-                                <span>+</span>
-                            </div>
-                            <ul>
-                                <li><a href="#">VÒNG TAY</a></li>
-                                <li><a href="#">DÂY CHUYỀN</a></li>
-                                <li><a href="#">NHẪN</a></li>
-                            </ul>
-                        </li>
-                        <li class="cartegory-left-li">
-                            <div class="cartegory-title">
-                                <a href="#">BỘ SƯU TẬP</a>
-                                <span>+</span>
-                            </div>
-                            <ul>
-                                <li><a href="#">XUÂN HÈ</a></li>
-                                <li><a href="#">THU ĐÔNG</a></li>
-                            </ul>
-                        </li>
-                        <li class="cartegory-left-li">
-                            <div class="cartegory-title">
-                                <a href="#">SALE</a>
-                                <span>+</span>
+                                <a href="cartegory.php">TẤT CẢ SẢN PHẨM</a>
                             </div>
                         </li>
+
+                        <?php foreach ($categories as $category): ?>
+                            <li class="cartegory-left-li">
+                                <div class="cartegory-title">
+                                    <a href="cartegory.php?category_id=<?= $category['id'] ?>">
+                                        <?= htmlspecialchars($category['name']) ?>
+                                    </a>
+                                    <span>+</span>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
 
@@ -363,7 +331,7 @@ function productImagePath($image)
                     <!-- TOP -->
                     <div class="cartegory-right-top row">
                         <div class="cartegory-right-top-item">
-                            <p>ALL ITEMS</p>
+                            <p><?= htmlspecialchars($currentCategoryName) ?></p>
                         </div>
                         <div class="cartegory-right-top-item">
                             <button>
@@ -406,21 +374,21 @@ function productImagePath($image)
                 ==========================-->
                     <div class="cartegory-right-content row">
                         <?php if (!empty($products)): ?>
-                        <?php foreach ($products as $product): ?>
-                        <a href="product.php?id=<?= $product['id'] ?>" class="cartegory-right-content-item"
-                            style="text-decoration: none; color: inherit;">
-                            <img src="<?= htmlspecialchars(productImagePath($product['image'])) ?>"
-                                alt="<?= htmlspecialchars($product['name']) ?>">
-                            <h1>
-                                <?= htmlspecialchars($product['name']) ?>
-                            </h1>
-                            <p>
-                                <?= formatPrice($product['price']) ?>
-                            </p>
-                        </a>
-                        <?php endforeach; ?>
+                            <?php foreach ($products as $product): ?>
+                                <a href="product.php?id=<?= $product['id'] ?>" class="cartegory-right-content-item"
+                                    style="text-decoration: none; color: inherit;">
+                                    <img src="<?= htmlspecialchars(productImagePath($product['image'])) ?>"
+                                        alt="<?= htmlspecialchars($product['name']) ?>">
+                                    <h1>
+                                        <?= htmlspecialchars($product['name']) ?>
+                                    </h1>
+                                    <p>
+                                        <?= formatPrice($product['price']) ?>
+                                    </p>
+                                </a>
+                            <?php endforeach; ?>
                         <?php else: ?>
-                        <p>Không tìm thấy sản phẩm nào.</p>
+                            <p>Không tìm thấy sản phẩm nào.</p>
                         <?php endif; ?>
                     </div>
                     <div class="cartegory-right-bottom">
