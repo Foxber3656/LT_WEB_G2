@@ -1,0 +1,367 @@
+/* =========================================================
+   1. COMMON ADMIN STYLE
+   Dùng chung cho:
+   - admin/categories/index.php
+   - admin/categories/create.php
+   
+   - admin/categories/edit.php
+========================================================= */
+
+:root {
+  --admin-bg: #f4f6f8;
+  --admin-surface: #ffffff;
+  --admin-text: #1f2937;
+  --admin-muted: #6b7280;
+  --admin-border: #e5e7eb;
+
+  --admin-primary: #111827;
+  --admin-primary-hover: #374151;
+
+  --admin-danger: #dc2626;
+  --admin-danger-hover: #b91c1c;
+
+  --admin-success-bg: #ecfdf3;
+  --admin-success-text: #027a48;
+
+  --admin-error-bg: #fef3f2;
+  --admin-error-text: #b42318;
+
+  --admin-radius: 14px;
+  --admin-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.admin-page {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--admin-bg);
+  color: var(--admin-text);
+}
+
+.admin-layout {
+  padding: 40px 24px;
+}
+
+.admin-section {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* =========================================================
+   2. PAGE HEADER
+   Dùng chung cho:
+   - index.php
+   - create.php
+   - edit.php
+========================================================= */
+
+.admin-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.admin-breadcrumb {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--admin-muted);
+}
+
+.admin-page-title {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--admin-text);
+}
+
+.admin-page-subtitle {
+  margin: 8px 0 0;
+  color: var(--admin-muted);
+  font-size: 15px;
+}
+
+/* =========================================================
+   3. PANEL / CARD
+   Dùng chung cho:
+   - index.php: chứa table
+   - create.php: chứa form thêm
+   - edit.php: chứa form sửa
+========================================================= */
+
+.admin-panel {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  box-shadow: var(--admin-shadow);
+  overflow: hidden;
+}
+
+.admin-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.admin-panel__header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.admin-panel__header span {
+  color: var(--admin-muted);
+  font-size: 14px;
+}
+
+/* =========================================================
+   4. BUTTONS
+   Dùng chung cho:
+   - index.php: nút Thêm, Sửa, Xóa
+   - create.php: nút Thêm, Hủy
+   - edit.php: nút Cập nhật, Hủy
+========================================================= */
+
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.admin-btn--primary {
+  background: var(--admin-primary);
+  color: #ffffff;
+}
+
+.admin-btn--primary:hover {
+  background: var(--admin-primary-hover);
+}
+
+.admin-btn--secondary {
+  background: #ffffff;
+  color: var(--admin-text);
+  border-color: var(--admin-border);
+}
+
+.admin-btn--secondary:hover {
+  background: #f3f4f6;
+}
+
+.admin-btn--danger {
+  background: var(--admin-danger);
+  color: #ffffff;
+}
+
+.admin-btn--danger:hover {
+  background: var(--admin-danger-hover);
+}
+
+/* =========================================================
+   5. ALERT MESSAGE
+   Dùng chung cho:
+   - index.php: hiện message/error sau khi thêm/sửa/xóa
+   - create.php: hiện lỗi nhập form
+   - edit.php: hiện lỗi nhập form
+========================================================= */
+
+.admin-alert {
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.admin-alert--success {
+  background: var(--admin-success-bg);
+  color: var(--admin-success-text);
+}
+
+.admin-alert--error {
+  background: var(--admin-error-bg);
+  color: var(--admin-error-text);
+}
+
+/* =========================================================
+   6. INDEX PAGE STYLE
+   Chỉ dùng cho:
+   - admin/categories/index.php
+   Mục đích:
+   - Hiển thị bảng danh sách danh mục
+   - Hiển thị nút sửa/xóa
+========================================================= */
+
+.admin-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 16px 24px;
+  text-align: left;
+  border-bottom: 1px solid var(--admin-border);
+  font-size: 14px;
+}
+
+.admin-table th {
+  background: #f9fafb;
+  color: #374151;
+  font-weight: 700;
+}
+
+.admin-table tr:hover td {
+  background: #fafafa;
+}
+
+.admin-table__actions {
+  width: 220px;
+}
+
+.admin-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.admin-empty {
+  text-align: center;
+  color: var(--admin-muted);
+  padding: 32px 24px;
+}
+
+.admin-back-link {
+  display: inline-block;
+  margin-top: 20px;
+  color: var(--admin-muted);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.admin-back-link:hover {
+  color: var(--admin-text);
+}
+
+/* =========================================================
+   7. CREATE + EDIT PAGE STYLE
+   Dùng cho:
+   - admin/categories/create.php
+   - admin/categories/edit.php
+   Mục đích:
+   - Style form thêm danh mục
+   - Style form sửa danh mục
+========================================================= */
+
+.admin-form {
+  padding: 24px;
+}
+
+.admin-form__group {
+  margin-bottom: 22px;
+}
+
+.admin-form__label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--admin-text);
+}
+
+.admin-form__input,
+.admin-form__select,
+.admin-form__textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 11px 14px;
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+  background: #ffffff;
+  font-size: 14px;
+  color: var(--admin-text);
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.admin-form__input::placeholder,
+.admin-form__textarea::placeholder {
+  color: #9ca3af;
+}
+
+.admin-form__input:focus,
+.admin-form__select:focus,
+.admin-form__textarea:focus {
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08);
+}
+
+.admin-form__textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+.admin-form__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--admin-border);
+}
+
+/* =========================================================
+   8. RESPONSIVE
+   Dùng chung cho:
+   - index.php
+   - create.php
+   - edit.php
+========================================================= */
+
+@media (max-width: 768px) {
+  .admin-page-header {
+    flex-direction: column;
+  }
+
+  .admin-page-title {
+    font-size: 26px;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding: 14px 16px;
+  }
+
+  .admin-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .admin-form__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-btn {
+    width: 100%;
+  }
+}
