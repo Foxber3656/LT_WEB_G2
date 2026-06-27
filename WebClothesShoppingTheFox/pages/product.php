@@ -1,13 +1,62 @@
+<?php
+require_once __DIR__ . '/../models/Product.php';
+
+$productModel = new Product();
+
+$id = $_GET['id'] ?? null;
+
+if (!$id || !is_numeric($id)) {
+    die('Không tìm thấy sản phẩm.');
+}
+
+$product = $productModel->getById($id);
+
+if (!$product) {
+    die('Sản phẩm không tồn tại.');
+}
+
+$relatedProducts = $productModel->getAll([
+    'category_id' => $product['category_id'] ?? ''
+]);
+
+function formatPrice($price)
+{
+    return number_format($price, 0, ',', '.') . 'đ';
+}
+
+function productImagePath($image)
+{
+    if (empty($image)) {
+        return '../assets/images/no-image.png';
+    }
+
+    $image = trim($image);
+    $image = str_replace('\\', '/', $image);
+
+    if (strpos($image, 'http://') === 0 || strpos($image, 'https://') === 0) {
+        return $image;
+    }
+
+    $fileName = basename($image);
+
+    return '../assets/images/' . $fileName;
+}
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="icon" type="image/x-icon" href="../assets/images/fashion.ico">
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!--=========================CSS==========================-->
 
     <link rel="stylesheet" href="../assets/css/product.css">
@@ -19,502 +68,483 @@
 </head>
 
 <body>
-<!--=========================HEADER==========================-->
-<header id="header">
-    <div class="container">
-        <!-- LOGO -->
-        <div class="header-logo">
-            <a href="#">
-                <img
-                src="../assets/images/icon.png"
-                alt="The Fox Logo"
-                class="logo">
-            </a>
-        </div>
-        <!--=========================
+    <!--=========================HEADER==========================-->
+    <header id="header">
+        <div class="container">
+            <!-- LOGO -->
+            <div class="header-logo">
+                <a href="#">
+                    <img src="../assets/images/icon.png" alt="The Fox Logo" class="logo">
+                </a>
+            </div>
+            <!--=========================
         NAVBAR
         ==========================-->
-        <nav class="navbar">
-            <ul class="menu">
+            <nav class="navbar">
+                <ul class="menu">
 
-                <!-- WOMEN -->
-                <li class="menu-items">
-                    <a href="#">NỮ</a>
-                    <div class="mega-menu">
-                        <div class="mega-col">
-                            <h4><a href="#">ALL ITEMS</a></h4>
-                            <ul>
-                                <li><a href="#">NEW ARRIVALS</a></li>
-                                <li><a href="#">SALE | CHỈ CÓ TẠI ONLINE</a></li>
-                            </ul>
-                        </div>
-                        <div class="mega-col">
-                            <h4><a href="#">ÁO</a></h4>
-                            <ul>
-                                <li><a href="#">Áo thun</a></li>
-                                <li><a href="#">Áo sơ mi</a></li>
-                                <li><a href="#">Áo croptop</a></li>
-                                <li><a href="#">Áo len</a></li>
-                                <li><a href="#">Đồ lót</a></li>
-                            </ul>
-                        </div>
-                        <div class="mega-col">
-                            <h4><a href="#">QUẦN</a></h4>
-                            <ul>
-                                <li><a href="#">Quần jean</a></li>
-                                <li><a href="#">Quần tây</a></li>
-                                <li><a href="#">Quần short</a></li>
-                                <li><a href="#">Quần legging</a></li>
-                                <li><a href="#">Jumpsuit</a></li>
-                            </ul>
-                        </div>
-                        <div class="mega-col">
-                            <h4><a href="#">ĐẦM</a></h4>
+                    <!-- WOMEN -->
+                    <li class="menu-items">
+                        <a href="#">NỮ</a>
+                        <div class="mega-menu">
+                            <div class="mega-col">
+                                <h4><a href="#">ALL ITEMS</a></h4>
+                                <ul>
+                                    <li><a href="#">NEW ARRIVALS</a></li>
+                                    <li><a href="#">SALE | CHỈ CÓ TẠI ONLINE</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-col">
+                                <h4><a href="#">ÁO</a></h4>
+                                <ul>
+                                    <li><a href="#">Áo thun</a></li>
+                                    <li><a href="#">Áo sơ mi</a></li>
+                                    <li><a href="#">Áo croptop</a></li>
+                                    <li><a href="#">Áo len</a></li>
+                                    <li><a href="#">Đồ lót</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-col">
+                                <h4><a href="#">QUẦN</a></h4>
+                                <ul>
+                                    <li><a href="#">Quần jean</a></li>
+                                    <li><a href="#">Quần tây</a></li>
+                                    <li><a href="#">Quần short</a></li>
+                                    <li><a href="#">Quần legging</a></li>
+                                    <li><a href="#">Jumpsuit</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-col">
+                                <h4><a href="#">ĐẦM</a></h4>
 
-                            <ul>
-                                <li><a href="#">Đầm thun</a></li>
-                                <li><a href="#">Áo dài</a></li>
-                                <li><a href="#">Đầm dạ hội</a></li>
-                                <li><a href="#">Đầm công sở</a></li>
-                                <li><a href="#">Chân váy</a></li>
-                            </ul>
+                                <ul>
+                                    <li><a href="#">Đầm thun</a></li>
+                                    <li><a href="#">Áo dài</a></li>
+                                    <li><a href="#">Đầm dạ hội</a></li>
+                                    <li><a href="#">Đầm công sở</a></li>
+                                    <li><a href="#">Chân váy</a></li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <!-- MEN -->
-                <li class="menu-items">
-                    <a href="#">NAM</a>
-                    <div class = "mega-menu">
-                        <div class="mega-col">
-                            <h4><a href = "#">ALL ITEMS</a></h4>
-                        <ul>
-                            <li><a href = "#">NEW ARRIVALS</a></li>
-                        </ul>
+                    </li>
+                    <!-- MEN -->
+                    <li class="menu-items">
+                        <a href="#">NAM</a>
+                        <div class="mega-menu">
+                            <div class="mega-col">
+                                <h4><a href="#">ALL ITEMS</a></h4>
+                                <ul>
+                                    <li><a href="#">NEW ARRIVALS</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-col">
+                                <h4> <a href="#">ÁO</a></h4>
+                                <ul>
+                                    <li><a href="#">Áo thun</a></li>
+                                    <li><a href="#">Áo sơ mi</a></li>
+                                    <li><a href="#">Áo polo</a></li>
+                                    <li><a href="#">Áo len</a></li>
+                                    <li><a href="#">Đồ lót</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-col">
+                                <h4> <a href="#">QUẦN</a></h4>
+                                <ul>
+                                    <li><a href="#">Quần jean</a></li>
+                                    <li><a href="#">Quần tây</a></li>
+                                    <li><a href="#">Quần short</a></li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="mega-col">
-                            <h4> <a href = "#">ÁO</a></h4>
-                            <ul>
-                                <li><a href = "#">Áo thun</a></li>
-                                <li><a href = "#">Áo sơ mi</a></li>
-                                <li><a href = "#">Áo polo</a></li>
-                                <li><a href = "#">Áo len</a></li>
-                                <li><a href = "#">Đồ lót</a></li>
-                            </ul>
-                        </div>
-                        <div class="mega-col">
-                            <h4> <a href = "#">QUẦN</a></h4>
-                            <ul>
-                                <li><a href = "#">Quần jean</a></li>
-                                <li><a href = "#">Quần tây</a></li>
-                                <li><a href = "#">Quần short</a></li>                      
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-                <!-- CHILDREN -->
+                    </li>
+                    <!-- CHILDREN -->
 
-                <li class="menu-items">
-                    <a href="#">TRẺ EM</a>
-                    <div class = "mega-menu">
-                        <div class="mega-col">
-                            <h4><a href = "#">ALL ITEMS</a></h4>
-                        <ul>
-                            <li><a href = "#">NEW ARRIVALS</a></li>
-                        </ul>
+                    <li class="menu-items">
+                        <a href="#">TRẺ EM</a>
+                        <div class="mega-menu">
+                            <div class="mega-col">
+                                <h4><a href="#">ALL ITEMS</a></h4>
+                                <ul>
+                                    <li><a href="#">NEW ARRIVALS</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-col">
+                                <h4> <a href="#">ÁO</a></h4>
+                                <ul>
+                                    <li><a href="#">Áo thun</a></li>
+                                    <li><a href="#">Áo sơ mi</a></li>
+                                    <li><a href="#">Áo polo</a></li>
+                                    <li><a href="#">Áo len</a></li>
+                                    <li><a href="#">Đồ lót</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-col">
+                                <h4> <a href="#">QUẦN</a></h4>
+                                <ul>
+                                    <li><a href="#">Quần jean</a></li>
+                                    <li><a href="#">Quần tây</a></li>
+                                    <li><a href="#">Quần short</a></li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="mega-col">
-                            <h4> <a href = "#">ÁO</a></h4>
-                            <ul>
-                                <li><a href = "#">Áo thun</a></li>
-                                <li><a href = "#">Áo sơ mi</a></li>
-                                <li><a href = "#">Áo polo</a></li>
-                                <li><a href = "#">Áo len</a></li>
-                                <li><a href = "#">Đồ lót</a></li>
-                            </ul>
-                        </div>
-                        <div class="mega-col">
-                            <h4> <a href = "#">QUẦN</a></h4>
-                            <ul>
-                                <li><a href = "#">Quần jean</a></li>
-                                <li><a href = "#">Quần tây</a></li>
-                                <li><a href = "#">Quần short</a></li>                    
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-                <!-- ACCESSORIES -->
+                    </li>
+                    <!-- ACCESSORIES -->
 
-                <li class="menu-items">
-                    <a href="#">PHỤ KIỆN</a>
-                    <div class = "mega-menu">
-                        <div class="mega-col">
-                            <h4><a href = "#">ALL ITEMS</a></h4>
-                        <ul>
-                            <li><a href = "#">NEW ARRIVALS</a></li>
-                        </ul>
+                    <li class="menu-items">
+                        <a href="#">PHỤ KIỆN</a>
+                        <div class="mega-menu">
+                            <div class="mega-col">
+                                <h4><a href="#">ALL ITEMS</a></h4>
+                                <ul>
+                                    <li><a href="#">NEW ARRIVALS</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-col">
+                                <h4> <a href="#">VÒNG TAY</a></h4>
+                                <ul>
+                                    <li><a href="#">Vòng tay bạc</a></li>
+                                    <li><a href="#">Vòng tay vàng</a></li>
+                                    <li><a href="#">Vòng tay đá</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-col">
+                                <h4> <a href="#">DÂY CHUYỀN</a></h4>
+                                <ul>
+                                    <li><a href="#">Dây chuyền bạc</a></li>
+                                    <li><a href="#">Dây chuyền vàng</a></li>
+                                    <li><a href="#">Dây chuyền đá</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-col">
+                                <h4><a href="#">NHẪN</a></h4>
+                                <ul>
+                                    <li><a href="#">Nhẫn bạc</a></li>
+                                    <li><a href="#">Nhẫn vàng</a></li>
+                                    <li><a href="#">Nhẫn đá</a></li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="mega-col">
-                            <h4> <a href = "#">VÒNG TAY</a></h4>
-                            <ul>
-                                <li><a href = "#">Vòng tay bạc</a></li>
-                                <li><a href = "#">Vòng tay vàng</a></li>
-                                <li><a href = "#">Vòng tay đá</a></li>                   
-                            </ul>
+                    </li>
+                    <!-- COLLECTION -->
+
+                    <li class="menu-items">
+                        <a href="#">BỘ SƯU TẬP</a>
+                        <div class="mega-menu">
+                            <div class="mega-col">
+                                <h4> <a href="#">BỘ SƯU TẬP MỚI</a></h4>
+                                <ul>
+                                    <li><a href="#">Bộ sưu tập Xuân Hè 2026</a></li>
+                                    <li><a href="#">Bộ sưu tập Thu Đông 2026</a></li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="mega-col">
-                            <h4> <a href = "#">DÂY CHUYỀN</a></h4>
-                            <ul>
-                                <li><a href = "#">Dây chuyền bạc</a></li>
-                                <li><a href = "#">Dây chuyền vàng</a></li>
-                                <li><a href = "#">Dây chuyền đá</a></li>                   
-                            </ul>
+                    </li>
+                    <!-- SALE -->
+
+                    <li class="sale-menu">
+                        <a href="#">SALE</a>
+                        <div class="mega-menu">
+                            <div class="mega-col">
+                                <h4><a href="#">OUTLET đồ NỮ từ 159k</a></h4>
+                                <h4><a href="#">OUTLET đồ NAM từ 159k</a></h4>
+                                <h4><a href="#">OUTLET đồ TRẺ EM từ 159k</a></h4>
+                                <h4><a href="#">OUTLET PHỤ KIỆN từ 159k</a></h4>
+                            </div>
                         </div>
-                        <div class="mega-col">
-                            <h4><a href = "#">NHẪN</a></h4>
-                            <ul>
-                                <li><a href = "#">Nhẫn bạc</a></li>
-                                <li><a href = "#">Nhẫn vàng</a></li>
-                                <li><a href = "#">Nhẫn đá</a></li>                   
-                            </ul>
+                    </li>
+                    <!-- BRAND -->
+
+                    <li class="menu-items">
+                        <a href="#">THƯƠNG HIỆU</a>
+                        <div class="mega-menu">
+                            <div class="mega-col">
+                                <h4><a href="#">THE FOX</a></h4>
+                                <h4><a href="#">THE FOX KIDS</a></h4>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <!-- COLLECTION -->
-
-                <li class="menu-items">
-                    <a href="#">BỘ SƯU TẬP</a>
-                    <div class = "mega-menu">
-                        <div class="mega-col">
-                            <h4> <a href = "#">BỘ SƯU TẬP MỚI</a></h4>
-                            <ul>
-                                <li><a href = "#">Bộ sưu tập Xuân Hè 2026</a></li>
-                                <li><a href = "#">Bộ sưu tập Thu Đông 2026</a></li>                    
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-                <!-- SALE -->
-
-                <li class="sale-menu">
-                    <a href="#">SALE</a>
-                    <div class = "mega-menu">
-                        <div class="mega-col">
-                            <h4><a href="#">OUTLET đồ NỮ từ 159k</a></h4>
-                            <h4><a href="#">OUTLET đồ NAM từ 159k</a></h4>
-                            <h4><a href="#">OUTLET đồ TRẺ EM từ 159k</a></h4>
-                            <h4><a href="#">OUTLET PHỤ KIỆN từ 159k</a></h4>
-                        </div>
-                    </div>           
-                </li>
-                <!-- BRAND -->
-
-                <li class="menu-items">
-                    <a href="#">THƯƠNG HIỆU</a>
-                    <div class = "mega-menu">
-                        <div class="mega-col">
-                            <h4><a href="#">THE FOX</a></h4>
-                            <h4><a href="#">THE FOX KIDS</a></h4>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </nav>
-        <!--=========================HEADER ACTION==========================-->
-        <div class="header-action">
-            <!-- SEARCH -->
-            <div class="search-box">
-                <input type="text" placeholder="Tìm kiếm">
-                <i class="fas fa-search"></i>
-            </div>
-            <a class="fa fa-headphones" href="#"></a>
-            <a class="fa fa-user" href="#"></a>
-            <a class="fa fa-shopping-bag cart-icon-btn" href="javascript:void(0)"></a>
-        </div>
-    </div>
-</header>
-<!--=========================PRODUCT_DETAILS=========================-->
-<section class="product">
-    <div class="container">
-        <div class="product-top">
-            <p>TRANG CHỦ</p>
-            <span>&#8594;</span>
-            <p>ALL ITEMS</p>
-            <span>&#8594;</span>
-            <p>ÁO KIỂU FOX SUMMER</p>
-        </div>
-        <!--=========================CONTENT==========================-->
-        <div class="product-content row">
-            <!--=========================LEFT==========================-->
-            <div class="product-content-left">
-                <!-- MAIN IMAGE -->
-                <div class="product-content-left-big-img">
-                    <button class="main-arrow prev">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <img src="../assets/images/sp1.jpg"alt="Product">
-                    <button class="main-arrow next">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-
-                <!-- THUMBNAILS -->
-                <div class="product-content-left-small-wrapper">
-                    <button class="thumb-arrow up">
-                        <i class="fas fa-chevron-up"></i>
-                    </button>
-                    <div class="thumb-container">
-                    <div class="product-content-left-small-img">
-                        <img src="../assets/images/sp1.jpg">
-                        <img src="../assets/images/sp2.jpg">
-                        <img src="../assets/images/sp3.jpg">
-                        <img src="../assets/images/sp4.jpg">
-                        <img src="../assets/images/sp4.jpg">
-                    </div>
-                    </div>
-                <button class="thumb-arrow down">
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                </div>
-            </div>
-
-            <!--=========================RIGHT==========================-->
-            <div class="product-content-right">
-
-                <!-- TITLE -->
-                <div class="product-content-right-name">
-                    <h1>ÁO KIỂU FOX SUMMER</h1>
-                    <p>SKU: FX001</p>
-                </div>
-                <!-- PRICE -->
-
-                <div class="product-content-right-price">
-                    <p>
-                        790.000đ
-                    </p>
-                </div>
-
-                <!-- COLOR -->
-                <div class="product-content-right-color">
-                    <p>
-                        <span>Màu:</span> Hồng Pastel
-                    </p>
-                    <div class="product-color">
-                        <span class="color pink"></span>
-                        <span class="color gray"></span>
-                    </div>
-                </div>
-                <!-- SIZE -->
-                <div class="product-content-right-size">
-                    <p>Size:</p>
-                    <div class="size">
-                        <span class="active">S</span>
-                        <span>M</span>
-                        <span>L</span>
-                        <span>XL</span>
-                    </div>
-                </div>
-
-                <!-- QUANTITY -->
-                <div class="quantity">
-                    <p>Số lượng:</p>
-                    <div class="quantity-box">
-                        <button>-</button>
-                        <input
-                        type="text"
-                        value="1">
-                        <button>+</button>
-                    </div>
-                </div>
-
-                <!-- BUTTON -->
-                <div class="product-content-right-button">
-                    <button>
-                        <i class="fas fa-shopping-cart"></i>
-                        THÊM VÀO GIỎ
-                    </button>
-                    <button>MUA NGAY</button>
-                    <button><i class="far fa-heart"></i></button>
-                </div>
-            <!--=========================PRODUCT INFO==========================-->
-            <div class="product-content-right-bottom">
-                <!-- TAB -->
-                 <div class="product-content-right-bottom-top">
-                    <div class="product-content-right-bottom-top-item active">
-                        <p>GIỚI THIỆU</p>
-                    </div>
-                    <div class="product-content-right-bottom-top-item">
-                        <p>CHI TIẾT SẢN PHẨM</p>
-                    </div>
-                    <div class="product-content-right-bottom-top-item">
-                        <p>BẢO QUẢN</p>
-                    </div>
-                </div>
-
-                <!-- CONTENT -->
-                 <div class="product-content-right-bottom-content">
-                    <div class="product-tab-content active">
-                        <div class="product-content-right-bottom-content-title">
-                            <p>Thông tin mẫu:</p>
-                        </div>
-                        <div class="product-content-right-bottom-content-text">
-                            <p>
-                                <strong>Chiều cao:</strong>165 cm
-                            </p>
-                            <p>
-                                <strong>Cân nặng:</strong>49 kg
-                            </p>
-                            <p>
-                                <strong>Số đo 3 vòng:</strong>81-63-90 cm
-                            </p>
-                            <p>
-                                Mẫu mặc size S.
-                                Lưu ý: Màu sắc sản phẩm thực tế có thể chênh lệch nhẹ.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="product-tab-content">
-                        <div class="product-content-right-bottom-content-text">
-                            <p><strong>Chất liệu:</strong> Cotton</p>
-                            <p><strong>Form:</strong> Regular Fit</p>
-                            <p><strong>Tay áo:</strong> Ngắn</p>
-                        </div>
-                    </div>
-                    <!-- BẢO QUẢN -->
-                     <div class="product-tab-content">
-                        <div class="product-content-right-bottom-content-text">
-                            <p>Giặt dưới 30°C</p>
-                            <p>Không dùng thuốc tẩy</p>
-                            <p>Ủi nhiệt độ thấp</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- TOGGLE -->
-                <div class="product-content-right-bottom-toggle">
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-            </div>
-        </div>
-
-        <!--=========================RELATED PRODUCT==========================-->
-        <div class="product-related">
-            <h2>SẢN PHẨM LIÊN QUAN</h2>
-            <div class="product-related-items row">
-                <a href="product.php?name=Áo%20Kiểu%20Fox%20Summer&price=790.000đ&image=../assets/images/sp1.jpg" class="product-related-item" style="text-decoration: none; color: inherit;">
-                    <img src="../assets/images/sp1.jpg">
-                    <h1>
-                        ÁO KIỂU FOX SUMMER
-                    </h1>
-                    <p>
-                        790.000đ
-                    </p>
-                </a>
-                <a href="product.php?name=Váy%20Hoa%20Fox&price=690.000đ&image=../assets/images/sp2.jpg" class="product-related-item" style="text-decoration: none; color: inherit;">
-                    <img src="../assets/images/sp2.jpg">
-                    <h1>
-                        VÁY HOA FOX
-                    </h1>
-                    <p>
-                        690.000đ
-                    </p>
-                </a>
-                <a href="product.php?name=Áo%20Thun%20Fox&price=590.000đ&image=../assets/images/sp3.jpg" class="product-related-item" style="text-decoration: none; color: inherit;">
-                    <img src="../assets/images/sp3.jpg">
-                    <h1>
-                        ÁO THUN FOX
-                    </h1>
-                    <p>
-                        590.000đ
-                    </p>
-                </a>
-                <a href="product.php?name=Chân%20Váy%20Fox&price=490.000đ&image=../assets/images/sp4.jpg" class="product-related-item" style="text-decoration: none; color: inherit;">
-                    <img src="../assets/images/sp4.jpg">
-                    <h1>
-                        CHÂN VÁY FOX
-                    </h1>
-                    <p>
-                        490.000đ
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!--=========================FOOTER==========================-->
-<div class="site-bottom">
-    <div id="footer">
-    <div class="container">
-        <div class="footer-wrapper">
-            <div class="footer-col">
-                <!--LOGO-->
-                <div class="footer-logo">
-                <img src="../assets/images/fashion.ico" alt="The Fox Logo">
-                </div>
-                <!--SOCIAL MEDIA-->
-                <div class="footer-social">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-                <!--CONTACT-->
-                <div class="footer-contact">
-                    <p>LIÊN HỆ: <a href="mailto:info@thefox.com">info@thefox.com</a></p>
-                </div>
-            </div>
-            <div class="footer-col">
-                <h4>GIỚI THIỆU</h4>
-                <ul>
-                    <li><a href="#">Về chúng tôi</a></li>
-                    <li><a href="#">Tin tức</a></li>
-                    <li><a href="#">Liên hệ</a></li>
+                    </li>
                 </ul>
-            </div>
-            <div class="footer-col">
-                <h4>DỊCH VỤ KHÁCH HÀNG</h4>
-                <ul>
-                    <li><a href="#">Chính sách bảo hành</a></li>
-                    <li><a href="#">Chính sách đổi trả</a></li>
-                    <li><a href="#">Hướng dẫn mua hàng</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>LIÊN HỆ</h4>
-                <ul>
-                    <li><a href="#">Hỗ trợ khách hàng</a></li>
-                    <li><a href="#">Góp ý</a></li>
-                    <li><a href="#">Tuyển dụng</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <!--NEW-->
-                <div class="footer-new">
-                <h3>ĐĂNG KÝ NHẬN TIN MỚI NHẤT TỪ THE FOX</h3>
-                    <form action="#" method="post">
-                        <input type="email" placeholder="Nhập email của bạn" required>
-                        <button type="submit">Đăng ký</button>
-                    </form>
+            </nav>
+            <!--=========================HEADER ACTION==========================-->
+            <div class="header-action">
+                <!-- SEARCH -->
+                <div class="search-box">
+                    <input type="text" placeholder="Tìm kiếm">
+                    <i class="fas fa-search"></i>
                 </div>
-                <!--Dowload-->
-                <div class="footer-download">
-                    <div class="footer-download-app">
-                        <h4>TẢI ỨNG DỤNG</h4>
-                        <a href="#"><img src="../assets/images/appstore.png" alt="App Store"></a>
-                        <a href="#"><img src="../assets/images/googleplay.png" alt="Google Play"></a>
+                <a class="fa fa-headphones" href="#"></a>
+                <a class="fa fa-user" href="#"></a>
+                <a class="fa fa-shopping-bag cart-icon-btn" href="javascript:void(0)"></a>
+            </div>
+        </div>
+    </header>
+    <!--=========================PRODUCT_DETAILS=========================-->
+    <section class="product">
+        <div class="container">
+            <div class="product-top">
+                <p>TRANG CHỦ</p>
+                <span>&#8594;</span>
+                <p>ALL ITEMS</p>
+                <span>&#8594;</span>
+                <p><?= htmlspecialchars($product['name']) ?></p>
+            </div>
+            <!--=========================CONTENT==========================-->
+            <div class="product-content row">
+                <!--=========================LEFT==========================-->
+                <div class="product-content-left">
+                    <!-- MAIN IMAGE -->
+                    <div class="product-content-left-big-img">
+                        <button class="main-arrow prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <img src="<?= htmlspecialchars(productImagePath($product['image'])) ?>"
+                            alt="<?= htmlspecialchars($product['name']) ?>">
+                        <button class="main-arrow next">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
-                </div>   
+
+                    <!-- THUMBNAILS -->
+                    <div class="product-content-left-small-wrapper">
+                        <button class="thumb-arrow up">
+                            <i class="fas fa-chevron-up"></i>
+                        </button>
+                        <div class="thumb-container">
+                            <div class="product-content-left-small-img">
+                                <img src="../assets/images/sp1.jpg">
+                                <img src="../assets/images/sp2.jpg">
+                                <img src="../assets/images/sp3.jpg">
+                                <img src="../assets/images/sp4.jpg">
+                                <img src="../assets/images/sp4.jpg">
+                            </div>
+                        </div>
+                        <button class="thumb-arrow down">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!--=========================RIGHT==========================-->
+                <div class="product-content-right">
+
+                    <!-- TITLE -->
+                    <div class="product-content-right-name">
+                        <h1><?= htmlspecialchars($product['name']) ?></h1>
+                        <p>SKU: FX<?= str_pad($product['id'], 3, '0', STR_PAD_LEFT) ?></p>
+                    </div>
+                    <!-- PRICE -->
+
+                    <div class="product-content-right-price">
+                        <p>
+                            <?= formatPrice($product['price']) ?>
+                        </p>
+                    </div>
+
+                    <!-- COLOR -->
+                    <div class="product-content-right-color">
+                        <p>
+                            <span>Màu:</span> Hồng Pastel
+                        </p>
+                        <div class="product-color">
+                            <span class="color pink"></span>
+                            <span class="color gray"></span>
+                        </div>
+                    </div>
+                    <!-- SIZE -->
+                    <div class="product-content-right-size">
+                        <p>Size:</p>
+                        <div class="size">
+                            <span class="active">S</span>
+                            <span>M</span>
+                            <span>L</span>
+                            <span>XL</span>
+                        </div>
+                    </div>
+
+                    <!-- QUANTITY -->
+                    <div class="quantity">
+                        <p>Số lượng:</p>
+                        <div class="quantity-box">
+                            <button>-</button>
+                            <input type="text" value="1">
+                            <button>+</button>
+                        </div>
+                    </div>
+
+                    <!-- BUTTON -->
+                    <div class="product-content-right-button">
+                        <button data-product-id="<?= $product['id'] ?>">
+                            <i class="fas fa-shopping-cart"></i>
+                            THÊM VÀO GIỎ
+                        </button>
+                        <button>MUA NGAY</button>
+                        <button><i class="far fa-heart"></i></button>
+                    </div>
+                    <!--=========================PRODUCT INFO==========================-->
+                    <div class="product-content-right-bottom">
+                        <!-- TAB -->
+                        <div class="product-content-right-bottom-top">
+                            <div class="product-content-right-bottom-top-item active">
+                                <p>GIỚI THIỆU</p>
+                            </div>
+                            <div class="product-content-right-bottom-top-item">
+                                <p>CHI TIẾT SẢN PHẨM</p>
+                            </div>
+                            <div class="product-content-right-bottom-top-item">
+                                <p>BẢO QUẢN</p>
+                            </div>
+                        </div>
+
+                        <!-- CONTENT -->
+                        <div class="product-content-right-bottom-content">
+                            <div class="product-tab-content active">
+                                <div class="product-content-right-bottom-content-title">
+                                    <p>Thông tin mẫu:</p>
+                                </div>
+                                <div class="product-content-right-bottom-content-text">
+                                    <p>
+                                        <?= nl2br(htmlspecialchars($product['description'] ?? 'Chưa có mô tả sản phẩm.')) ?>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="product-tab-content">
+                                <div class="product-content-right-bottom-content-text">
+                                    <p><strong>Chất liệu:</strong> Cotton</p>
+                                    <p><strong>Form:</strong> Regular Fit</p>
+                                    <p><strong>Tay áo:</strong> Ngắn</p>
+                                </div>
+                            </div>
+                            <!-- BẢO QUẢN -->
+                            <div class="product-tab-content">
+                                <div class="product-content-right-bottom-content-text">
+                                    <p>Giặt dưới 30°C</p>
+                                    <p>Không dùng thuốc tẩy</p>
+                                    <p>Ủi nhiệt độ thấp</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- TOGGLE -->
+                        <div class="product-content-right-bottom-toggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!--=========================RELATED PRODUCT==========================-->
+                <div class="product-related">
+                    <h2>SẢN PHẨM LIÊN QUAN</h2>
+                    <div class="product-related-items row">
+                        <?php
+                        $count = 0;
+                        foreach ($relatedProducts as $related):
+                            if ($related['id'] == $product['id']) {
+                                continue;
+                            }
+
+                            if ($count >= 4) {
+                                break;
+                            }
+
+                            $count++;
+                        ?>
+                            <a href="product.php?id=<?= $related['id'] ?>" class="product-related-item"
+                                style="text-decoration: none; color: inherit;">
+                                <img src="<?= htmlspecialchars(productImagePath($related['image'])) ?>"
+                                    alt="<?= htmlspecialchars($related['name']) ?>">
+                                <h1>
+                                    <?= htmlspecialchars($related['name']) ?>
+                                </h1>
+                                <p>
+                                    <?= formatPrice($related['price']) ?>
+                                </p>
+                            </a>
+                        <?php endforeach; ?>
+
+                        <?php if ($count === 0): ?>
+                            <p>Chưa có sản phẩm liên quan.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--=========================FOOTER==========================-->
+    <div class="site-bottom">
+        <div id="footer">
+            <div class="container">
+                <div class="footer-wrapper">
+                    <div class="footer-col">
+                        <!--LOGO-->
+                        <div class="footer-logo">
+                            <img src="../assets/images/fashion.ico" alt="The Fox Logo">
+                        </div>
+                        <!--SOCIAL MEDIA-->
+                        <div class="footer-social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                        <!--CONTACT-->
+                        <div class="footer-contact">
+                            <p>LIÊN HỆ: <a href="mailto:info@thefox.com">info@thefox.com</a></p>
+                        </div>
+                    </div>
+                    <div class="footer-col">
+                        <h4>GIỚI THIỆU</h4>
+                        <ul>
+                            <li><a href="#">Về chúng tôi</a></li>
+                            <li><a href="#">Tin tức</a></li>
+                            <li><a href="#">Liên hệ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>DỊCH VỤ KHÁCH HÀNG</h4>
+                        <ul>
+                            <li><a href="#">Chính sách bảo hành</a></li>
+                            <li><a href="#">Chính sách đổi trả</a></li>
+                            <li><a href="#">Hướng dẫn mua hàng</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>LIÊN HỆ</h4>
+                        <ul>
+                            <li><a href="#">Hỗ trợ khách hàng</a></li>
+                            <li><a href="#">Góp ý</a></li>
+                            <li><a href="#">Tuyển dụng</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <!--NEW-->
+                        <div class="footer-new">
+                            <h3>ĐĂNG KÝ NHẬN TIN MỚI NHẤT TỪ THE FOX</h3>
+                            <form action="#" method="post">
+                                <input type="email" placeholder="Nhập email của bạn" required>
+                                <button type="submit">Đăng ký</button>
+                            </form>
+                        </div>
+                        <!--Dowload-->
+                        <div class="footer-download">
+                            <div class="footer-download-app">
+                                <h4>TẢI ỨNG DỤNG</h4>
+                                <a href="#"><img src="../assets/images/appstore.png" alt="App Store"></a>
+                                <a href="#"><img src="../assets/images/googleplay.png" alt="Google Play"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    </div>
-</div>
-<footer id="footer-bottom">
-    <div class="copy-right">
-        <p>©THE FOX</p>
-    </div>
-</footer>
+    <footer id="footer-bottom">
+        <div class="copy-right">
+            <p>©THE FOX</p>
+        </div>
+    </footer>
     <?php include 'sidebarcart.php'; ?>
 </body>
 
 <script src="../assets/js/product.js"></script>
 <script src="../assets/js/scroll.js"></script>
+
 </html>
