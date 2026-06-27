@@ -20,6 +20,7 @@ Create Table `Users` (
 ) Engine=Innodb Default Charset=utf8mb4 Collate=utf8mb4_unicode_ci
   Comment='Tài khoản người dùng và quản trị viên';
 -- Bảng 2: Categories - Danh mục sản phẩm 
+Create Table `Categories` (
     `Id`            Int Unsigned Auto_increment Primary Key,
     `Ten`           Varchar(100) Not Null Comment 'Tên danh mục (Nam, Nữ, Trẻ em...)',
     `Slug`          Varchar(120) Not Null Unique Comment 'URL thân thiện',
@@ -47,6 +48,7 @@ Create Table `Products` (
 ) Engine=Innodb Default Charset=utf8mb4 Collate=utf8mb4_unicode_ci
   Comment='Sản phẩm thời trang';
 -- Bảng 4: Product images - Ảnh phụ của sản phẩm
+Create Table `Product images` (
     `Id`            Int Unsigned Auto_increment Primary Key,
     `San pham id`   Int Unsigned Not Null,
     `Duong dan`     Varchar(255) Not Null Comment 'Đường dẫn file ảnh',
@@ -109,7 +111,7 @@ Create Table `Orders` (
   Comment='Đơn hàng của khách hàng';
 
 -- Bảng 8: Order details - Chi tiết sản phẩm trong đơn hàng
-
+Create Table `Order details` (
     `Id`            Int Unsigned Auto_increment Primary Key,
     `Don hang id`   Int Unsigned Not Null,
     `Bien the id`   Int Unsigned Not Null,
@@ -123,7 +125,8 @@ Create Table `Orders` (
     Foreign Key (`Bien the id`) References `Product variants`(`Id`) On Delete Restrict
 ) Engine=Innodb Default Charset=utf8mb4 Collate=utf8mb4_unicode_ci
   Comment='Chi tiết sản phẩm trong từng đơn hàng';
--- Bảng 9: Wishlists - Danh sách yêu thích
+-- Bảng 9: Wishlists - Danh sách yêu thích 
+   Create Table `Wishlists`(
     `Id`            Int Unsigned Auto_increment Primary Key,
     `Nguoi dung id` Int Unsigned Not Null,
     `San pham id`   Int Unsigned Not Null,
