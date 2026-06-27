@@ -1,36 +1,51 @@
-/* SCROLL */
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        header.classList.add('active');
-    } else {
-        header.classList.remove('active');
-    }
-});
-/* HOVER */
-header.addEventListener('mouseenter', () => {
-    header.classList.add('active');
-});
+/* ==========================================================================
+   THE FOX - Module Thanh Điều Hướng & Điều Hướng Trang (Scroll & Navigation JS)
+   Áp dụng chuẩn thiết kế phần mềm Clean Code & Senior Developer
+   Tên biến/hàm: Tiếng Anh chuẩn | Chú thích (Comments): Tiếng Việt chuyên nghiệp
+   ========================================================================== */
 
-header.addEventListener('mouseleave', () => {
-    if (window.scrollY <= 50) {
-        header.classList.remove('active');
-    }
-});
+const mainHeaderElement = document.querySelector('#header');
 
-/*===================== ACTIVE NAVBAR LINK HIGHLIGHTER & ROUTING ======================*/
-document.addEventListener('DOMContentLoaded', () => {
-    const currentUrl = window.location.href;
-    const pageName = currentUrl.split('/').pop().split('?')[0].split('#')[0] || 'home.php';
-
-    // 1. Cập nhật link Logo về home.php
-    const logoLinks = document.querySelectorAll('.header-logo a');
-    logoLinks.forEach((link) => {
-        link.setAttribute('href', 'home.php');
+if (mainHeaderElement) {
+    /* ======================================================
+       THAY ĐỔI GIAO DIỆN HEADER KHU DÙNG CUỘN TRANG (STICKY)
+    ====================================================== */
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            mainHeaderElement.classList.add('active');
+        } else {
+            mainHeaderElement.classList.remove('active');
+        }
     });
 
-    // 2. Cập nhật các menu link chính về cartegory.php với tham số phân loại
-    const menuLinks = document.querySelectorAll('.menu > li > a');
-    const catMap = {
+    /* HIỆU ỨNG RÊ CHUỘT (HOVER) GIỮ NỀN HEADER SÁNG */
+    mainHeaderElement.addEventListener('mouseenter', () => {
+        mainHeaderElement.classList.add('active');
+    });
+
+    mainHeaderElement.addEventListener('mouseleave', () => {
+        if (window.scrollY <= 50) {
+            mainHeaderElement.classList.remove('active');
+        }
+    });
+}
+
+/* ======================================================
+   TỰ ĐỘNG HIGHLIGHT VÀ ĐỊNH TỰ ĐỘNG ĐƯỜNG DẪN NAVIGATION
+====================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+    const currentFullUrl = window.location.href;
+    const currentActivePageName = currentFullUrl.split('/').pop().split('?')[0].split('#')[0] || 'home.php';
+
+    // 1. Cập nhật đường dẫn Logo mặc định dẫn về Trang Chủ (home.php)
+    const headerLogoLinkElements = document.querySelectorAll('.header-logo a');
+    headerLogoLinkElements.forEach((singleLink) => {
+        singleLink.setAttribute('href', 'home.php');
+    });
+
+    // 2. Định ánh xạ danh mục sản phẩm từ Tiếng Việt sang tham số Query URL
+    const navigationMenuLinksList = document.querySelectorAll('.menu > li > a');
+    const categorySlugMappingTable = {
         NỮ: 'nu',
         NAM: 'nam',
         'TRẺ EM': 'tre-em',
@@ -39,39 +54,48 @@ document.addEventListener('DOMContentLoaded', () => {
         SALE: 'sale',
         'THƯƠNG HIỆU': 'thuong-hieu',
     };
-    menuLinks.forEach((link) => {
-        const text = link.textContent.trim().toUpperCase();
-        if (catMap[text]) {
-            link.setAttribute('href', `cartegory.php?cat=${catMap[text]}`);
+    navigationMenuLinksList.forEach((singleLink) => {
+        const linkLabelText = singleLink.textContent.trim().toUpperCase();
+        if (categorySlugMappingTable[linkLabelText]) {
+            singleLink.setAttribute('href', `cartegory.php?cat=${categorySlugMappingTable[linkLabelText]}`);
         }
     });
 
-    // 3. Cập nhật user link sang trang quản lý đơn hàng order.php
-    const userLinks = document.querySelectorAll('.header-action a.fa-user');
-    userLinks.forEach((link) => {
-        link.setAttribute('href', 'order.php');
+    // 3. Kiểm tra trạng thái Session linh hoạt để gắn liên kết Hồ sơ (profile.php) hoặc Đăng nhập (login.php)
+    const userHeaderIconLinkElements = document.querySelectorAll('.header-action a.fa-user');
+    userHeaderIconLinkElements.forEach(async (singleLink) => {
+        try {
+            const checkSessionResponse = await fetch('../routes/auth.php?action=check');
+            const checkSessionResultData = await checkSessionResponse.json();
+            if (checkSessionResultData.success && checkSessionResultData.logged_in) {
+                singleLink.setAttribute('href', 'profile.php');
+            } else {
+                singleLink.setAttribute('href', 'login.php');
+            }
+        } catch (error) {
+            singleLink.setAttribute('href', 'login.php');
+        }
     });
 
-    // 4. Highlight mục đang được chọn dựa trên pageName và query param ?cat=
-    const urlParams = new URLSearchParams(window.location.search);
-    let activeCat = urlParams.get('cat');
-    if (pageName === 'cartegory.php' && !activeCat) {
-        activeCat = 'nu'; // mặc định là Nữ khi vào trang cartegory.php trực tiếp
+    // 4. Đánh dấu nổi bật (Highlight CSS) liên kết trang/danh mục hiện tại đang được truy cập
+    const urlSearchParameters = new URLSearchParams(window.location.search);
+    let activeCategorySlug = urlSearchParameters.get('cat');
+    if (currentActivePageName === 'cartegory.php' && !activeCategorySlug) {
+        activeCategorySlug = 'nu';
     }
 
-    const allNavLinks = document.querySelectorAll('.menu > li > a');
-    allNavLinks.forEach((link) => {
-        const href = link.getAttribute('href');
-        if (href && href !== '#' && href !== 'javascript:void(0)') {
-            // Phân tách href
-            const linkPage = href.split('?')[0].split('/').pop();
-            const linkQuery = href.split('?')[1] || '';
-            const linkParams = new URLSearchParams(linkQuery);
-            const linkCat = linkParams.get('cat');
+    const allNavigationLinksList = document.querySelectorAll('.menu > li > a');
+    allNavigationLinksList.forEach((singleLink) => {
+        const hrefAttributeValue = singleLink.getAttribute('href');
+        if (hrefAttributeValue && hrefAttributeValue !== '#' && hrefAttributeValue !== 'javascript:void(0)') {
+            const extractedLinkPage = hrefAttributeValue.split('?')[0].split('/').pop();
+            const extractedLinkQuery = hrefAttributeValue.split('?')[1] || '';
+            const extractedLinkParams = new URLSearchParams(extractedLinkQuery);
+            const extractedLinkCategory = extractedLinkParams.get('cat');
 
-            if (pageName === linkPage) {
-                if (linkCat === activeCat) {
-                    link.classList.add('active-nav-link');
+            if (currentActivePageName === extractedLinkPage) {
+                if (extractedLinkCategory === activeCategorySlug) {
+                    singleLink.classList.add('active-nav-link');
                 }
             }
         }
