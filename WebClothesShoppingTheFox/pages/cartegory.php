@@ -5,16 +5,6 @@ require_once __DIR__ . '/../models/Category.php';
 $productModel = new Product();
 $categoryModel = new Category();
 
-$currentCategoryName = 'ALL ITEMS';
-
-if (!empty($filters['category_id'])) {
-    $currentCategory = $categoryModel->getById($filters['category_id']);
-
-    if ($currentCategory) {
-        $currentCategoryName = $currentCategory['name'];
-    }
-}
-
 $filters = [
     'search' => $_GET['search'] ?? '',
     'category_id' => $_GET['category_id'] ?? '',
@@ -25,6 +15,24 @@ $filters = [
 
 $products = $productModel->getAll($filters);
 $categories = $categoryModel->getAll();
+
+$currentCategoryName = 'TẤT CẢ SẢN PHẨM';
+
+if (!empty($filters['category_id'])) {
+    $currentCategory = $categoryModel->getById($filters['category_id']);
+
+    if ($currentCategory) {
+        $currentCategoryName = $currentCategory['name'];
+    }
+} elseif (!empty($filters['search'])) {
+    $currentCategoryName = 'Kết quả tìm kiếm: "' . $filters['search'] . '"';
+} elseif (!empty($filters['min_price']) && !empty($filters['max_price'])) {
+    $currentCategoryName = 'Sản phẩm từ ' . formatPrice($filters['min_price']) . ' đến ' . formatPrice($filters['max_price']);
+} elseif (!empty($filters['min_price'])) {
+    $currentCategoryName = 'Sản phẩm từ ' . formatPrice($filters['min_price']) . ' trở lên';
+} elseif (!empty($filters['max_price'])) {
+    $currentCategoryName = 'Sản phẩm dưới ' . formatPrice($filters['max_price']);
+}
 
 function formatPrice($price)
 {
@@ -48,6 +56,16 @@ function productImagePath($image)
 
     return '../assets/images/' . $fileName;
 }
+function getCategoryIdByName($categories, $name)
+{
+    foreach ($categories as $category) {
+        if ($category['name'] === $name) {
+            return $category['id'];
+        }
+    }
+
+    return '';
+}
 ?>
 
 
@@ -70,10 +88,14 @@ function productImagePath($image)
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!--=========================CSS==========================-->
 
-    <link rel="stylesheet" href="../assets/css/cartegory.css">
+    <!-- <link rel="stylesheet" href="../assets/css/cartegory.css">
     <link rel="stylesheet" href="../assets/css/header.css">
     <link rel="stylesheet" href="../assets/css/footer.css">
+    <link rel="stylesheet" href="../assets/css/gobal.css"> -->
     <link rel="stylesheet" href="../assets/css/gobal.css">
+    <link rel="stylesheet" href="../assets/css/header.css">
+    <link rel="stylesheet" href="../assets/css/footer.css">
+    <link rel="stylesheet" href="../assets/css/cartegory.css?v=2">
 
     <title>The Fox</title>
 </head>
@@ -97,7 +119,12 @@ function productImagePath($image)
                         <a href="#">NỮ</a>
                         <div class="mega-menu">
                             <div class="mega-col">
-                                <h4><a href="#">ALL ITEMS</a></h4>
+                                <h4>
+                                    <a
+                                        href="cartegory.php?category_id=<?= getCategoryIdByName($categories, 'Thời trang Nữ') ?>">
+                                        TẤT CẢ SẢN PHẨM NỮ
+                                    </a>
+                                </h4>
                                 <ul>
                                     <li><a href="#">NEW ARRIVALS</a></li>
                                     <li><a href="#">SALE | CHỈ CÓ TẠI ONLINE</a></li>
@@ -141,7 +168,12 @@ function productImagePath($image)
                         <a href="#">NAM</a>
                         <div class="mega-menu">
                             <div class="mega-col">
-                                <h4><a href="#">ALL ITEMS</a></h4>
+                                <h4>
+                                    <a
+                                        href="cartegory.php?category_id=<?= getCategoryIdByName($categories, 'Thời trang Nam') ?>">
+                                        TẤT CẢ SẢN PHẨM NAM
+                                    </a>
+                                </h4>
                                 <ul>
                                     <li><a href="#">NEW ARRIVALS</a></li>
                                 </ul>
@@ -172,7 +204,12 @@ function productImagePath($image)
                         <a href="#">TRẺ EM</a>
                         <div class="mega-menu">
                             <div class="mega-col">
-                                <h4><a href="#">ALL ITEMS</a></h4>
+                                <h4>
+                                    <a
+                                        href="cartegory.php?category_id=<?= getCategoryIdByName($categories, 'Trẻ Em') ?>">
+                                        TẤT CẢ SẢN PHẨM TRẺ EM
+                                    </a>
+                                </h4>
                                 <ul>
                                     <li><a href="#">NEW ARRIVALS</a></li>
                                 </ul>
@@ -203,7 +240,12 @@ function productImagePath($image)
                         <a href="#">PHỤ KIỆN</a>
                         <div class="mega-menu">
                             <div class="mega-col">
-                                <h4><a href="#">ALL ITEMS</a></h4>
+                                <h4>
+                                    <a
+                                        href="cartegory.php?category_id=<?= getCategoryIdByName($categories, 'Phụ Kiện') ?>">
+                                        TẤT CẢ PHỤ KIỆN
+                                    </a>
+                                </h4>
                                 <ul>
                                     <li><a href="#">NEW ARRIVALS</a></li>
                                 </ul>
@@ -312,13 +354,43 @@ function productImagePath($image)
                         </li>
 
                         <?php foreach ($categories as $category): ?>
-                            <li class="cartegory-left-li">
+                            <?php
+                            $categoryName = $category['name'];
+
+                            $subCategories = [
+                                'Phụ Kiện' => ['Túi xách', 'Giày dép', 'Mũ nón'],
+                                'Trẻ Em' => ['Áo trẻ em', 'Quần trẻ em', 'Váy trẻ em'],
+                                'Thời trang Nữ' => ['Áo nữ', 'Váy', 'Chân váy', 'Quần nữ'],
+                                'Thời trang Nam' => ['Áo nam', 'Quần nam', 'Áo sơ mi nam']
+                            ];
+
+                            $children = $subCategories[$categoryName] ?? [];
+
+                            $isActive = !empty($filters['category_id']) && $filters['category_id'] == $category['id'];
+                            ?>
+
+                            <li class="cartegory-left-li <?= $isActive ? 'active' : '' ?>">
                                 <div class="cartegory-title">
                                     <a href="cartegory.php?category_id=<?= $category['id'] ?>">
-                                        <?= htmlspecialchars($category['name']) ?>
+                                        <?= htmlspecialchars($categoryName) ?>
                                     </a>
-                                    <span>+</span>
+
+                                    <?php if (!empty($children)): ?>
+                                        <span>+</span>
+                                    <?php endif; ?>
                                 </div>
+
+                                <?php if (!empty($children)): ?>
+                                    <ul>
+                                        <?php foreach ($children as $child): ?>
+                                            <li>
+                                                <a href="cartegory.php?category_id=<?= $category['id'] ?>">
+                                                    <?= htmlspecialchars($child) ?>
+                                                </a>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                <?php endif; ?>
                             </li>
                         <?php endforeach; ?>
                     </ul>
@@ -333,11 +405,47 @@ function productImagePath($image)
                         <div class="cartegory-right-top-item">
                             <p><?= htmlspecialchars($currentCategoryName) ?></p>
                         </div>
-                        <div class="cartegory-right-top-item">
-                            <button>
+                        <div class="cartegory-right-top-item filter-wrapper">
+                            <button type="button" id="filterToggle">
                                 <span>Bộ lọc</span>
                                 <i class="fas fa-chevron-down"></i>
                             </button>
+
+                            <form class="filter-dropdown" method="GET" action="cartegory.php">
+                                <input type="hidden" name="search" value="<?= htmlspecialchars($filters['search']) ?>">
+                                <input type="hidden" name="sort" value="<?= htmlspecialchars($filters['sort']) ?>">
+
+                                <div class="filter-group">
+                                    <label>Danh mục</label>
+                                    <select name="category_id">
+                                        <option value="">Tất cả danh mục</option>
+
+                                        <?php foreach ($categories as $category): ?>
+                                            <option value="<?= $category['id'] ?>"
+                                                <?= $filters['category_id'] == $category['id'] ? 'selected' : '' ?>>
+                                                <?= htmlspecialchars($category['name']) ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+
+                                <div class="filter-group">
+                                    <label>Giá từ</label>
+                                    <input type="number" name="min_price" placeholder="Ví dụ: 100000"
+                                        value="<?= htmlspecialchars($filters['min_price']) ?>">
+                                </div>
+
+                                <div class="filter-group">
+                                    <label>Giá đến</label>
+                                    <input type="number" name="max_price" placeholder="Ví dụ: 1000000"
+                                        value="<?= htmlspecialchars($filters['max_price']) ?>">
+                                </div>
+
+                                <div class="filter-actions">
+                                    <button type="submit">Áp dụng</button>
+                                    <a href="cartegory.php">Reset</a>
+                                </div>
+                            </form>
                         </div>
                         <div class="cartegory-right-top-item">
                             <form method="GET" action="cartegory.php">
@@ -484,9 +592,11 @@ function productImagePath($image)
         </div>
     </footer>
     <?php include 'sidebarcart.php'; ?>
-</body>
 
-<script src="../assets/js/animation.js"></script>
-<script src="../assets/js/scroll.js"></script>
+
+    <script src="../assets/js/animation.js"></script>
+    <script src="../assets/js/scroll.js"></script>
+    <script src="../assets/js/cartegory.js?v=2"></script>
+</body>
 
 </html>
