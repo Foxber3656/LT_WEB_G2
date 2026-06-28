@@ -1,18 +1,32 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+// Yêu cầu đăng nhập để truy cập trang quản lý đơn hàng
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+$fullname = $_SESSION['fullname'] ?? 'Thành viên';
+$isAdmin  = ($_SESSION['role'] ?? '') === 'admin';
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="icon" type="image/x-icon" href="../assets/images/fashion.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!--=========================CSS==========================-->
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/accountSidebar.css">
     <link rel="stylesheet" href="../assets/css/header.css">
     <link rel="stylesheet" href="../assets/css/footer.css">
     <link rel="stylesheet" href="../assets/css/gobal.css">
+    <link rel="stylesheet" href="../assets/css/order.css">
 
-    <title>The Fox - Quản lý đơn hàng</title>
+    <title>Quản lý đơn hàng - The Fox</title>
 </head>
 
 <body>
@@ -21,20 +35,17 @@
     <div class="container">
         <!-- LOGO -->
         <div class="header-logo">
-            <a href="../index.php">
+            <a href="home.php">
                 <img src="../assets/images/icon.png" alt="The Fox Logo" class="logo">
             </a>
         </div>
         <!--=========================NAVBAR==========================-->
         <nav class="navbar">
             <ul class="menu">
-                <li class="menu-items"><a href="cartegory.php">NỮ</a></li>
-                <li class="menu-items"><a href="cartegory.php">NAM</a></li>
-                <li class="menu-items"><a href="cartegory.php">TRẺ EM</a></li>
-                <li class="menu-items"><a href="cartegory.php">PHỤ KIỆN</a></li>
-                <li class="menu-items"><a href="#">BỘ SƯU TẬP</a></li>
-                <li class="sale-menu"><a href="#">SALE</a></li>
-                <li class="menu-items"><a href="#">THƯƠNG HIỆU</a></li>
+                <li class="menu-items"><a href="cartegory.php?cat=nu">NỮ</a></li>
+                <li class="menu-items"><a href="cartegory.php?cat=nam">NAM</a></li>
+                <li class="menu-items"><a href="cartegory.php?cat=tre-em">TRẺ EM</a></li>
+                <li class="menu-items"><a href="cartegory.php?cat=phu-kien">PHỤ KIỆN</a></li>
             </ul>
         </nav>
         <!--=========================HEADER ACTION==========================-->
@@ -44,71 +55,125 @@
                 <i class="fas fa-search"></i>
             </div>
             <a class="fa fa-headphones" href="#"></a>
-            <a class="fa fa-user" href="#"></a>
-            <a class="fa fa-shopping-bag" href="cart.php"></a>
+            <a class="fa fa-user" href="profile.php"></a>
+            <a class="fa fa-shopping-bag cart-icon-btn" href="javascript:void(0)"></a>
         </div>
     </div>
 </header>
 
-<!--=========================MAIN==========================-->
-<main class="site-main" style="padding-top: 120px; padding-bottom: 80px; background: #fafafa;">
-    <div class="container" style="max-width: 1000px;">
-        <h1 style="font-size: 24px; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1px;">Lịch sử đơn hàng</h1>
-        
-        <!-- Order history container -->
-        <div style="background: #fff; padding: 25px; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
-                <p style="color: #666; font-size: 14px; margin: 0;">Danh sách tất cả các đơn hàng đã đặt trên hệ thống.</p>
-                <!-- Search -->
-                <div style="position: relative;">
-                    <input type="text" id="order-search" placeholder="Tìm mã đơn hàng..." style="padding: 10px 15px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 14px; width: 220px; outline: none;">
-                    <i class="fas fa-search" style="position: absolute; right: 12px; top: 12px; color: #aaa;"></i>
+<!--=========================Account Layout==========================-->
+<section class="account">
+    <div class="container">
+        <div class="account-wrapper">
+
+            <div class="account-sidebar">
+                <div class="account-user">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <span><?php echo htmlspecialchars($fullname); ?></span>
                 </div>
+                <ul>
+                    <li>
+                        <a href="profile.php">
+                            <i class="fa-regular fa-user"></i>
+                            Thông tin tài khoản
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile.php?tab=outfits">
+                            <i class="fa-solid fa-shirt"></i>
+                            Phối đồ của tôi
+                        </a>
+                    </li>
+                    <li>
+                        <a href="wishlist.php">
+                            <i class="fa-regular fa-heart"></i>
+                            Sản phẩm yêu thích
+                        </a>
+                    </li>
+                    <li>
+                        <a href="order.php" class="active">
+                            <i class="fa-solid fa-rotate"></i>
+                            Quản lý đơn hàng
+                        </a>
+                    </li>
+                    <li>
+                        <a href="outfit-builder.php">
+                            <i class="fa-solid fa-magic"></i>
+                            Tạo phối đồ
+                        </a>
+                    </li>
+                    <?php if ($isAdmin): ?>
+                    <li>
+                        <a href="profile.php?tab=admin-users" class="admin-link">
+                            <i class="fa-solid fa-users-gear"></i>
+                            Quản lý thành viên (Admin)
+                        </a>
+                    </li>
+                    <?php endif; ?>
+                    <li>
+                        <a href="javascript:void(0)" id="logoutBtn" class="logout-link">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            Đăng xuất
+                        </a>
+                    </li>
+                </ul>
             </div>
 
-            <!-- Table -->
-            <div style="overflow-x: auto;">
-                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
-                    <thead>
-                        <tr style="border-bottom: 2px solid #eee; background: #fdfdfd;">
-                            <th style="padding: 15px 10px; font-weight: 600;">Mã Đơn</th>
-                            <th style="padding: 15px 10px; font-weight: 600;">Ngày đặt</th>
-                            <th style="padding: 15px 10px; font-weight: 600;">Khách hàng</th>
-                            <th style="padding: 15px 10px; font-weight: 600;">Thành tiền</th>
-                            <th style="padding: 15px 10px; font-weight: 600;">Thanh toán</th>
-                            <th style="padding: 15px 10px; font-weight: 600;">Trạng thái</th>
-                            <th style="padding: 15px 10px; font-weight: 600; text-align: center;">Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody id="order-list-tbody">
-                        <!-- Dynamic content -->
-                        <tr>
-                            <td colspan="7" style="padding: 30px; text-align: center; color: #888;">Đang tải đơn hàng...</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- Content Area -->
+            <div class="account-content">
+                <h2>Lịch sử đơn hàng</h2>
+                <p class="order-subtitle">Danh sách tất cả các đơn hàng đã đặt trên hệ thống của bạn.</p>
+
+                <!-- Toolbar tìm kiếm -->
+                <div class="order-toolbar">
+                    <div class="order-search-wrap">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="order-search" placeholder="Tìm mã đơn hàng...">
+                    </div>
+                </div>
+
+                <!-- Bảng đơn hàng -->
+                <div class="order-table-wrap">
+                    <table class="table-premium" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Mã Đơn</th>
+                                <th>Ngày đặt</th>
+                                <th>Khách hàng</th>
+                                <th>Thành tiền</th>
+                                <th>Thanh toán</th>
+                                <th>Trạng thái</th>
+                                <th style="text-align: center;">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="order-list-tbody">
+                            <tr>
+                                <td colspan="7" style="padding: 30px; text-align: center; color: #888;">Đang tải đơn hàng...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</main>
+</section>
 
 <!--=========================DETAIL MODAL==========================-->
-<div id="order-detail-modal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px;">
-    <div style="background: #fff; max-width: 600px; width: 100%; border-radius: 8px; box-shadow: 0 5px 25px rgba(0,0,0,0.2); overflow: hidden; display: flex; flex-direction: column; max-height: 90vh;">
-        <!-- Modal Header -->
-        <div style="padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; background: #fafafa;">
-            <h3 style="margin: 0; font-size: 18px; text-transform: uppercase;">Chi Tiết Đơn Hàng <span id="modal-order-code" style="color: var(--primary);"></span></h3>
-            <button id="close-modal-btn" style="background: none; border: none; font-size: 20px; cursor: pointer; color: #999;"><i class="fas fa-times"></i></button>
+<div class="order-modal-overlay" id="order-detail-modal">
+    <div class="order-modal-box">
+        <div class="order-modal-head">
+            <h3>Chi Tiết Đơn Hàng <span id="modal-order-code" style="color: #BF8A49;"></span></h3>
+            <button class="order-modal-close" id="close-modal-btn" title="Đóng">&times;</button>
         </div>
-        <!-- Modal Content -->
-        <div id="modal-body-content" style="padding: 20px; overflow-y: auto; flex: 1; font-size: 14px; line-height: 1.6;">
-            <!-- Render details -->
+        <div id="modal-body-content" class="order-modal-body">
+            <!-- Nội dung render bởi order.js -->
         </div>
-        <!-- Modal Footer -->
-        <div style="padding: 15px 20px; border-top: 1px solid #eee; background: #fafafa; display: flex; justify-content: space-between; align-items: center;">
-            <div id="simulation-controls" style="display: flex; gap: 8px; align-items: center;">
-                <span style="font-size: 12px; color: #d32f2f; font-weight: bold;"><i class="fas fa-tools"></i> Giả lập trạng thái:</span>
-                <select id="sim-status-select" style="padding: 6px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 13px;">
+        <div class="order-modal-foot">
+            <?php if ($isAdmin): ?>
+            <!-- Giả lập trạng thái — chỉ Admin thấy -->
+            <div class="sim-controls">
+                <span class="sim-label"><i class="fas fa-tools"></i> Giả lập trạng thái:</span>
+                <select id="sim-status-select">
                     <option value="Chờ xác nhận">Chờ xác nhận</option>
                     <option value="Đang xử lý">Đang xử lý</option>
                     <option value="Đang giao hàng">Đang giao hàng</option>
@@ -116,7 +181,10 @@
                     <option value="Đã hủy">Đã hủy</option>
                 </select>
             </div>
-            <button id="close-modal-footer-btn" style="padding: 8px 18px; background: #666; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Đóng</button>
+            <?php else: ?>
+            <div></div>
+            <?php endif; ?>
+            <button type="button" class="btn-secondary" id="close-modal-footer-btn">Đóng</button>
         </div>
     </div>
 </div>
@@ -155,8 +223,11 @@
         <p>©THE FOX</p>
     </div>
 </footer>
-</body>
 
-<script src="../assets/js/order.js"></script>
+<?php include 'sidebarcart.php'; ?>
+
+<!-- Scripts -->
+<script src="../assets/js/order.js?v=2"></script>
 <script src="../assets/js/scroll.js"></script>
+</body>
 </html>

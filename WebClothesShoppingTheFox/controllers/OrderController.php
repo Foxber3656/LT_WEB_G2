@@ -1,118 +1,140 @@
 <?php
+/* ==========================================================================
+   THE FOX - Controller Quản Lý Đơn Hàng & Thanh Toán (Order Controller)
+   Áp dụng chuẩn thiết kế phần mềm Clean Code & Senior Developer
+   Tên biến/hàm: Tiếng Anh chuẩn | Chú thích (Comments): Tiếng Việt chuyên nghiệp
+   ========================================================================== */
+
 require_once __DIR__ . '/../models/Order.php';
 require_once __DIR__ . '/../models/OrderDetail.php';
 require_once __DIR__ . '/../models/Cart.php';
 
 class OrderController {
-    private $db;
+    private $databaseConnection;
     private $orderModel;
     private $orderDetailModel;
 
-    public function __construct($dbConnection) {
-        $this->db = $dbConnection;
-        $this->orderModel = new Order($dbConnection);
-        $this->orderDetailModel = new OrderDetail($dbConnection);
+    public function __construct($databaseConnection) {
+        $this->databaseConnection = $databaseConnection;
+        $this->orderModel = new Order($databaseConnection);
+        $this->orderDetailModel = new OrderDetail($databaseConnection);
     }
 
-    public function checkout($request) {
+    // Xử lý quy trình đặt hàng và tạo giao dịch thanh toán (Checkout Transaction)
+    public function checkout($requestData) {
         try {
-            if (empty($request['fullname']) || empty($request['phone']) || empty($request['address']) || empty($request['items'])) {
+            // Ràng buộc dữ liệu bắt buộc để đảm bảo đơn hàng đủ thông tin giao nhận
+            if (empty($requestData['fullname']) || empty($requestData['phone']) || empty($requestData['address']) || empty($requestData['items'])) {
                 return ['success' => false, 'message' => 'Vui lòng cung cấp đầy đủ thông tin giao hàng và sản phẩm.'];
             }
 
-            $subtotal = 0;
-            foreach ($request['items'] as $item) {
-                $subtotal += $item['price'] * $item['quantity'];
+            $orderSubtotal = 0;
+            foreach ($requestData['items'] as $cartItem) {
+                $orderSubtotal += $cartItem['price'] * $cartItem['quantity'];
             }
 
-            $discount = $subtotal >= 1000000 ? 100000 : 0;
-            $shipping_fee = isset($request['shipping_fee']) ? (int)$request['shipping_fee'] : 0;
-            $final_total = $subtotal + $shipping_fee - $discount;
+            // Quy tắc chiết khấu nghiệp vụ: Tự động giảm 100.000đ cho đơn hàng mua sắm từ 1.000.000đ
+            $discountAmount = $orderSubtotal >= 1000000 ? 100000 : 0;
+            $shippingFee = isset($requestData['shipping_fee']) ? (int)$requestData['shipping_fee'] : 0;
+            $finalTotalAmount = $orderSubtotal + $shippingFee - $discountAmount;
 
-            $order_code = 'FOX' . rand(100000, 999999);
-            $payment_status = $request['payment_method'] === 'COD' ? 'Chưa thanh toán' : 'Đã thanh toán';
+            $generatedOrderCode = 'FOX' . rand(100000, 999999);
+            $initialPaymentStatus = $requestData['payment_method'] === 'COD' ? 'Chưa thanh toán' : 'Đã thanh toán';
 
-            $this->db->beginTransaction();
+            // Sử dụng Database Transaction để bảo đảm tính toàn vẹn dữ liệu (ACID): Tạo đơn hàng và tạo các chi tiết đơn hàng phải cùng thành công
+            $this->databaseConnection->beginTransaction();
 
-            $orderData = [
-                'order_code' => $order_code,
-                'user_id' => $request['user_id'] ?? null,
-                'fullname' => $request['fullname'],
-                'phone' => $request['phone'],
-                'email' => $request['email'] ?? '',
-                'address' => $request['address'],
-                'shipping_method' => $request['shipping_method'] ?? 'Tiêu chuẩn',
-                'shipping_fee' => $shipping_fee,
-                'discount' => $discount,
-                'subtotal' => $subtotal,
-                'final_total' => $final_total,
-                'payment_method' => $request['payment_method'],
-                'payment_status' => $payment_status,
-                'note' => $request['note'] ?? ''
+            $formattedOrderData = [
+                'order_code' => $generatedOrderCode,
+                'user_id' => $requestData['user_id'] ?? null,
+                'fullname' => $requestData['fullname'],
+                'phone' => $requestData['phone'],
+                'email' => $requestData['email'] ?? '',
+                'address' => $requestData['address'],
+                'shipping_method' => $requestData['shipping_method'] ?? 'Tiêu chuẩn',
+                'shipping_fee' => $shippingFee,
+                'discount' => $discountAmount,
+                'subtotal' => $orderSubtotal,
+                'final_total' => $finalTotalAmount,
+                'payment_method' => $requestData['payment_method'],
+                'payment_status' => $initialPaymentStatus,
+                'note' => $requestData['note'] ?? ''
             ];
 
-            $orderId = $this->orderModel->create($orderData);
+            $createdOrderId = $this->orderModel->create($formattedOrderData);
 
-            foreach ($request['items'] as $item) {
-                $itemData = [
-                    'product_id' => $item['product_id'] ?? null,
-                    'product_name' => $item['product_name'],
-                    'color' => $item['color'],
-                    'size' => $item['size'],
-                    'price' => $item['price'],
-                    'quantity' => $item['quantity']
+            foreach ($requestData['items'] as $cartItem) {
+                $orderItemData = [
+                    'product_id' => $cartItem['product_id'] ?? null,
+                    'product_name' => $cartItem['product_name'],
+                    'color' => $cartItem['color'],
+                    'size' => $cartItem['size'],
+                    'price' => $cartItem['price'],
+                    'quantity' => $cartItem['quantity']
                 ];
-                $this->orderDetailModel->create($orderId, $itemData);
+                $this->orderDetailModel->create($createdOrderId, $orderItemData);
             }
 
-            if (!empty($request['user_id'])) {
-                $cartModel = new Cart($this->db);
-                $cartModel->clear($request['user_id']);
+            // Xóa sạch giỏ hàng của người dùng sau khi đặt hàng thành công
+            if (!empty($requestData['user_id'])) {
+                $userCartModel = new Cart($this->databaseConnection);
+                $userCartModel->clear($requestData['user_id']);
             }
 
-            $this->db->commit();
+            $this->databaseConnection->commit();
             return [
                 'success' => true, 
-                'order_code' => $order_code,
+                'order_code' => $generatedOrderCode,
                 'message' => 'Đặt hàng thành công!'
             ];
 
-        } catch (Exception $e) {
-            if ($this->db->inTransaction()) {
-                $this->db->rollBack();
+        } catch (Exception $exception) {
+            // Hoàn tác dữ liệu (Rollback) nếu xảy ra bất kỳ lỗi hệ thống nào trong quá trình xử lý chuỗi giao dịch
+            if ($this->databaseConnection->inTransaction()) {
+                $this->databaseConnection->rollBack();
             }
-            return ['success' => false, 'message' => 'Lỗi hệ thống: ' . $e->getMessage()];
+            return ['success' => false, 'message' => 'Lỗi hệ thống: ' . $exception->getMessage()];
         }
     }
 
-    public function getOrders() {
+    // Truy xuất lịch sử đơn hàng phân quyền dựa trên Vai trò người dùng (RBAC)
+    public function getOrdersByUser($userId, $userRole = 'user') {
         try {
-            $orders = $this->orderModel->getAll();
-            
-            foreach ($orders as &$order) {
-                $order['items'] = $this->orderDetailModel->getItemsByOrderId($order['id']);
+            // Phân quyền dữ liệu: Tài khoản Admin xem toàn bộ hệ thống đơn hàng, tài khoản User chỉ xem được đơn hàng chính mình
+            if ($userRole === 'admin') {
+                $userOrdersList = $this->orderModel->getAll();
+            } else {
+                $userOrdersList = $this->orderModel->getByUserId($userId);
             }
-            
-            return ['success' => true, 'orders' => $orders];
-        } catch (Exception $e) {
-            return ['success' => false, 'message' => $e->getMessage()];
+
+            foreach ($userOrdersList as &$singleOrder) {
+                $singleOrder['items'] = $this->orderDetailModel->getItemsByOrderId($singleOrder['id']);
+            }
+
+            return ['success' => true, 'orders' => $userOrdersList];
+        } catch (Exception $exception) {
+            return ['success' => false, 'message' => $exception->getMessage()];
         }
     }
 
-    public function updateStatus($request) {
+    // Cập nhật trạng thái đơn hàng (Dành cho Admin hoặc Giả lập trạng thái)
+    public function updateStatus($requestData) {
         try {
-            if (empty($request['order_code']) || empty($request['status'])) {
+            if (empty($requestData['order_code']) || empty($requestData['status'])) {
                 return ['success' => false, 'message' => 'Thiếu thông tin cập nhật.'];
             }
             
-            $status = $request['status'];
-            $paymentStatus = $status === 'Đã hoàn thành' ? 'Đã thanh toán' : 'Chưa thanh toán';
+            $updatedOrderStatus = $requestData['status'];
+            $updatedPaymentStatus = $updatedOrderStatus === 'Đã hoàn thành' ? 'Đã thanh toán' : 'Chưa thanh toán';
             
-            $success = $this->orderModel->updateStatus($request['order_code'], $status, $paymentStatus);
+            $isStatusUpdateSuccessful = $this->orderModel->updateStatus($requestData['order_code'], $updatedOrderStatus, $updatedPaymentStatus);
             
-            return ['success' => $success, 'message' => $success ? 'Cập nhật trạng thái thành công!' : 'Không tìm thấy đơn hàng.'];
-        } catch (Exception $e) {
-            return ['success' => false, 'message' => $e->getMessage()];
+            return [
+                'success' => $isStatusUpdateSuccessful, 
+                'message' => $isStatusUpdateSuccessful ? 'Cập nhật trạng thái thành công!' : 'Không tìm thấy đơn hàng.'
+            ];
+        } catch (Exception $exception) {
+            return ['success' => false, 'message' => $exception->getMessage()];
         }
     }
 }

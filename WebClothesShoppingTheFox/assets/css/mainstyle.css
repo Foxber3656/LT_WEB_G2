@@ -1,114 +1,99 @@
-/*=========================
-HOME BANNER
-==========================*/
+/* ==========================================================================
+   THE FOX - Module Giao Diện Trang Chủ & Banner (Main Home Banner Style)
+   Áp dụng chuẩn thiết kế phần mềm Clean Code & Senior Developer Architecture
+   Sử dụng Hệ thống Biến Toàn Cục (CSS Custom Properties) & Chú thích Tiếng Việt
+   ========================================================================== */
+
+/* --- KHUNG BANNER TRANG CHỦ (HOME BANNER CAROUSEL) --- */
 .home-banner {
     width: 100vw;
-
     overflow: hidden;
-
     position: relative;
-
     top: -20px;
 }
+
 .banner-item {
     position: relative;
-
     display: block;
-
     padding-top: 56.25%;
-
-    transition: 0.3s;
+    transition: all var(--transition-normal, 0.3s ease);
 }
-/* IMAGE */
+
 .banner-item img {
     position: absolute;
-
     top: 0;
     left: 0;
-
     width: 100%;
     height: 100%;
-
     opacity: 0;
+    object-fit: cover;
+    transition: opacity var(--transition-normal, 0.3s ease);
 }
+
 .banner-item::after {
     content: '';
-
     position: absolute;
-
     inset: 0;
-
     background: linear-gradient(to top, rgba(0, 0, 0, 0.25), transparent);
 }
-/* BUTTON */
+
+/* --- NÚT CHUYỂN BANNER SANG TRÁI / PHẢI (PREV/NEXT BUTTONS) --- */
 .banner-prev,
 .banner-next {
     position: absolute;
-
     top: 50%;
-
     transform: translateY(-50%);
-
     width: 55px;
     height: 55px;
-
     border: none;
     border-radius: 50%;
-
     cursor: pointer;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     background: rgba(255, 255, 255, 0.85);
-
-    transition: 0.3s;
-
+    transition: all var(--transition-normal, 0.3s);
     z-index: 10;
-
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-card);
 }
+
 .banner-prev {
     left: 20px;
 }
 .banner-next {
     right: 20px;
 }
+
 .banner-prev:hover,
 .banner-next:hover {
     transform: translateY(-50%) scale(1.05);
+    background: #ffffff;
 }
+
 .banner-prev i,
 .banner-next i {
     font-size: 16px;
-    color: #444;
+    color: var(--color-text-main, #444);
 }
-/* DOT */
+
+/* --- CÁC CHẤT CHỈ THỊ BANNER (BANNER DOT INDICATORS) --- */
 .banner-dots {
     position: absolute;
-
     bottom: 25px;
     left: 50%;
-
     transform: translateX(-50%);
-
     display: flex;
     gap: 12px;
-
     z-index: 10;
 }
+
 .banner-dot {
     width: 12px;
     height: 12px;
-
     border-radius: 50%;
-
     border: 1px solid white;
-
     cursor: pointer;
-
-    transition: 0.3s;
+    transition: all var(--transition-normal, 0.3s);
 }
 
 .banner-dot.active {

@@ -1,182 +1,199 @@
+/* ==========================================================================
+   THE FOX - Module Thanh Toán & Đặt Hàng (Checkout JS)
+   Áp dụng chuẩn thiết kế phần mềm Clean Code & Senior Developer
+   Tên biến/hàm: Tiếng Anh chuẩn | Chú thích (Comments): Tiếng Việt chuyên nghiệp
+   ========================================================================== */
+
 document.addEventListener('DOMContentLoaded', () => {
-    const itemsListContainer = document.getElementById('checkout-items-list');
-    const subtotalEl = document.getElementById('summary-subtotal');
-    const shippingEl = document.getElementById('summary-shipping');
-    const discountEl = document.getElementById('summary-discount');
-    const totalEl = document.getElementById('summary-total');
-    const checkoutForm = document.getElementById('checkout-form');
-    
-    // Tải danh sách giỏ hàng
-    let cart = JSON.parse(localStorage.getItem('the_fox_cart')) || [];
-    
-    // Chuyển hướng người dùng nếu giỏ hàng trống rỗng
-    if (cart.length === 0) {
+    const checkoutItemsListContainer = document.getElementById('checkout-items-list');
+    const subtotalDisplayElement = document.getElementById('summary-subtotal');
+    const shippingDisplayElement = document.getElementById('summary-shipping');
+    const discountDisplayElement = document.getElementById('summary-discount');
+    const finalTotalDisplayElement = document.getElementById('summary-total');
+    const checkoutSubmissionForm = document.getElementById('checkout-form');
+
+    // Tải danh sách giỏ hàng lưu trữ ở phía khách hàng (Local Storage)
+    let cartProductsList = JSON.parse(localStorage.getItem('the_fox_cart')) || [];
+
+    // Ràng buộc bảo vệ: Chuyển hướng ngay về giỏ hàng nếu không có sản phẩm để ngăn chặn đặt hàng rỗng
+    if (cartProductsList.length === 0) {
         alert('Giỏ hàng của bạn đang trống. Vui lòng thêm sản phẩm trước khi thanh toán.');
         window.location.href = 'cart.php';
         return;
     }
-    
-    let shippingFee = 30000; // Phí ship mặc định của Giao hàng tiêu chuẩn
-    
-    // Hiển thị tóm tắt đơn hàng ở cột bên phải
-    function renderSummary() {
-        if (!itemsListContainer) return;
-        
-        let subtotal = 0;
-        let itemsHTML = '';
-        
-        cart.forEach(item => {
-            subtotal += item.price * item.quantity;
-            itemsHTML += `
+
+    let currentShippingFeeAmount = 30000;
+
+    // Tính toán tổng số tiền và render tóm tắt đơn hàng ở cột bên phải
+    function calculateAndRenderSummary() {
+        if (!checkoutItemsListContainer) return;
+
+        let accumulatedSubtotalAmount = 0;
+        let checkoutItemsHtmlMarkup = '';
+
+        cartProductsList.forEach((singleItem) => {
+            accumulatedSubtotalAmount += singleItem.price * singleItem.quantity;
+            checkoutItemsHtmlMarkup += `
                 <div style="display: flex; gap: 12px; align-items: center; border-bottom: 1px solid #f0f0f0; padding-bottom: 10px;">
-                    <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 60px; object-fit: cover; border-radius: 4px;">
+                    <img src="${singleItem.image}" alt="${singleItem.name}" style="width: 50px; height: 60px; object-fit: cover; border-radius: 4px;">
                     <div style="flex: 1;">
-                        <h4 style="font-size: 13px; font-weight: 500; margin: 0 0 3px 0; color: #333;">${item.name}</h4>
-                        <span style="font-size: 11px; color: #777; display: block;">Màu: ${item.color} | Size: ${item.size}</span>
-                        <span style="font-size: 12px; font-weight: bold; color: #555;">${item.quantity} x ${formatPrice(item.price)}đ</span>
+                        <h4 style="font-size: 13px; font-weight: 500; margin: 0 0 3px 0; color: #333;">${singleItem.name}</h4>
+                        <span style="font-size: 11px; color: #777; display: block;">Màu: ${singleItem.color} | Size: ${singleItem.size}</span>
+                        <span style="font-size: 12px; font-weight: bold; color: #555;">${singleItem.quantity} x ${formatCurrencyPrice(singleItem.price)}đ</span>
                     </div>
-                    <span style="font-size: 13px; font-weight: bold; color: #333;">${formatPrice(item.price * item.quantity)}đ</span>
+                    <span style="font-size: 13px; font-weight: bold; color: #333;">${formatCurrencyPrice(singleItem.price * singleItem.quantity)}đ</span>
                 </div>
             `;
         });
-        
-        itemsListContainer.innerHTML = itemsHTML;
-        
-        // Áp dụng quy tắc giảm giá: Giảm 100k cho đơn hàng từ 1.000.000đ trở lên
-        let discount = subtotal >= 1000000 ? 100000 : 0;
-        let finalTotal = subtotal + shippingFee - discount;
-        
-        subtotalEl.innerText = formatPrice(subtotal) + 'đ';
-        shippingEl.innerText = formatPrice(shippingFee) + 'đ';
-        discountEl.innerText = '-' + formatPrice(discount) + 'đ';
-        totalEl.innerText = formatPrice(finalTotal) + 'đ';
-        
-        return { subtotal, discount, finalTotal };
+
+        checkoutItemsListContainer.innerHTML = checkoutItemsHtmlMarkup;
+
+        // Quy tắc chiết khấu nghiệp vụ: Giảm 100.000đ cho hóa đơn từ 1.000.000đ trở lên
+        let calculatedDiscountAmount = accumulatedSubtotalAmount >= 1000000 ? 100000 : 0;
+        let calculatedFinalTotalAmount =
+            accumulatedSubtotalAmount + currentShippingFeeAmount - calculatedDiscountAmount;
+
+        subtotalDisplayElement.innerText = formatCurrencyPrice(accumulatedSubtotalAmount) + 'đ';
+        shippingDisplayElement.innerText = formatCurrencyPrice(currentShippingFeeAmount) + 'đ';
+        discountDisplayElement.innerText = '-' + formatCurrencyPrice(calculatedDiscountAmount) + 'đ';
+        finalTotalDisplayElement.innerText = formatCurrencyPrice(calculatedFinalTotalAmount) + 'đ';
+
+        return {
+            subtotal: accumulatedSubtotalAmount,
+            discount: calculatedDiscountAmount,
+            finalTotal: calculatedFinalTotalAmount,
+        };
     }
-    
-    // Theo dõi thay đổi phương thức vận chuyển
-    const shippingRadios = document.querySelectorAll('input[name="shipping_method"]');
-    shippingRadios.forEach(radio => {
-        radio.addEventListener('change', (e) => {
-            if (e.target.value === 'Hỏa tốc') {
-                shippingFee = 50000;
+
+    const shippingMethodRadioButtonElements = document.querySelectorAll('input[name="shipping_method"]');
+    shippingMethodRadioButtonElements.forEach((radioItem) => {
+        radioItem.addEventListener('change', (event) => {
+            if (event.target.value === 'Hỏa tốc') {
+                currentShippingFeeAmount = 50000;
             } else {
-                shippingFee = 30000;
+                currentShippingFeeAmount = 30000;
             }
-            renderSummary();
+            calculateAndRenderSummary();
         });
     });
-    
-    const totals = renderSummary();
-    
-    // Xử lý xác nhận đặt hàng
-    if (checkoutForm) {
-        checkoutForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const fullname = document.getElementById('fullname').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const address = document.getElementById('address').value.trim();
-            const note = document.getElementById('note').value.trim();
-            const shipping_method = document.querySelector('input[name="shipping_method"]:checked').value;
-            const payment_method = document.querySelector('input[name="payment_method"]:checked').value;
-            
-            const phoneRegex = /^(03|05|07|08|09)\d{8}$/;
-            if (!phoneRegex.test(phone)) {
+
+    const orderTotalsCalculation = calculateAndRenderSummary();
+
+    // Xử lý sự kiện gửi biểu mẫu xác nhận đặt hàng
+    if (checkoutSubmissionForm) {
+        checkoutSubmissionForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const customerFullname = document.getElementById('fullname').value.trim();
+            const customerPhoneNumber = document.getElementById('phone').value.trim();
+            const customerEmailAddress = document.getElementById('email').value.trim();
+            const customerShippingAddress = document.getElementById('address').value.trim();
+            const customerOrderNote = document.getElementById('note').value.trim();
+            const selectedShippingMethod = document.querySelector('input[name="shipping_method"]:checked').value;
+            const selectedPaymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+
+            // Kiểm tra định dạng số điện thoại chuẩn các nhà mạng Việt Nam
+            const vietnamPhoneRegex = /^(03|05|07|08|09)\d{8}$/;
+            if (!vietnamPhoneRegex.test(customerPhoneNumber)) {
                 alert('Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại Việt Nam gồm 10 chữ số.');
                 return;
             }
-            
-            const orderData = {
-                fullname,
-                phone,
-                email,
-                address,
-                note,
-                shipping_method,
-                shipping_fee: shippingFee,
-                payment_method,
-                items: cart.map(item => ({
-                    product_id: item.product_id,
-                    product_name: item.name,
-                    color: item.color,
-                    size: item.size,
-                    price: item.price,
-                    quantity: item.quantity
-                }))
+
+            const checkoutPayloadData = {
+                fullname: customerFullname,
+                phone: customerPhoneNumber,
+                email: customerEmailAddress,
+                address: customerShippingAddress,
+                note: customerOrderNote,
+                shipping_method: selectedShippingMethod,
+                shipping_fee: currentShippingFeeAmount,
+                payment_method: selectedPaymentMethod,
+                items: cartProductsList.map((cartItem) => ({
+                    product_id: cartItem.product_id,
+                    product_name: cartItem.name,
+                    color: cartItem.color,
+                    size: cartItem.size,
+                    price: cartItem.price,
+                    quantity: cartItem.quantity,
+                })),
             };
-            
-            const submitBtn = checkoutForm.closest('div').querySelector('button[type="submit"]');
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                submitBtn.innerText = 'Đang xử lý đặt hàng...';
+
+            const submitFormButton = checkoutSubmissionForm.closest('div').querySelector('button[type="submit"]');
+            if (submitFormButton) {
+                submitFormButton.disabled = true;
+                submitFormButton.innerText = 'Đang xử lý đặt hàng...';
             }
-            
+
             fetch('../routes/order.php?action=checkout', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(orderData)
+                body: JSON.stringify(checkoutPayloadData),
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    localStorage.removeItem('the_fox_cart');
-                    
-                    sessionStorage.setItem('last_order', JSON.stringify({
-                        order_code: data.order_code,
-                        fullname: fullname,
-                        phone: phone,
-                        email: email,
-                        address: address,
-                        payment_method: payment_method,
-                        shipping_method: shipping_method,
-                        shipping_fee: shippingFee,
-                        discount: totals.discount,
-                        subtotal: totals.subtotal,
-                        final_total: totals.finalTotal,
-                        items: cart
-                    }));
-                    
-                    window.location.href = `invoice.php?order_code=${data.order_code}`;
-                } else {
-                    alert('Có lỗi xảy ra khi tạo đơn hàng: ' + (data.message || 'Lỗi không xác định'));
-                    if (submitBtn) {
-                        submitBtn.disabled = false;
-                        submitBtn.innerText = 'Xác nhận đặt hàng';
+                .then((apiResponse) => apiResponse.json())
+                .then((apiResultData) => {
+                    if (apiResultData.success) {
+                        localStorage.removeItem('the_fox_cart');
+
+                        sessionStorage.setItem(
+                            'last_order',
+                            JSON.stringify({
+                                order_code: apiResultData.order_code,
+                                fullname: customerFullname,
+                                phone: customerPhoneNumber,
+                                email: customerEmailAddress,
+                                address: customerShippingAddress,
+                                payment_method: selectedPaymentMethod,
+                                shipping_method: selectedShippingMethod,
+                                shipping_fee: currentShippingFeeAmount,
+                                discount: orderTotalsCalculation.discount,
+                                subtotal: orderTotalsCalculation.subtotal,
+                                final_total: orderTotalsCalculation.finalTotal,
+                                items: cartProductsList,
+                            })
+                        );
+
+                        window.location.href = `invoice.php?order_code=${apiResultData.order_code}`;
+                    } else {
+                        alert('Có lỗi xảy ra khi tạo đơn hàng: ' + (apiResultData.message || 'Lỗi không xác định'));
+                        if (submitFormButton) {
+                            submitFormButton.disabled = false;
+                            submitFormButton.innerText = 'Xác nhận đặt hàng';
+                        }
                     }
-                }
-            })
-            .catch(err => {
-                console.error('Checkout error:', err);
-                alert('Không thể kết nối đến máy chủ. Hệ thống sẽ kích hoạt lưu trữ đơn hàng ngoại tuyến.');
-                
-                const mockOrderCode = 'FOX' + Math.floor(100000 + Math.random() * 900000);
-                localStorage.removeItem('the_fox_cart');
-                
-                sessionStorage.setItem('last_order', JSON.stringify({
-                    order_code: mockOrderCode,
-                    fullname: fullname,
-                    phone: phone,
-                    email: email,
-                    address: address,
-                    payment_method: payment_method,
-                    shipping_method: shipping_method,
-                    shipping_fee: shippingFee,
-                    discount: totals.discount,
-                    subtotal: totals.subtotal,
-                    final_total: totals.finalTotal,
-                    items: cart
-                }));
-                
-                window.location.href = `invoice.php?order_code=${mockOrderCode}`;
-            });
+                })
+                .catch((connectionError) => {
+                    console.error('Checkout error:', connectionError);
+                    alert('Không thể kết nối đến máy chủ. Hệ thống sẽ kích hoạt lưu trữ đơn hàng ngoại tuyến.');
+
+                    const generatedFallbackOrderCode = 'FOX' + Math.floor(100000 + Math.random() * 900000);
+                    localStorage.removeItem('the_fox_cart');
+
+                    sessionStorage.setItem(
+                        'last_order',
+                        JSON.stringify({
+                            order_code: generatedFallbackOrderCode,
+                            fullname: customerFullname,
+                            phone: customerPhoneNumber,
+                            email: customerEmailAddress,
+                            address: customerShippingAddress,
+                            payment_method: selectedPaymentMethod,
+                            shipping_method: selectedShippingMethod,
+                            shipping_fee: currentShippingFeeAmount,
+                            discount: orderTotalsCalculation.discount,
+                            subtotal: orderTotalsCalculation.subtotal,
+                            final_total: orderTotalsCalculation.finalTotal,
+                            items: cartProductsList,
+                        })
+                    );
+
+                    window.location.href = `invoice.php?order_code=${generatedFallbackOrderCode}`;
+                });
         });
     }
-    
-    function formatPrice(num) {
-        return num.toLocaleString('vi-VN');
+
+    function formatCurrencyPrice(amountNumber) {
+        return amountNumber.toLocaleString('vi-VN');
     }
 });

@@ -1,17 +1,23 @@
+/* ==========================================================================
+   THE FOX - Module Quản Lý Giỏ Hàng Chính (Main Shopping Cart JS)
+   Áp dụng chuẩn thiết kế phần mềm Clean Code & Senior Developer
+   Tên biến/hàm: Tiếng Anh chuẩn | Chú thích (Comments): Tiếng Việt chuyên nghiệp
+   ========================================================================== */
+
 document.addEventListener('DOMContentLoaded', () => {
     const cartLeftContainer = document.querySelector('.cart-left');
-    const titleCountEl = document.querySelector('.cart-title span');
+    const titleCountElement = document.querySelector('.cart-title span');
     const summaryItems = document.querySelectorAll('.cart-summary-item span');
-    const cartOrderBtn = document.querySelector('.cart-order');
-    const continueShoppingBtn = document.querySelector('.continue-shopping');
+    const proceedToCheckoutButton = document.querySelector('.cart-order');
+    const continueShoppingButton = document.querySelector('.continue-shopping');
 
-    // 1. Hàm tải dữ liệu và render trang giỏ hàng chính
+    // Tải dữ liệu giỏ hàng và render toàn bộ danh sách sản phẩm cùng tổng chi phí
     function renderMainCart() {
-        let cart = JSON.parse(localStorage.getItem('the_fox_cart')) || [];
+        let cartItems = JSON.parse(localStorage.getItem('the_fox_cart')) || [];
 
-        // Hỗ trợ đồng bộ dữ liệu mẫu ban đầu nếu giỏ hàng trống hoàn toàn để dễ test
-        if (cart.length === 0) {
-            cart = [
+        // Tạo dữ liệu mẫu khởi tạo ban đầu khi giỏ hàng trống giúp thử nghiệm giao diện thuận tiện hơn
+        if (cartItems.length === 0) {
+            cartItems = [
                 {
                     product_id: 1,
                     name: 'Áo kiểu Fox Summer',
@@ -31,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     image: '../assets/images/sp2.jpg',
                 },
             ];
-            localStorage.setItem('the_fox_cart', JSON.stringify(cart));
+            localStorage.setItem('the_fox_cart', JSON.stringify(cartItems));
         }
 
         if (!cartLeftContainer) return;
@@ -40,13 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
         let totalQuantity = 0;
         let totalPrice = 0;
 
-        cart.forEach((item, index) => {
+        cartItems.forEach((item, itemIndex) => {
             const itemTotal = item.price * item.quantity;
             totalQuantity += item.quantity;
             totalPrice += itemTotal;
 
-            const itemHTML = `
-                <div class="cart-item" data-index="${index}">
+            const itemHtmlMarkup = `
+                <div class="cart-item" data-index="${itemIndex}">
                     <div class="cart-item-image">
                         <img src="${item.image}" alt="${item.name}">
                     </div>
@@ -56,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p>Size: ${item.size}</p>
                     </div>
                     <div class="cart-item-price">
-                        <p>${formatPrice(item.price)}đ</p>
+                        <p>${formatCurrencyPrice(item.price)}đ</p>
                     </div>
                     <div class="cart-item-quantity" style="display: flex; align-items: center; gap: 5px;">
                         <button class="btn-qty-minus" style="width: 28px; height: 28px; border: 1px solid #ccc; background: #fff; cursor: pointer; font-size: 14px;">-</button>
@@ -64,94 +70,89 @@ document.addEventListener('DOMContentLoaded', () => {
                         <button class="btn-qty-plus" style="width: 28px; height: 28px; border: 1px solid #ccc; background: #fff; cursor: pointer; font-size: 14px;">+</button>
                     </div>
                     <div class="cart-item-total">
-                        <p>${formatPrice(itemTotal)}đ</p>
+                        <p>${formatCurrencyPrice(itemTotal)}đ</p>
                     </div>
                     <div class="cart-item-delete" style="cursor: pointer; padding: 5px; color: #888; transition: .3s;">
                         <i class="fas fa-trash"></i>
                     </div>
                 </div>
             `;
-            cartLeftContainer.insertAdjacentHTML('beforeend', itemHTML);
+            cartLeftContainer.insertAdjacentHTML('beforeend', itemHtmlMarkup);
         });
 
-        // Cập nhật số lượng ở Title
-        if (titleCountEl) {
-            titleCountEl.innerText = `${totalQuantity} Sản phẩm`;
+        if (titleCountElement) {
+            titleCountElement.innerText = `${totalQuantity} Sản phẩm`;
         }
 
-        // Cập nhật Summary
         if (summaryItems && summaryItems.length >= 4) {
-            // Tổng sản phẩm
             summaryItems[0].innerText = totalQuantity;
-            // Tổng tiền hàng
-            summaryItems[1].innerText = formatPrice(totalPrice) + 'đ';
+            summaryItems[1].innerText = formatCurrencyPrice(totalPrice) + 'đ';
 
-            // Giảm giá (mặc định cho demo là 100.000đ nếu tổng > 500k, còn lại là 0)
-            const discount = totalPrice > 500000 ? 100000 : 0;
-            summaryItems[2].innerText = `-${formatPrice(discount)}đ`;
+            // Khuyến mãi tự động: Giảm 100.000đ khi tổng giá trị đơn hàng vượt mốc 500.000đ để kích thích mua sắm
+            const discountAmount = totalPrice > 500000 ? 100000 : 0;
+            summaryItems[2].innerText = `-${formatCurrencyPrice(discountAmount)}đ`;
 
-            // Thành tiền
-            const finalTotal = Math.max(0, totalPrice - discount);
-            summaryItems[3].innerText = formatPrice(finalTotal) + 'đ';
+            const finalTotalPayment = Math.max(0, totalPrice - discountAmount);
+            summaryItems[3].innerText = formatCurrencyPrice(finalTotalPayment) + 'đ';
         }
 
-        attachEventListeners(cart);
+        attachCartEventListeners(cartItems);
     }
 
-    // 2. Gắn các sự kiện click cho nút Tăng / Giảm / Xóa
-    function attachEventListeners(cart) {
-        const items = cartLeftContainer.querySelectorAll('.cart-item');
-        items.forEach((itemEl) => {
-            const index = parseInt(itemEl.dataset.index);
-            const minusBtn = itemEl.querySelector('.btn-qty-minus');
-            const plusBtn = itemEl.querySelector('.btn-qty-plus');
-            const deleteBtn = itemEl.querySelector('.cart-item-delete');
+    // Đăng ký sự kiện tương tác tăng/giảm số lượng và xóa sản phẩm
+    function attachCartEventListeners(cartItems) {
+        const cartItemElements = cartLeftContainer.querySelectorAll('.cart-item');
+        cartItemElements.forEach((itemElement) => {
+            const itemIndex = parseInt(itemElement.dataset.index);
+            const decreaseQuantityButton = itemElement.querySelector('.btn-qty-minus');
+            const increaseQuantityButton = itemElement.querySelector('.btn-qty-plus');
+            const deleteItemButton = itemElement.querySelector('.cart-item-delete');
 
-            minusBtn.addEventListener('click', () => {
-                if (cart[index].quantity > 1) {
-                    cart[index].quantity--;
-                    updateLocalStorage(cart);
+            decreaseQuantityButton.addEventListener('click', () => {
+                if (cartItems[itemIndex].quantity > 1) {
+                    cartItems[itemIndex].quantity--;
+                    persistCartData(cartItems);
                 }
             });
 
-            plusBtn.addEventListener('click', () => {
-                cart[index].quantity++;
-                updateLocalStorage(cart);
+            increaseQuantityButton.addEventListener('click', () => {
+                cartItems[itemIndex].quantity++;
+                persistCartData(cartItems);
             });
 
-            deleteBtn.addEventListener('click', () => {
-                cart.splice(index, 1);
-                updateLocalStorage(cart);
+            deleteItemButton.addEventListener('click', () => {
+                cartItems.splice(itemIndex, 1);
+                persistCartData(cartItems);
             });
         });
     }
 
-    function updateLocalStorage(cart) {
-        localStorage.setItem('the_fox_cart', JSON.stringify(cart));
+    // Cập nhật LocalStorage và kích hoạt đồng bộ dữ liệu giao diện đa thành phần
+    function persistCartData(cartItems) {
+        localStorage.setItem('the_fox_cart', JSON.stringify(cartItems));
         renderMainCart();
-        // Đồng bộ ngược lại với giỏ hàng trượt nếu có
+
+        // Đồng bộ dữ liệu ngược lại với Sidebar Cart giúp giao diện luôn nhất quán trên toàn bộ hệ thống
         if (typeof window.loadAndRenderSidebarCart === 'function') {
             window.loadAndRenderSidebarCart();
         }
     }
 
-    function formatPrice(number) {
-        return number.toLocaleString('vi-VN');
+    function formatCurrencyPrice(amountNumber) {
+        return amountNumber.toLocaleString('vi-VN');
     }
 
-    // 3. Sự kiện chuyển trang thanh toán và tiếp tục mua hàng
-    if (cartOrderBtn) {
-        cartOrderBtn.addEventListener('click', () => {
+    if (proceedToCheckoutButton) {
+        proceedToCheckoutButton.addEventListener('click', () => {
             window.location.href = 'checkout.php';
         });
     }
 
-    if (continueShoppingBtn) {
-        continueShoppingBtn.addEventListener('click', () => {
+    if (continueShoppingButton) {
+        continueShoppingButton.addEventListener('click', () => {
             window.location.href = 'cartegory.php';
         });
     }
 
-    // Chạy render lần đầu
     renderMainCart();
 });

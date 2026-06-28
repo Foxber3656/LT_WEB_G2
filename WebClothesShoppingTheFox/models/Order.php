@@ -1,13 +1,20 @@
 <?php
-class Order {
-    private $db;
+/* ==========================================================================
+   THE FOX - Model Thao Tác CSDL Đơn Hàng (Order Model)
+   Áp dụng chuẩn thiết kế phần mềm Clean Code & Senior Developer
+   Tên biến/hàm: Tiếng Anh chuẩn | Chú thích (Comments): Tiếng Việt chuyên nghiệp
+   ========================================================================== */
 
-    public function __construct($dbConnection) {
-        $this->db = $dbConnection;
+class Order {
+    private $databaseConnection;
+
+    public function __construct($databaseConnection) {
+        $this->databaseConnection = $databaseConnection;
     }
 
-    public function create($data) {
-        $sql = "INSERT INTO orders (
+    // Khởi tạo bản ghi đơn hàng mới trong CSDL
+    public function create($orderDataArray) {
+        $sqlQuery = "INSERT INTO orders (
                     order_code, user_id, fullname, phone, email, address, 
                     shipping_method, shipping_fee, discount, subtotal, final_total, 
                     payment_method, payment_status, note
@@ -17,36 +24,45 @@ class Order {
                     :payment_method, :payment_status, :note
                 )";
         
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([
-            ':order_code' => $data['order_code'],
-            ':user_id' => $data['user_id'] ?? null,
-            ':fullname' => $data['fullname'],
-            ':phone' => $data['phone'],
-            ':email' => $data['email'] ?? '',
-            ':address' => $data['address'],
-            ':shipping_method' => $data['shipping_method'],
-            ':shipping_fee' => $data['shipping_fee'],
-            ':discount' => $data['discount'] ?? 0.00,
-            ':subtotal' => $data['subtotal'],
-            ':final_total' => $data['final_total'],
-            ':payment_method' => $data['payment_method'],
-            ':payment_status' => $data['payment_status'] ?? 'Chưa thanh toán',
-            ':note' => $data['note'] ?? ''
+        $statement = $this->databaseConnection->prepare($sqlQuery);
+        $statement->execute([
+            ':order_code' => $orderDataArray['order_code'],
+            ':user_id' => $orderDataArray['user_id'] ?? null,
+            ':fullname' => $orderDataArray['fullname'],
+            ':phone' => $orderDataArray['phone'],
+            ':email' => $orderDataArray['email'] ?? '',
+            ':address' => $orderDataArray['address'],
+            ':shipping_method' => $orderDataArray['shipping_method'],
+            ':shipping_fee' => $orderDataArray['shipping_fee'],
+            ':discount' => $orderDataArray['discount'] ?? 0.00,
+            ':subtotal' => $orderDataArray['subtotal'],
+            ':final_total' => $orderDataArray['final_total'],
+            ':payment_method' => $orderDataArray['payment_method'],
+            ':payment_status' => $orderDataArray['payment_status'] ?? 'Chưa thanh toán',
+            ':note' => $orderDataArray['note'] ?? ''
         ]);
 
-        return $this->db->lastInsertId();
+        return $this->databaseConnection->lastInsertId();
     }
 
+    // Truy xuất toàn bộ danh sách đơn hàng toàn hệ thống (Dành cho Admin)
     public function getAll() {
-        $stmt = $this->db->query("SELECT * FROM orders ORDER BY created_at DESC");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $statement = $this->databaseConnection->query("SELECT * FROM orders ORDER BY created_at DESC");
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function updateStatus($orderCode, $status, $paymentStatus) {
-        $stmt = $this->db->prepare("UPDATE orders SET status = ?, payment_status = ? WHERE order_code = ?");
-        $stmt->execute([$status, $paymentStatus, $orderCode]);
-        return $stmt->rowCount() > 0;
+    // Truy xuất lịch sử danh sách đơn hàng của một người dùng cụ thể
+    public function getByUserId($userId) {
+        $statement = $this->databaseConnection->prepare("SELECT * FROM orders WHERE user_id = :user_id ORDER BY created_at DESC");
+        $statement->execute([':user_id' => $userId]);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Cập nhật trạng thái xử lý đơn hàng và trạng thái thanh toán tương ứng
+    public function updateStatus($orderCode, $orderStatus, $paymentStatus) {
+        $statement = $this->databaseConnection->prepare("UPDATE orders SET status = ?, payment_status = ? WHERE order_code = ?");
+        $statement->execute([$orderStatus, $paymentStatus, $orderCode]);
+        return $statement->rowCount() > 0;
     }
 }
 ?>

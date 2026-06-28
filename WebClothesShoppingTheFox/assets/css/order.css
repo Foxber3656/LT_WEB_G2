@@ -1,0 +1,172 @@
+/* ==========================================================================
+   THE FOX - Module Giao Diện Quản Lý Đơn Hàng Cá Nhân (User Order Management Style)
+   Áp dụng chuẩn thiết kế phần mềm Clean Code & Senior Developer Architecture
+   Sử dụng Hệ thống Biến Toàn Cục (CSS Custom Properties) & Chú thích Tiếng Việt
+   ========================================================================== */
+
+/* --- THANH TÌM KIẾM ĐƠN HÀNG (ORDER SEARCH TOOLBAR) --- */
+.order-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.order-search-wrap {
+    position: relative;
+    max-width: 250px;
+    width: 100%;
+}
+
+.order-search-wrap .search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted, #aaa);
+    font-size: 14px;
+    pointer-events: none;
+}
+
+.order-search-wrap input {
+    width: 100%;
+    padding: 10px 16px 10px 40px;
+    height: 46px;
+    font-size: 14px;
+    border: 1.5px solid var(--color-border-main, #e2e8f0);
+    border-radius: var(--border-radius-md, 8px);
+    outline: none;
+    transition: border-color var(--transition-fast, 0.2s);
+    box-sizing: border-box;
+}
+
+.order-search-wrap input:focus {
+    border-color: var(--color-primary, #BF8A49);
+}
+
+/* --- BẢNG HIỂN THỊ DANH SÁCH ĐƠN HÀNG --- */
+.order-table-wrap {
+    overflow-x: auto;
+}
+
+/* --- HỘP THOẠI CHI TIẾT ĐƠN HÀNG (ORDER DETAILS MODAL OVERLAY) --- */
+.order-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.52);
+    backdrop-filter: blur(4px);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.order-modal-overlay.active {
+    display: flex;
+    animation: overlayFadeIn 0.22s ease forwards;
+}
+
+@keyframes overlayFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.order-modal-box {
+    background: var(--color-bg-body, #fff);
+    border-radius: 18px;
+    width: 100%;
+    max-width: 700px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-modal, 0 24px 70px rgba(0, 0, 0, 0.22));
+    animation: modalSlideUp 0.25s ease forwards;
+    overflow: hidden;
+}
+
+@keyframes modalSlideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* THÀNH PHẦN MODAL */
+.order-modal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 26px;
+    border-bottom: 1px solid var(--color-border-light, #eee);
+    background: var(--color-bg-secondary, #fafafa);
+}
+
+.order-modal-head h3 {
+    margin: 0;
+    font-size: 17px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-dark-heading, #222);
+}
+
+.order-modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--color-text-muted, #999);
+    line-height: 1;
+    padding: 4px 9px;
+    border-radius: 7px;
+    transition: all var(--transition-fast, 0.18s);
+}
+
+.order-modal-close:hover {
+    background: var(--color-border-light, #f0f0f0);
+    color: var(--color-dark-heading, #333);
+}
+
+.order-modal-body {
+    padding: 26px;
+    overflow-y: auto;
+    flex: 1;
+    font-size: 14.5px;
+    line-height: 1.7;
+}
+
+.order-modal-foot {
+    padding: 14px 26px;
+    border-top: 1px solid var(--color-border-light, #eee);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    background: var(--color-bg-secondary, #fafafa);
+}
+
+/* KHU VỰC ĐIỀU KHIỂN TRẠNG THÁI (STATUS SIMULATION CONTROLS) */
+.sim-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.sim-controls .sim-label {
+    font-size: 12px;
+    color: var(--color-danger, #d32f2f);
+    font-weight: bold;
+}
+
+.sim-controls select {
+    padding: 6px 12px;
+    border: 1.5px solid var(--color-border-main, #e2e8f0);
+    border-radius: var(--border-radius-md, 8px);
+    font-size: 13px;
+    outline: none;
+    cursor: pointer;
+    transition: border-color var(--transition-fast, 0.2s);
+}
+
+.sim-controls select:focus {
+    border-color: var(--color-primary, #BF8A49);
+}

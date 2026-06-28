@@ -1,0 +1,263 @@
+/* ==========================================================================
+   THE FOX - Module Thanh Điều Hướng Hồ Sơ Cá Nhân (Account Sidebar Style)
+   Áp dụng chuẩn thiết kế phần mềm Clean Code & Senior Developer Architecture
+   Sử dụng Hệ thống Biến Toàn Cục (CSS Custom Properties) & Chú thích Tiếng Việt
+   ========================================================================== */
+
+.account {
+    padding: 140px 0 80px 0;
+    background: radial-gradient(circle at 10% 20%, rgba(245, 239, 230, 0.35) 0%, rgba(255, 255, 255, 1) 90%);
+    min-height: 80vh;
+}
+
+.account-wrapper {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+/* --- THANH SIDEBAR THÔNG TIN TÀI KHOẢN --- */
+.account-sidebar {
+    width: 300px;
+    flex-shrink: 0;
+    border: 1px solid rgba(191, 138, 73, 0.15);
+    border-radius: 24px;
+    overflow: hidden;
+    background: var(--color-bg-body, #fff);
+    box-shadow: 0 12px 35px rgba(191, 138, 73, 0.04), 0 2px 4px rgba(0, 0, 0, 0.01);
+    transition: transform var(--transition-normal, 0.3s ease);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.account-sidebar:hover {
+    transform: translateY(-2px);
+}
+
+.account-user {
+    padding: 35px 24px;
+    border-bottom: 1px solid rgba(191, 138, 73, 0.12);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: linear-gradient(135deg, #fdfdfd 0%, #f7f0e6 100%);
+}
+
+.account-user i {
+    font-size: 28px;
+    color: #fff;
+    background: var(--color-primary, #BF8A49);
+    padding: 12px;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(191, 138, 73, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 52px;
+    height: 52px;
+}
+
+.account-user span {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-dark-heading, #221f20);
+    letter-spacing: 0.3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sidebar-group-header {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: var(--color-text-main, #333) !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    padding: 12px 20px !important;
+}
+
+.account-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: var(--color-bg-body, #fff);
+}
+
+.account-sidebar li a {
+    display: block;
+    padding: 10px 20px 10px 52px;
+    text-decoration: none;
+    color: var(--color-text-sub, #555);
+    font-weight: 400;
+    font-size: 14.5px;
+    transition: all var(--transition-fast, 0.2s ease);
+    border-left: none;
+}
+
+.account-sidebar li a:hover,
+.account-sidebar li a.active {
+    background: none;
+    color: var(--color-danger, #ee4d2d);
+    padding-left: 52px;
+}
+
+.account-sidebar li a.active {
+    font-weight: 500;
+}
+
+/* --- BỐ CỤC KHUNG NỘI DUNG CHÍNH (CONTENT CARD) --- */
+.account-content {
+    flex: 1;
+    background: var(--color-bg-body, #fff);
+    border: 1px solid rgba(191, 138, 73, 0.15);
+    border-radius: 24px;
+    padding: 45px;
+    box-shadow: 0 12px 35px rgba(191, 138, 73, 0.04), 0 2px 4px rgba(0, 0, 0, 0.01);
+}
+
+.account-content h2 {
+    font-size: 26px;
+    margin-bottom: 35px;
+    font-weight: 700;
+    color: var(--color-dark-heading, #221f20);
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid rgba(191, 138, 73, 0.1);
+    padding-bottom: 16px;
+    text-transform: uppercase;
+}
+
+/* --- FORM ĐỔI THÔNG TIN HỒ SƠ --- */
+.profile-form { max-width: 850px; }
+.profile-form .form-group { margin-bottom: 25px; }
+
+.profile-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-text-main, #333);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.input-with-icon .input-icon {
+    position: absolute;
+    left: 18px;
+    color: var(--color-text-muted, #888);
+    font-size: 16px;
+    pointer-events: none;
+    transition: color var(--transition-normal, 0.3s ease);
+    z-index: 5;
+}
+
+.profile-form input,
+.profile-form select {
+    width: 100%;
+    height: 54px;
+    border: 1.5px solid var(--color-border-main, #e2e8f0);
+    border-radius: 12px;
+    padding: 0 18px 0 48px;
+    font-size: 15px;
+    transition: all var(--transition-normal, 0.3s) cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--color-bg-body, #fff);
+    color: var(--color-dark-heading, #221f20);
+}
+
+.profile-form input:hover { border-color: var(--color-primary, #BF8A49); }
+
+.profile-form input:focus {
+    outline: none;
+    border-color: var(--color-primary, #BF8A49);
+    box-shadow: 0 0 0 4px rgba(191, 138, 73, 0.15);
+}
+
+.input-with-icon input:focus + .input-icon {
+    color: var(--color-primary, #BF8A49);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+/* NÚT BẤM CHÍNH */
+.primary-btn {
+    min-width: 220px;
+    height: 52px;
+    border: none;
+    border-radius: 14px 0 14px 0;
+    background: var(--color-dark-heading, #221f20);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-normal, 0.3s) cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 14px rgba(34, 31, 32, 0.15);
+    letter-spacing: 0.5px;
+}
+
+.primary-btn:hover {
+    background: var(--color-primary, #BF8A49);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(191, 138, 73, 0.3);
+}
+
+/* NÚT KHÓA/MỞ KHÓA TRƯỜNG THÔNG TIN */
+.input-with-icon-btn input { padding-right: 140px; }
+
+.btn-lock-action {
+    position: absolute;
+    right: 8px;
+    height: 38px;
+    padding: 0 16px;
+    background: #fdfbf7;
+    border: 1px solid rgba(191, 138, 73, 0.35);
+    color: var(--color-primary, #BF8A49);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-normal, 0.3s ease);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    z-index: 10;
+}
+
+.btn-lock-action:hover {
+    background: var(--color-primary, #BF8A49);
+    color: #fff;
+    border-color: var(--color-primary, #BF8A49);
+}
+
+.btn-lock-action.unlocked {
+    background: #edfbf2;
+    border-color: #bdf0cd;
+    color: var(--color-success, #178a42);
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 992px) {
+    .account-wrapper { gap: 30px; }
+    .account-sidebar { width: 260px; }
+}
+
+@media (max-width: 768px) {
+    .account { padding: 100px 0 40px 0; }
+    .account-wrapper { flex-direction: column; gap: 25px; }
+    .account-sidebar { width: 100%; }
+    .form-row { grid-template-columns: 1fr; gap: 0; }
+    .account-content { padding: 30px 20px; }
+}

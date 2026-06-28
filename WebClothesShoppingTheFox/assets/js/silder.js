@@ -1,50 +1,68 @@
-const bannerImages = document.querySelectorAll('.banner-item img');
-const bannerDots = document.querySelectorAll('.banner-dot');
-let currentBanner = 0;
-/* INIT */
-bannerImages.forEach((img, index) => {
-    img.style.opacity = index === 0 ? '1' : '0';
+/* ==========================================================================
+   THE FOX - Module Quản Lý Banner Slider Trang Chủ (Homepage Slider JS)
+   Áp dụng chuẩn thiết kế phần mềm Clean Code & Senior Developer
+   Tên biến/hàm: Tiếng Anh chuẩn | Chú thích (Comments): Tiếng Việt chuyên nghiệp
+   ========================================================================== */
 
-    img.style.transition = 'opacity .5s ease';
+const bannerImageElementsList = document.querySelectorAll('.banner-item img');
+const bannerNavigationDotElementsList = document.querySelectorAll('.banner-dot');
+const nextBannerSlideButton = document.querySelector('.banner-next');
+const previousBannerSlideButton = document.querySelector('.banner-prev');
+
+let activeBannerSlideIndex = 0;
+
+// Khởi tạo trạng thái ban đầu cho danh sách ảnh banner (Hiển thị ảnh đầu tiên, ẩn các ảnh còn lại bằng mờ đục transition)
+bannerImageElementsList.forEach((imageItem, imageIndex) => {
+    imageItem.style.opacity = imageIndex === 0 ? '1' : '0';
+    imageItem.style.transition = 'opacity .5s ease';
 });
-/* UPDATE */
-function updateBanner() {
-    bannerImages.forEach((img, index) => {
-        img.style.opacity = index === currentBanner ? '1' : '0';
-    });
-    bannerDots.forEach((dot) => {
-        dot.classList.remove('active');
-    });
-    bannerDots[currentBanner].classList.add('active');
-}
-/* NEXT */
-document.querySelector('.banner-next').onclick = () => {
-    currentBanner++;
-    if (currentBanner >= bannerImages.length) {
-        currentBanner = 0;
-    }
-    updateBanner();
-};
 
-/* PREV */
-document.querySelector('.banner-prev').onclick = () => {
-    currentBanner--;
-    if (currentBanner < 0) {
-        currentBanner = bannerImages.length - 1;
+// Cập nhật hiển thị Banner và trạng thái Active của các chấm tròn điều hướng
+function updateActiveBannerSlideDisplay() {
+    bannerImageElementsList.forEach((imageItem, imageIndex) => {
+        imageItem.style.opacity = imageIndex === activeBannerSlideIndex ? '1' : '0';
+    });
+    bannerNavigationDotElementsList.forEach((dotItem) => {
+        dotItem.classList.remove('active');
+    });
+    if (bannerNavigationDotElementsList[activeBannerSlideIndex]) {
+        bannerNavigationDotElementsList[activeBannerSlideIndex].classList.add('active');
     }
-    updateBanner();
-};
-bannerDots.forEach((dot, index) => {
-    dot.onclick = () => {
-        bannerImages = index;
-        updateBanner();
+}
+
+if (nextBannerSlideButton) {
+    nextBannerSlideButton.onclick = () => {
+        activeBannerSlideIndex++;
+        if (activeBannerSlideIndex >= bannerImageElementsList.length) {
+            activeBannerSlideIndex = 0;
+        }
+        updateActiveBannerSlideDisplay();
+    };
+}
+
+if (previousBannerSlideButton) {
+    previousBannerSlideButton.onclick = () => {
+        activeBannerSlideIndex--;
+        if (activeBannerSlideIndex < 0) {
+            activeBannerSlideIndex = bannerImageElementsList.length - 1;
+        }
+        updateActiveBannerSlideDisplay();
+    };
+}
+
+bannerNavigationDotElementsList.forEach((dotItem, dotIndex) => {
+    dotItem.onclick = () => {
+        activeBannerSlideIndex = dotIndex;
+        updateActiveBannerSlideDisplay();
     };
 });
+
+// Thiết lập tự động chuyển Slide Banner sau mỗi chu kỳ 5 giây
 setInterval(() => {
-    currentBanner++;
-    if (currentBanner >= bannerImages.length) {
-        currentBanner = 0;
+    if (bannerImageElementsList.length === 0) return;
+    activeBannerSlideIndex++;
+    if (activeBannerSlideIndex >= bannerImageElementsList.length) {
+        activeBannerSlideIndex = 0;
     }
-    updateBanner();
+    updateActiveBannerSlideDisplay();
 }, 5000);
-const header = document.querySelector('#header');

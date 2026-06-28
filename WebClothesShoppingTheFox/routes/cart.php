@@ -1,10 +1,19 @@
 <?php
-session_start();
+/* ==========================================================================
+   THE FOX - Route Định Tuyến Giỏ Hàng (Cart Route API)
+   Áp dụng chuẩn thiết kế phần mềm Clean Code & Senior Developer
+   Tên biến/hàm: Tiếng Anh chuẩn | Chú thích (Comments): Tiếng Việt chuyên nghiệp
+   ========================================================================== */
 
-if (!isset($_SESSION['user_id'])) {
-    $_SESSION['user_id'] = 1; // Mặc định gán user_id = 1 để chạy thử
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
-$userId = $_SESSION['user_id'];
+
+// Giả lập tài khoản thử nghiệm nếu người dùng chưa đăng nhập để giữ giỏ hàng hoạt động liên tục
+if (!isset($_SESSION['user_id'])) {
+    $_SESSION['user_id'] = 1;
+}
+$currentUserId = $_SESSION['user_id'];
 
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Origin: *");
@@ -20,27 +29,27 @@ require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../controllers/CartController.php';
 
 try {
-    $pdo = getDBConnection();
-} catch (Exception $e) {
+    $databaseConnection = getDBConnection();
+} catch (Exception $exception) {
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Lỗi kết nối CSDL: ' . $e->getMessage()]);
+    echo json_encode(['success' => false, 'message' => 'Lỗi kết nối CSDL: ' . $exception->getMessage()]);
     exit();
 }
 
-$action = $_GET['action'] ?? '';
-$cartController = new CartController($pdo);
+$routeAction = $_GET['action'] ?? '';
+$cartController = new CartController($databaseConnection);
 
-switch ($action) {
+switch ($routeAction) {
     case 'get_cart':
-        $response = $cartController->getCart($userId);
-        echo json_encode($response);
+        $apiResponse = $cartController->getCart($currentUserId);
+        echo json_encode($apiResponse);
         break;
 
     case 'add_to_cart':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $input = json_decode(file_get_contents("php://input"), true);
-            $response = $cartController->addToCart($userId, $input);
-            echo json_encode($response);
+            $requestInput = json_decode(file_get_contents("php://input"), true);
+            $apiResponse = $cartController->addToCart($currentUserId, $requestInput);
+            echo json_encode($apiResponse);
         } else {
             http_response_code(405);
             echo json_encode(['success' => false, 'message' => 'Phương thức không được hỗ trợ']);
@@ -49,9 +58,9 @@ switch ($action) {
 
     case 'update_cart_qty':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $input = json_decode(file_get_contents("php://input"), true);
-            $response = $cartController->updateQuantity($userId, $input);
-            echo json_encode($response);
+            $requestInput = json_decode(file_get_contents("php://input"), true);
+            $apiResponse = $cartController->updateQuantity($currentUserId, $requestInput);
+            echo json_encode($apiResponse);
         } else {
             http_response_code(405);
             echo json_encode(['success' => false, 'message' => 'Phương thức không được hỗ trợ']);
@@ -60,9 +69,9 @@ switch ($action) {
 
     case 'remove_cart_item':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $input = json_decode(file_get_contents("php://input"), true);
-            $response = $cartController->removeItem($userId, $input);
-            echo json_encode($response);
+            $requestInput = json_decode(file_get_contents("php://input"), true);
+            $apiResponse = $cartController->removeItem($currentUserId, $requestInput);
+            echo json_encode($apiResponse);
         } else {
             http_response_code(405);
             echo json_encode(['success' => false, 'message' => 'Phương thức không được hỗ trợ']);

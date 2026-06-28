@@ -1,0 +1,257 @@
+/* ==========================================================================
+   THE FOX - Module Thực Thể Mạnh: Hồ Sơ Người Dùng (User Profile Strong Entity Style)
+   Áp dụng chuẩn thiết kế phần mềm Clean Code & Senior Developer Architecture
+   Sử dụng Hệ thống Biến Toàn Cục (CSS Custom Properties) & Chú thích Tiếng Việt
+   ========================================================================== */
+
+.account {
+    padding: 140px 0 80px 0;
+    background: radial-gradient(circle at 10% 20%, rgba(245, 239, 230, 0.35) 0%, rgba(255, 255, 255, 1) 90%);
+    min-height: 80vh;
+}
+
+.account-wrapper {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+/* --- THANH SIDEBAR TÀI KHOẢN --- */
+.account-sidebar {
+    width: 300px;
+    flex-shrink: 0;
+    border: 1px solid rgba(191, 138, 73, 0.15);
+    border-radius: 24px;
+    overflow: hidden;
+    background: var(--color-bg-body, #fff);
+    box-shadow: 0 12px 35px rgba(191, 138, 73, 0.04), 0 2px 4px rgba(0, 0, 0, 0.01);
+    transition: transform var(--transition-normal, 0.3s ease);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.account-sidebar:hover { transform: translateY(-2px); }
+
+.account-user {
+    padding: 35px 24px;
+    border-bottom: 1px solid rgba(191, 138, 73, 0.12);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: linear-gradient(135deg, #fdfdfd 0%, #f7f0e6 100%);
+}
+
+.account-user i {
+    font-size: 28px;
+    color: #fff;
+    background: var(--color-primary, #BF8A49);
+    padding: 12px;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(191, 138, 73, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 52px;
+    height: 52px;
+}
+
+.account-user span {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-dark-heading, #221f20);
+    letter-spacing: 0.3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sidebar-group-header {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: var(--color-text-main, #333) !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    padding: 12px 20px !important;
+}
+
+.account-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: var(--color-bg-body, #fff);
+}
+
+.account-sidebar li a {
+    display: block;
+    padding: 10px 20px 10px 52px;
+    text-decoration: none;
+    color: var(--color-text-sub, #555);
+    font-weight: 400;
+    font-size: 14.5px;
+    transition: all var(--transition-fast, 0.2s ease);
+    border-left: none;
+}
+
+.account-sidebar li a:hover,
+.account-sidebar li a.active {
+    background: none;
+    color: var(--color-primary, #BF8A49);
+    padding-left: 52px;
+}
+
+.account-sidebar li a.active { font-weight: 500; }
+
+/* --- KHU VỰC NỘI DUNG --- */
+.account-content {
+    flex: 1;
+    background: var(--color-bg-body, #fff);
+    border: 1px solid rgba(191, 138, 73, 0.15);
+    border-radius: 24px;
+    padding: 45px;
+    box-shadow: 0 12px 35px rgba(191, 138, 73, 0.04), 0 2px 4px rgba(0, 0, 0, 0.01);
+}
+
+/* NÚT TƯƠNG TÁC HỒ SƠ */
+.primary-btn {
+    min-width: 220px;
+    height: 52px;
+    border: none;
+    border-radius: 14px 0 14px 0;
+    background: var(--color-primary, #BF8A49);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-normal, 0.3s) cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 14px rgba(191, 138, 73, 0.25);
+    letter-spacing: 0.5px;
+}
+
+.primary-btn:hover {
+    background: var(--color-primary-hover, #a67439);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(191, 138, 73, 0.35);
+}
+
+/* --- QUẢN LÝ CỬA SỔ MODAL (MODAL POPUP SYSTEM) --- */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 99999;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal.active {
+    display: flex !important;
+    animation: fadeInModal 0.25s ease forwards;
+}
+
+.modal-content {
+    background: #ffffff;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    padding: 24px;
+    position: relative;
+    animation: slideUpModal 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+}
+
+.modal-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-dark-heading, #221f20);
+    margin: 0;
+}
+
+.modal-header .close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.2s;
+    line-height: 1;
+}
+
+.modal-header .close-btn:hover {
+    color: var(--color-danger, #de3b3b);
+}
+
+.btn-group {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.btn-premium {
+    background: var(--color-primary, #BF8A49);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-premium:hover {
+    background: var(--color-primary-hover, #a67439);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: #f5f5f5;
+    color: #555;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+    background: #e9e9e9;
+    color: #333;
+}
+
+@keyframes fadeInModal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUpModal {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+

@@ -24,7 +24,7 @@
     <div class="container">
         <!-- LOGO -->
         <div class="header-logo">
-            <a href="#">
+            <a href="home.php">
                 <img
                 src="../assets/images/icon.png"
                 alt="The Fox Logo"
@@ -224,8 +224,8 @@
                 <input type="text" placeholder="Tìm kiếm">
                 <i class="fas fa-search"></i>
             </div>
-            <a class="fa fa-headphones" href="#"></a>
-            <a class="fa fa-user" href="javascript:void(0)"></a>
+            <a class="fa fa-headphones" href="mailto:info@thefox.com"></a>
+            <a class="fa fa-user" href="profile.php"></a>
             <a class="fa fa-shopping-bag cart-icon-btn" href="javascript:void(0)"></a>
         </div>
     </div>
